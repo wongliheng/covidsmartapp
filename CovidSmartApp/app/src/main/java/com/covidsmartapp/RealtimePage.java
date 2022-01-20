@@ -20,7 +20,7 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 public class RealtimePage extends AppCompatActivity {
 
-    String country;
+    private String country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -9,8 +9,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button realtimeBtn;
-    Button loginBtn;
+    private Button realtimeBtn;
+    private Button loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
