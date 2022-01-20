@@ -24,7 +24,7 @@ public class apiService {
 
         void onResponse (CovidDataModel covidDataModel);
 
-        void onImage (ImageLoader imageLoader, String url);
+//        void onImage (ImageLoader imageLoader, String url);
     }
 
     public void getCovidData (String country, final VolleyResponseListener vrl) {
@@ -44,8 +44,8 @@ public class apiService {
                         e.printStackTrace();
                     }
                     vrl.onResponse(covidDataModel);
-                    ImageLoader imageLoader = SingletonClass.getInstance(context).getImageLoader();
-                    vrl.onImage(imageLoader, covidDataModel.getFlag());
+//                    ImageLoader imageLoader = SingletonClass.getInstance(context).getImageLoader();
+//                    vrl.onImage(imageLoader, covidDataModel.getFlag());
                 }, error -> vrl.onError("error"));
 
         SingletonClass.getInstance(context).addToRequestQueue(request);

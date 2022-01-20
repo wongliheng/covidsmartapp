@@ -12,7 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidSmartApp">
         <activity
+            android:name=".LoggedIn"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPage"
+            android:exported="false" />
+        <activity
             android:name=".RealtimePage"
+            android:exported="false" />
+        <activity
+            android:name=".LoginPage"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

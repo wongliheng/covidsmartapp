@@ -9,7 +9,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button realtimeBtn;
+    private Button realtimeBtn;
+    private Button loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, RealtimePage.class));
+
+            }
+        });
+
+        loginBtn =  findViewById(R.id.loginBtn);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, LoginPage.class));
 
             }
         });
