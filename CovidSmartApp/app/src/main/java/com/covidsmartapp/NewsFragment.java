@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.kwabenaberko.newsapilib.NewsApiClient;
@@ -19,7 +21,17 @@ import com.kwabenaberko.newsapilib.models.request.EverythingRequest;
 import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,8 +44,10 @@ public class NewsFragment extends Fragment {
     public static final String apiKey2 = "4ac3d974cd814bc5b69c66d10463823e";
     public boolean exceeded1 = false;
 
-    NewsApiClient newsApiClient;
-    ArrayList<NewsDataModel> newsArray;
+    public NewsApiClient newsApiClient;
+    public ArrayList<NewsDataModel> newsArray;
+    JSONObject newsJson;
+    String jsonString;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,57 +95,40 @@ public class NewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_news, container, false);
 
-        newsArray = new ArrayList<NewsDataModel>();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.newsRecycler);
-
-        if (exceeded1){
-            newsApiClient = new NewsApiClient(apiKey2);
-        }
-        else {
-            newsApiClient = new NewsApiClient(apiKey);
-        }
-
         TextView test1 = (TextView) view.findViewById(R.id.textView5);
-        TextView test3 = (TextView) view.findViewById(R.id.textView7);
-        Button testBtn = (Button) view.findViewById(R.id.reks);
-        testBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://free-news.p.rapidapi.com/v1/search?q=Singapore%20Travel%20Restrictions&lang=en&page=1&page_size=5")
+                .get()
+                .addHeader("x-rapidapi-host", "free-news.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", "c54b5bf9efmsh1ad73eb981e138ep1c2029jsnec5616f6b499")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                jsonString = response.body().string();
+                try {
+                    newsJson = new JSONObject(jsonString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                test1.setText(jsonString);
             }
         });
 
-        newsApiClient.getEverything(
-                new EverythingRequest.Builder()
-                        .q("singapore travel restrictions")
-                        .sortBy("publishedAt")
-                        .pageSize(7)
-                        .language("en")
-                        .build(),
-                new NewsApiClient.ArticlesResponseCallback() {
-                    @Override
-                    public void onSuccess(ArticleResponse response) {
-
-                        test1.setText(response.getArticles().get(0).getTitle());
 
 
-//                        for (int i = 0; i < response.getTotalResults(); i++){
-//                            NewsDataModel news = new NewsDataModel();
-////                            news.setSource(response.getArticles().get(i).getSource().getId());
-//                            news.setTitle(response.getArticles().get(i).getTitle());
-////                            news.setDescription(response.getArticles().get(i).getDescription());
-////                            news.setUrl(response.getArticles().get(i).getUrl());
-////                            news.setSource(response.getArticles().get(i).getUrlToImage());
-//                            newsArray.add(news);
-//                        }
-                    }
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        exceeded1 = true;
-                    }
-                }
-        );
 
+//        newsArray = new ArrayList<NewsDataModel>();
+//        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.newsRecycler);
 
 //        NewsAdapter newsAdapter = new NewsAdapter(getActivity(), newsArray);
 //        recyclerView.setAdapter(newsAdapter);
