@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/navHome"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/navInfo"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="@string/info"/>
+    <item
+        android:id="@+id/navBooking"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_book_online_24"
+        android:title="@string/booking"/>
+<!--    <item-->
+<!--        android:id="@+id/navHistory"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_history_24"-->
+<!--        android:title="@string/history"/>-->
+<!--    <item-->
+<!--        android:id="@+id/navMore"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_more_horiz_24"-->
+<!--        android:title="@string/more"/>-->
 </menu>

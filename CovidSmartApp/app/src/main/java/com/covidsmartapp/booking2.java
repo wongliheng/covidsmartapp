@@ -2,11 +2,20 @@ package com.covidsmartapp;
 
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +32,8 @@ public class booking2 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ActivityResultLauncher<ScanOptions> barcodeLauncher;
 
     public booking2() {
         // Required empty public constructor
@@ -59,6 +70,26 @@ public class booking2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_booking2, container, false);
+        View view = inflater.inflate(R.layout.fragment_booking2, container, false);
+        TextView qrContents = (TextView) view.findViewById(R.id.qrContents);
+        barcodeLauncher = registerForActivityResult(new ScanContract(),
+                result -> {
+                    if(result.getContents() == null) {
+                        Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                        qrContents.setText(result.getContents());
+                    }
+                });
+
+        Button qrTest = (Button) view.findViewById(R.id.qrTest);
+        qrTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                barcodeLauncher.launch(new ScanOptions());
+            }
+        });
+
+        return view;
     }
 }

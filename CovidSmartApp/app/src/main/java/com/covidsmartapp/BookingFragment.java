@@ -1,5 +1,6 @@
 package com.covidsmartapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,13 +8,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link bookingFragment#newInstance} factory method to
+ * Use the {@link BookingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class bookingFragment extends Fragment {
+public class BookingFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +28,9 @@ public class bookingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public bookingFragment() {
+    private FirebaseAuth mAuth;
+
+    public BookingFragment() {
         // Required empty public constructor
     }
 
@@ -37,8 +43,8 @@ public class bookingFragment extends Fragment {
      * @return A new instance of fragment bookingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static bookingFragment newInstance(String param1, String param2) {
-        bookingFragment fragment = new bookingFragment();
+    public static BookingFragment newInstance(String param1, String param2) {
+        BookingFragment fragment = new BookingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +65,31 @@ public class bookingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_booking, container, false);
+        View view = inflater.inflate(R.layout.fragment_booking, container, false);
+        mAuth = FirebaseAuth.getInstance();
+
+        Button signOut = (Button) view.findViewById(R.id.signOut);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                getActivity().finish();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button fragtest = (Button) view.findViewById(R.id.fragmenttest);
+        fragtest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                booking2 nextFrag = new booking2();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        return view;
     }
 }
