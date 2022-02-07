@@ -7,20 +7,19 @@
     tools:context=".NewsFragment">
 
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/newsRecycler"-->
-<!--        android:layout_width="413dp"-->
-<!--        android:layout_height="195dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView4"-->
-<!--        app:layout_constraintVertical_bias="0.058" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newsRecycler"
+        android:layout_width="413dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pageHeader"
+        app:layout_constraintVertical_bias="0.031" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/pageHeader"
         android:layout_width="258dp"
         android:layout_height="68dp"
         android:layout_marginTop="24dp"
@@ -32,15 +31,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="368dp"
-        android:layout_height="433dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="76dp"
-        android:text="why"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+    <!--    <TextView-->
+<!--        android:id="@+id/textView5"-->
+<!--        android:layout_width="368dp"-->
+<!--        android:layout_height="433dp"-->
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:layout_marginTop="76dp"-->
+<!--        android:text="why"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView4" />-->
 
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="84dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:text="Button"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView4" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

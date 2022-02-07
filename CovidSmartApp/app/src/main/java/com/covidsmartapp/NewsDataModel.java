@@ -7,22 +7,22 @@ public class NewsDataModel {
     private String description;
     private String url;
     private String urlToImage;
+    private String publishDate;
 
     public NewsDataModel() {}
 
-    public NewsDataModel(String source, String title, String description, String url, String urlToImage) {
+    public NewsDataModel(String source, String title, String description, String url, String urlToImage, String publishDate) {
         this.source = source;
         this.title = title;
         this.description = description;
         this.url = url;
         this.urlToImage = urlToImage;
+        this.publishDate = publishDate;
     }
 
     @Override
     public String toString() {
-        return "NewsDataModel{" +
-                ", title='" + title + '\'' +
-                '}';
+        return ", title='" + title + '\'' + '}';
     }
 
     public String getSource() {
@@ -64,4 +64,8 @@ public class NewsDataModel {
     public void setUrlToImage(String urlToImage) {
         this.urlToImage = urlToImage;
     }
+
+    public String getPublishDate() { return publishDate; }
+
+    public void setPublishDate(String publishDate) { this.publishDate = publishDate; }
 }

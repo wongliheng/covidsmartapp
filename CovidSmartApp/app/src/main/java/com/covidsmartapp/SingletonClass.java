@@ -12,28 +12,11 @@ import com.android.volley.toolbox.Volley;
 public class SingletonClass {
     private static SingletonClass instance;
     private RequestQueue requestQueue;
-//    private ImageLoader imageLoader;
     private static Context ctx;
 
     private SingletonClass(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
-
-//        imageLoader = new ImageLoader(requestQueue,
-//                new ImageLoader.ImageCache() {
-//                    private final LruCache<String, Bitmap>
-//                            cache = new LruCache<String, Bitmap>(20);
-//
-//                    @Override
-//                    public Bitmap getBitmap(String url) {
-//                        return cache.get(url);
-//                    }
-//
-//                    @Override
-//                    public void putBitmap(String url, Bitmap bitmap) {
-//                        cache.put(url, bitmap);
-//                    }
-//                });
     }
 
     public static synchronized SingletonClass getInstance(Context context) {
@@ -55,6 +38,4 @@ public class SingletonClass {
     public <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
-
-//    public ImageLoader getImageLoader() { return imageLoader; }
 }

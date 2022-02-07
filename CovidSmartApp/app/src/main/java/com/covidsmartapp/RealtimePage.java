@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -46,14 +44,14 @@ public class RealtimePage extends AppCompatActivity {
             }
         });
 
-        final apiService service = new apiService(RealtimePage.this);
+
 
         Button getCases = findViewById(R.id.getCases);
         TextView textView = findViewById(R.id.caseStat);
 
-//        NetworkImageView testImage = findViewById(R.id.networkimagetest);
         ImageView glideTest = findViewById(R.id.glidetest);
 
+        final apiService service = new apiService(RealtimePage.this);
         getCases.setOnClickListener(view -> service.getCovidData(country, new apiService.VolleyResponseListener() {
             @Override
             public void onError(String message) {
@@ -65,14 +63,6 @@ public class RealtimePage extends AppCompatActivity {
                 textView.setText(covidDataModel.toString());
                 Glide.with(RealtimePage.this).load(covidDataModel.getFlag()).into(glideTest);
             }
-
-//            @Override
-//            public void onImage(ImageLoader imageLoader, String url) {
-////                testImage.setDefaultImageResId(R.drawable.ic_launcher_background);
-////                testImage.setImageUrl(url, imageLoader);
-//            }
-
-
         }));
     }
 

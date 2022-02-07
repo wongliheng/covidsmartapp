@@ -20,9 +20,9 @@ public class apiService {
     }
 
     public interface VolleyResponseListener {
-        void onError (String message);
+        void onError(String message);
 
-        void onResponse (CovidDataModel covidDataModel);
+        void onResponse(CovidDataModel covidDataModel);
     }
 
     public void getCovidData (String country, final VolleyResponseListener vrl) {
