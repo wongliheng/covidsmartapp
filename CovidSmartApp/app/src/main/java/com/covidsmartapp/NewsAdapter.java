@@ -38,8 +38,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         NewsDataModel article = news.get(position);
         holder.headline.setText(article.getTitle());
-//        holder.description.setText(article.getDescription());
-//        Glide.with(this.context).load(article.getUrlToImage()).into(holder.image);
+        holder.description.setText(article.getDescription());
+        Glide.with(this.context).load(article.getUrlToImage()).into(holder.image);
     }
 
     @Override

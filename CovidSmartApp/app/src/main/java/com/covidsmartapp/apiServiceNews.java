@@ -44,6 +44,9 @@ public class apiServiceNews {
                             NewsDataModel newsDataModel = new NewsDataModel();
                             JSONObject article = articleArray.getJSONObject(i);
                             newsDataModel.setTitle(article.getString("title"));
+                            newsDataModel.setDescription(article.getString("description"));
+                            newsDataModel.setUrl(article.getString("url"));
+                            newsDataModel.setUrlToImage(article.getString("image_url"));
                             newsArray.add(newsDataModel);
                         }
 

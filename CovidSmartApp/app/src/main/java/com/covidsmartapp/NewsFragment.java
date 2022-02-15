@@ -1,8 +1,10 @@
 package com.covidsmartapp;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -79,7 +82,6 @@ public class NewsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        apiRequest();
     }
 
     @Override
@@ -87,16 +89,13 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_news, container, false);
-
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.newsRecycler);
-//        NewsAdapter adapter = new NewsAdapter(getActivity(), articleArray);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.newsProgressBar);
+        apiRequest(recyclerView, progressBar);
 
         return view;
     }
-
-    public void apiRequest () {
+    public void apiRequest(RecyclerView recyclerView, ProgressBar progressBar) {
         final apiServiceNews service = new apiServiceNews(getActivity());
         service.getLocal(new apiServiceNews.VolleyResponseListener() {
             @Override
@@ -107,7 +106,14 @@ public class NewsFragment extends Fragment {
             @Override
             public void onResponse(ArrayList<NewsDataModel> newsArray) {
                 articleArray = newsArray;
+
+                NewsAdapter adapter = new NewsAdapter(getActivity(), articleArray);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
+
+
 }
