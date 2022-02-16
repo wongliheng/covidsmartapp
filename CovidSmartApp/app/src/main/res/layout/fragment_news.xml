@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:saveEnabled="true"
     tools:context=".NewsFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newsRecycler"
-        android:layout_width="413dp"
+        android:layout_width="match_parent"
         android:layout_height="500dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +23,14 @@
         android:id="@+id/pageHeader"
         android:layout_width="258dp"
         android:layout_height="68dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="6dp"
+        android:gravity="center_vertical"
         android:text="Travel Restriction News In Singapore"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.353"
+        app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,6 +44,61 @@
         app:layout_constraintStart_toStartOf="@+id/newsRecycler"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="visible"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/webConstraint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#123456"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible">
+
+
+        <WebView
+            android:id="@+id/newsWebView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_baseline_close_24"
+            app:layout_constraintBottom_toTopOf="@+id/newsWebView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/urlTextView"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:text="TextView"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/closeButton"
+            app:layout_constraintStart_toEndOf="@+id/closeButton"
+            app:layout_constraintTop_toTopOf="@+id/closeButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <ProgressBar-->
+<!--        android:id="@+id/urlProgressBar"-->
+<!--        style="?android:attr/progressBarStyleHorizontal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/newsWebView"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:visibility="invisible"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

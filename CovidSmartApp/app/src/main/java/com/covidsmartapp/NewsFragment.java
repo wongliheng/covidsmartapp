@@ -5,15 +5,23 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +31,8 @@ import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -75,6 +85,13 @@ public class NewsFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Parcelable parcel = Parcels.wrap(articleArray);
+        outState.putParcelable("newsData", parcel);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -91,11 +108,19 @@ public class NewsFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_news, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.newsRecycler);
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.newsProgressBar);
-        apiRequest(recyclerView, progressBar);
+        WebView webView = (WebView) view.findViewById(R.id.newsWebView);
+        TextView urlText = (TextView) view.findViewById(R.id.urlTextView);
+        ConstraintLayout webConstraint = (ConstraintLayout) view.findViewById(R.id.webConstraint);
+        ImageButton close = (ImageButton) view.findViewById(R.id.closeButton);
+
+        loadNews(recyclerView, progressBar, webView, urlText, webConstraint, close);
+
+
 
         return view;
     }
-    public void apiRequest(RecyclerView recyclerView, ProgressBar progressBar) {
+    public void loadNews(RecyclerView recyclerView, ProgressBar progressBar, WebView webView,
+                         TextView urlText, ConstraintLayout webConstraint, ImageButton close) {
         final apiServiceNews service = new apiServiceNews(getActivity());
         service.getLocal(new apiServiceNews.VolleyResponseListener() {
             @Override
@@ -107,7 +132,34 @@ public class NewsFragment extends Fragment {
             public void onResponse(ArrayList<NewsDataModel> newsArray) {
                 articleArray = newsArray;
 
-                NewsAdapter adapter = new NewsAdapter(getActivity(), articleArray);
+                NewsAdapter adapter = new NewsAdapter(getActivity(), articleArray, new NewsOnClick() {
+                    @Override
+                    public void onNewsClicked(NewsDataModel newsDataModel) {
+                        urlText.setText(newsDataModel.getUrl());
+                        WebSettings settings = webView.getSettings();
+                        settings.setJavaScriptEnabled(true);
+                        webView.setWebViewClient(new WebViewClient());
+                        webView.loadUrl(newsDataModel.getUrl());
+                        webConstraint.setVisibility(View.VISIBLE);
+
+                        close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                webConstraint.setVisibility(View.GONE);
+                            }
+                        });
+
+
+//                        WebFragment webFrag = new WebFragment();
+//                        Bundle args = new Bundle();
+//                        args.putString("url", newsDataModel.getUrl());
+//                        webFrag.setArguments(args);
+//                        getActivity().getSupportFragmentManager().beginTransaction()
+//                                .replace(((ViewGroup)getView().getParent()).getId(), webFrag, "newsFrag")
+//                                .addToBackStack("newsFrag")
+//                                .commit();
+                    }
+                });
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 progressBar.setVisibility(View.GONE);

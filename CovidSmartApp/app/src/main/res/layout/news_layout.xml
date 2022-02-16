@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="300dp">
+    android:layout_height="300dp"
+    android:id="@+id/newsContainer">
 
     <ImageView
         android:id="@+id/newsImage"
-        android:layout_width="350dp"
-        android:layout_height="142dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -19,11 +21,13 @@
         android:id="@+id/newsHeadline"
         android:layout_width="360dp"
         android:layout_height="40dp"
-        android:layout_marginStart="14dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="14dp"
+        android:layout_marginRight="6dp"
         android:text="TextView"
         android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center_horizontal|center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +39,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="@+id/newsHeadline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/newsHeadline"
@@ -42,11 +47,14 @@
 
     <View
         android:id="@+id/divider"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="45dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newsDescription" />
 </androidx.constraintlayout.widget.ConstraintLayout>

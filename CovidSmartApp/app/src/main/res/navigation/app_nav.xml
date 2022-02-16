@@ -29,4 +29,9 @@
         android:name="com.covidsmartapp.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="com.covidsmartapp.WebFragment"
+        android:label="fragment_web"
+        tools:layout="@layout/fragment_web" />
 </navigation>

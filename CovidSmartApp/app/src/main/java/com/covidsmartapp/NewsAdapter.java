@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,30 +17,39 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> {
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
-    Context context;
-    ArrayList<NewsDataModel> news;
+    private Context context;
+    private ArrayList<NewsDataModel> news;
+    private NewsOnClick listener;
 
-    public NewsAdapter (Context ct, ArrayList<NewsDataModel> newsArray) {
+    public NewsAdapter (Context ct, ArrayList<NewsDataModel> newsArray, NewsOnClick l) {
         context = ct;
         news = newsArray;
+        listener = l;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.news_layout, parent, false);
-        return new MyViewHolder(view);
+        return new NewsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         NewsDataModel article = news.get(position);
         holder.headline.setText(article.getTitle());
         holder.description.setText(article.getDescription());
         Glide.with(this.context).load(article.getUrlToImage()).into(holder.image);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onNewsClicked(news.get(position));
+            }
+        });
     }
 
     @Override
@@ -47,16 +57,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder> 
         return news.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class NewsViewHolder extends RecyclerView.ViewHolder{
 
-        TextView headline, description;
-        ImageView image;
+        public TextView headline, description;
+        public ImageView image;
+        public ConstraintLayout container;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             headline = itemView.findViewById(R.id.newsHeadline);
             description = itemView.findViewById(R.id.newsDescription);
             image = itemView.findViewById(R.id.newsImage);
+            container = itemView.findViewById(R.id.newsContainer);
         }
     }
 }

@@ -1,6 +1,11 @@
 package com.covidsmartapp;
 
-public class NewsDataModel {
+import android.os.Parcelable;
+
+import org.parceler.Parcel;
+
+@Parcel
+public class NewsDataModel{
 
     private String source;
     private String title;
