@@ -1,6 +1,5 @@
 package com.covidsmartapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -62,11 +61,57 @@ public class InfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_info, container, false);
-        Button infoRedirect = (Button) view.findViewById(R.id.infotest1);
-        infoRedirect.setOnClickListener(new View.OnClickListener() {
+        Button covidCases = (Button) view.findViewById(R.id.covidCases);
+        Button localRestrictions = (Button) view.findViewById(R.id.localRestrictions);
+        Button globalRestrictions = (Button) view.findViewById(R.id.globalRestrictions);
+        Button vaccineNews = (Button) view.findViewById(R.id.vaccineNews);
+
+        covidCases.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CaseFragment caseFrag = new CaseFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), caseFrag, "findThisFragment1")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        localRestrictions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NewsFragment nextFrag = new NewsFragment();
+                Bundle args = new Bundle();
+                args.putString("newsType", "local");
+                nextFrag.setArguments(args);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        globalRestrictions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewsFragment nextFrag = new NewsFragment();
+                Bundle args = new Bundle();
+                args.putString("newsType", "global");
+                nextFrag.setArguments(args);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        vaccineNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NewsFragment nextFrag = new NewsFragment();
+                Bundle args = new Bundle();
+                args.putString("newsType", "vaccine");
+                nextFrag.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
                         .addToBackStack(null)

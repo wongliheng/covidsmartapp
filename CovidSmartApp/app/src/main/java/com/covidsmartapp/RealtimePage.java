@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -51,8 +49,8 @@ public class RealtimePage extends AppCompatActivity {
 
         ImageView glideTest = findViewById(R.id.glidetest);
 
-        final apiService service = new apiService(RealtimePage.this);
-        getCases.setOnClickListener(view -> service.getCovidData(country, new apiService.VolleyResponseListener() {
+        final apiServiceCases service = new apiServiceCases(RealtimePage.this);
+        getCases.setOnClickListener(view -> service.getCovidData(country, new apiServiceCases.VolleyResponseListener() {
             @Override
             public void onError(String message) {
                 textView.setText(message);

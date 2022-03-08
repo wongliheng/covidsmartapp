@@ -18,9 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private Button realtimeBtn;
-//    private Button loginBtn;
-
     private FirebaseAuth mAuth;
 
     @Override

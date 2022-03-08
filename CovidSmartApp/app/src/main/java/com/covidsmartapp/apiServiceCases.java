@@ -9,13 +9,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class apiService {
+public class apiServiceCases {
 
     public static final String covidQuery = "https://disease.sh/v3/covid-19/countries/";
     public static final String strictFalse = "?strict=false";
     Context context;
 
-    public apiService(Context context) {
+    public apiServiceCases(Context context) {
         this.context = context;
     }
 
