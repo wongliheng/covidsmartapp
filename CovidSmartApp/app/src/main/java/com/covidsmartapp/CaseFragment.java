@@ -1,5 +1,6 @@
 package com.covidsmartapp;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,9 +14,14 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -74,9 +80,19 @@ public class CaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_case, container, false);
 
+        ImageView flagImage = (ImageView) view.findViewById(R.id.flagImage);
+        TextView countryName = (TextView) view.findViewById(R.id.countryName);
+        TextView activeCases = (TextView) view.findViewById(R.id.activeCases);
+        TextView totalCases = (TextView) view.findViewById(R.id.totalCases);
+        TextView critical = (TextView) view.findViewById(R.id.critical);
+        TextView deaths = (TextView) view.findViewById(R.id.deaths);
+        TextView blocker = (TextView) view.findViewById(R.id.blocker);
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.caseProgressBar);
+
         SpinnerCreation createSpinner = new SpinnerCreation(getActivity());
         SearchableSpinner countrySpinner = (SearchableSpinner) view.findViewById(R.id.countrySpinner1);
         countrySpinner = createSpinner.createSpinner(countrySpinner);
+        countrySpinner.setSelection(181);
 
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -85,6 +101,8 @@ public class CaseFragment extends Fragment {
                 String noSpace = countryString.replace(" ", "%20");
                 String noOpenBrackets = noSpace.replace("(", "%28");
                 country = noOpenBrackets.replace(")", "%29");
+
+                loadCases(country, flagImage, countryName, activeCases, totalCases, critical, deaths, blocker, progressBar);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -92,11 +110,16 @@ public class CaseFragment extends Fragment {
             }
         });
 
+        loadCases("sg", flagImage, countryName, activeCases, totalCases, critical, deaths, blocker, progressBar);
+
         return view;
     }
 
-    public void loadCases(String country, ProgressBar progressBar) {
+    public void loadCases(String country, ImageView flagImage, TextView countryName, TextView activeCases,
+                          TextView totalCases, TextView critical, TextView deaths, TextView blocker,
+                          ProgressBar progressBar) {
         final apiServiceCases service = new apiServiceCases(getActivity());
+        progressBar.setVisibility(View.VISIBLE);
         service.getCovidData(country, new apiServiceCases.VolleyResponseListener() {
             @Override
             public void onError(String message) {
@@ -105,8 +128,15 @@ public class CaseFragment extends Fragment {
 
             @Override
             public void onResponse(CovidDataModel covidDataModel) {
+                Glide.with(getActivity()).load(covidDataModel.getFlag()).into(flagImage);
+                countryName.setText(covidDataModel.getCountry());
+                activeCases.setText(covidDataModel.getActive());
+                totalCases.setText(covidDataModel.getCases());
+                critical.setText(covidDataModel.getCritical());
+                deaths.setText(covidDataModel.getDeaths());
 
-
+                blocker.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

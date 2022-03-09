@@ -32,32 +32,32 @@ public class CovidDataModel {
                 '}';
     }
 
-    public int getCases() {
-        return cases;
+    public String getCases() {
+        return String.valueOf(cases);
     }
 
     public void setCases(int cases) {
         this.cases = cases;
     }
 
-    public int getDeaths() {
-        return deaths;
+    public String getDeaths() {
+        return String.valueOf(deaths);
     }
 
     public void setDeaths(int deaths) {
         this.deaths = deaths;
     }
 
-    public int getActive() {
-        return active;
+    public String getActive() {
+        return String.valueOf(active);
     }
 
     public void setActive(int active) {
         this.active = active;
     }
 
-    public int getCritical() {
-        return critical;
+    public String getCritical() {
+        return String.valueOf(critical);
     }
 
     public void setCritical(int critical) {
