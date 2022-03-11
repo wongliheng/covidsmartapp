@@ -13,11 +13,20 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -56,6 +65,7 @@ public class LoginPage extends AppCompatActivity {
                 logIn();
             }
         });
+
     }
 
     private void logIn() {
@@ -66,6 +76,10 @@ public class LoginPage extends AppCompatActivity {
 
         if (emailString.isEmpty()) {
             email.setError("Please enter your email");
+            email.requestFocus();
+        }
+        else if (!Patterns.EMAIL_ADDRESS.matcher(emailString).matches()) {
+            email.setError("Please enter a valid email");
             email.requestFocus();
         }
         else if (pwString.isEmpty()) {
@@ -85,12 +99,22 @@ public class LoginPage extends AppCompatActivity {
                                 updateUI(user);
                                 startActivity(new Intent(LoginPage.this, MainActivity.class));
                                 finish();
-                            } else {
-                                Toast.makeText(LoginPage.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                                updateUI(null);
                             }
                         }
-                    });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            if (e instanceof FirebaseAuthInvalidUserException) {
+                                email.setError("There is no account registered with this email");
+                                email.requestFocus();
+                            } else if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                                pw.setError("Incorrect password");
+                                pw.requestFocus();
+                            } else
+                                Toast.makeText(LoginPage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+            });
         }
     }
 

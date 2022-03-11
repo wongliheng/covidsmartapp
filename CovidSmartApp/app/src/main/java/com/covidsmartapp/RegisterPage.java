@@ -12,11 +12,18 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterPage extends AppCompatActivity {
 
@@ -31,6 +38,7 @@ public class RegisterPage extends AppCompatActivity {
         setContentView(R.layout.activity_register_page);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         register = findViewById(R.id.register);
         fName = findViewById(R.id.fNameEditText);
@@ -97,23 +105,53 @@ public class RegisterPage extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                UserClass user = new UserClass(fNameString, lNameString, emailString, pwString, phoneNum);
 
-                                FirebaseDatabase.getInstance().getReference("users")
-                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(RegisterPage.this, "Account successfully created", Toast.LENGTH_LONG).show();
-                                            finish();
-                                        }
-                                        else {
-                                            Toast.makeText(RegisterPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                        progressBar.setVisibility(View.GONE);
-                                    }
-                                });
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("userID", userID);
+                                user.put("fName", fNameString);
+                                user.put("lName", lNameString);
+                                user.put("email", emailString);
+                                user.put("pw", pwString);
+                                user.put("phoneNum", phoneNum);
+
+                                db.collection("users").document(userID)
+                                        .set(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(RegisterPage.this, "Account successfully created", Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(RegisterPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.GONE);
+                                            }
+                                        });
+
+//                                UserClass user = new UserClass(fNameString, lNameString, emailString, pwString, phoneNum);
+//
+//                                FirebaseDatabase.getInstance().getReference("users")
+//                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if (task.isSuccessful()) {
+//                                            Toast.makeText(RegisterPage.this, "Account successfully created", Toast.LENGTH_LONG).show();
+//                                            finish();
+//                                        }
+//                                        else {
+//                                            Toast.makeText(RegisterPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                                        }
+//                                        progressBar.setVisibility(View.GONE);
+//                                    }
+//                                });
                             } else {
                                 Toast.makeText(RegisterPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
@@ -121,6 +159,5 @@ public class RegisterPage extends AppCompatActivity {
                         }
                     });
         }
-        return;
     }
 }

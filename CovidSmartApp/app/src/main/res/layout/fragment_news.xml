@@ -22,8 +22,8 @@
         android:id="@+id/pageHeader"
         android:layout_width="300dp"
         android:layout_height="68dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
         android:gravity="center_vertical"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -53,8 +53,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"
-        tools:visibility="visible">
-
+        tools:visibility="invisible">
 
         <WebView
             android:id="@+id/newsWebView"

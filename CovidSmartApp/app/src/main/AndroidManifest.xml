@@ -20,9 +20,6 @@
             android:name=".RegisterPage"
             android:exported="false" />
         <activity
-            android:name=".RealtimePage"
-            android:exported="false" />
-        <activity
             android:name=".LoginPage"
             android:exported="false" />
         <activity

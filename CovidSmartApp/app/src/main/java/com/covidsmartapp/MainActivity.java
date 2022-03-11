@@ -51,23 +51,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-//        realtimeBtn =  findViewById(R.id.realtimeBtn);
-//        realtimeBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, RealtimePage.class));
-//
-//            }
-//        });
-//
-//        loginBtn =  findViewById(R.id.loginBtn);
-//        loginBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, LoginPage.class));
-//
-//            }
-//        });
     }
     private void replaceFragment (Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();

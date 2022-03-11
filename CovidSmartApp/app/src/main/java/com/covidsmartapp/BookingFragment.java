@@ -66,30 +66,11 @@ public class BookingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
-        mAuth = FirebaseAuth.getInstance();
 
-        Button signOut = (Button) view.findViewById(R.id.signOut);
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                getActivity().finish();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        Button createAppointment = (Button) view.findViewById(R.id.createAppointment);
+        Button viewResults = (Button) view.findViewById(R.id.viewResults);
+        Button viewLocationHistory = (Button) view.findViewById(R.id.viewLocationHistory);
 
-        Button fragtest = (Button) view.findViewById(R.id.fragmenttest);
-        fragtest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                booking2 nextFrag = new booking2();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
         return view;
     }
 }

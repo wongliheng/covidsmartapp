@@ -20,11 +20,6 @@
         android:label="fragment_booking"
         tools:layout="@layout/fragment_booking" />
     <fragment
-        android:id="@+id/booking2"
-        android:name="com.covidsmartapp.booking2"
-        android:label="fragment_booking2"
-        tools:layout="@layout/fragment_booking2" />
-    <fragment
         android:id="@+id/newsFragment"
         android:name="com.covidsmartapp.NewsFragment"
         android:label="fragment_news"
