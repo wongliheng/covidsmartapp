@@ -1,5 +1,6 @@
 package com.covidsmartapp;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,13 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CheckOutHolder holder, int position, @NonNull LocationClass model) {
+    protected void onBindViewHolder(@NonNull CheckOutHolder holder, @SuppressLint("RecyclerView") int position, @NonNull LocationClass model) {
         holder.checkedInLocation.setText(model.getLocationName());
+
+        String checkedIn = model.getCheckInDay() + "/" + model.getCheckInMonth() + " "
+                + model.getCheckInHour() + ":" + model.getCheckInMinute();
+        holder.checkInTime.setText(checkedIn);
+
         holder.checkOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +59,7 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
 
     public void checkOut(int position) {
         DocumentReference ref = getSnapshots().getSnapshot(position).getReference();
-        
+
         // Get time
         Date timeNow = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
@@ -78,12 +84,13 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
 
     class CheckOutHolder extends RecyclerView.ViewHolder {
 
-        TextView checkedInLocation;
+        TextView checkedInLocation, checkInTime;
         Button checkOutBtn;
 
         public CheckOutHolder(@NonNull View itemView) {
             super(itemView);
             checkedInLocation = itemView.findViewById(R.id.checkedInLocation);
+            checkInTime = itemView.findViewById(R.id.checkInTime);
             checkOutBtn = itemView.findViewById(R.id.checkOutBtn);
         }
     }
