@@ -1,70 +1,77 @@
 package com.covidsmartapp;
 
-import java.util.Date;
-
 public class LocationClass {
-    private String location;
-    private int day;
-    private int month;
-    private int year;
-    private int hour;
-    private int minute;
+    private int checkInDay, checkInMonth, checkInYear, checkInHour, checkInMinute;
+    private boolean checkedOut;
+    private String locationName;
 
-    public LocationClass(String location, String dateTime) {
-        this.location = location;
-        String[] array = dateTime.split("-");
-        setDay(Integer.parseInt(array[0]));
-        setMonth(Integer.parseInt(array[1]));
-        setYear(Integer.parseInt(array[2]));
-        setHour(Integer.parseInt(array[3]));
-        setMinute(Integer.parseInt(array[4]));
+    // Empty constructor for Firebase
+    public LocationClass() {
     }
 
-    public String getLocation() {
-        return location;
+    public LocationClass(int checkInDay, int checkInMonth, int checkInYear, int checkInHour, int checkInMinute, boolean checkedOut, String locationName) {
+        this.checkInDay = checkInDay;
+        this.checkInMonth = checkInMonth;
+        this.checkInYear = checkInYear;
+        this.checkInHour = checkInHour;
+        this.checkInMinute = checkInMinute;
+        this.checkedOut = checkedOut;
+        this.locationName = locationName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public int getCheckInDay() {
+        return checkInDay;
     }
 
-    public int getDay() {
-        return day;
+    public void setCheckInDay(int checkInDay) {
+        this.checkInDay = checkInDay;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public int getCheckInMonth() {
+        return checkInMonth;
     }
 
-    public int getMonth() {
-        return month;
+    public void setCheckInMonth(int checkInMonth) {
+        this.checkInMonth = checkInMonth;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public int getCheckInYear() {
+        return checkInYear;
     }
 
-    public int getYear() {
-        return year;
+    public void setCheckInYear(int checkInYear) {
+        this.checkInYear = checkInYear;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public int getCheckInHour() {
+        return checkInHour;
     }
 
-    public int getHour() {
-        return hour;
+    public void setCheckInHour(int checkInHour) {
+        this.checkInHour = checkInHour;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
+    public int getCheckInMinute() {
+        return checkInMinute;
     }
 
-    public int getMinute() {
-        return minute;
+    public void setCheckInMinute(int checkInMinute) {
+        this.checkInMinute = checkInMinute;
     }
 
-    public void setMinute(int minute) {
-        this.minute = minute;
+    public boolean isCheckedOut() {
+        return checkedOut;
+    }
+
+    public void setCheckedOut(boolean checkedOut) {
+        this.checkedOut = checkedOut;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 }

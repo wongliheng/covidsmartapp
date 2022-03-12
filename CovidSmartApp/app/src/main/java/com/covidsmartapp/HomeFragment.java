@@ -1,11 +1,14 @@
 package com.covidsmartapp;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,9 +28,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
@@ -45,11 +52,6 @@ import java.util.TimeZone;
  */
 public class HomeFragment extends Fragment {
 
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
-
-    private ActivityResultLauncher<ScanOptions> barcodeLauncher;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,6 +60,14 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private String userID;
+    private CheckOutAdapter adapter;
+    private ActivityResultLauncher<ScanOptions> barcodeLauncher;
+
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -90,7 +100,8 @@ public class HomeFragment extends Fragment {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        userID = mAuth.getCurrentUser().getUid();
     }
 
     @Override
@@ -102,11 +113,9 @@ public class HomeFragment extends Fragment {
         TextView userGreeting = (TextView) view.findViewById(R.id.userGreeting);
         Button scanQR = (Button) view.findViewById(R.id.scanQR);
         Button signOut = (Button) view.findViewById(R.id.signOut);
+        RecyclerView checkOutRecycler = (RecyclerView) view.findViewById(R.id.checkOutRecycler);
 
         // Display user greeting
-        String userID = user.getUid();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(userID)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -116,34 +125,24 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // Check Out Recycler View
+        createCheckOutRecycler(checkOutRecycler);
+
         // QR code scanner
         barcodeLauncher = registerForActivityResult(new ScanContract(),
             result -> {
                 if(result.getContents() == null) {
                     Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-
-                    Date timeNow = Calendar.getInstance().getTime();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
-                    dateFormat.setTimeZone(TimeZone.getDefault());
-                    String date = dateFormat.format(timeNow);
-
-                    String[] dateTimeArray = date.split("-");
-
-                    Map<String, Object> location = new HashMap<>();
-                    location.put("locationName", result.getContents());
-                    location.put("checkInDay", Integer.parseInt(dateTimeArray[0]));
-                    location.put("checkInMonth", Integer.parseInt(dateTimeArray[1]));
-                    location.put("checkInYear", Integer.parseInt(dateTimeArray[2]));
-                    location.put("checkInHour", Integer.parseInt(dateTimeArray[3]));
-                    location.put("checkInMinute", Integer.parseInt(dateTimeArray[4]));
-
-                    db.collection("history")
-                            .document(userID)
-                            .collection("locations")
-                            .document(date)
-                            .set(location);
+                    CheckFragment checkFrag = new CheckFragment();
+                    Bundle args = new Bundle();
+                    args.putString("location", result.getContents());
+                    checkFrag.setArguments(args);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                            .replace(((ViewGroup)getView().getParent()).getId(), checkFrag, "checkFrag")
+                            .addToBackStack("checkFrag")
+                            .commit();
                 }
             });
 
@@ -167,5 +166,32 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void createCheckOutRecycler(RecyclerView checkOutRecycler) {
+        CollectionReference locationRef = db.collection("history")
+                .document(userID)
+                .collection("locations");
+        Query query = locationRef.whereEqualTo("checkedOut", false);
+
+        FirestoreRecyclerOptions<LocationClass> options = new FirestoreRecyclerOptions.Builder<LocationClass>()
+                .setQuery(query, LocationClass.class)
+                .build();
+
+        adapter = new CheckOutAdapter(options);
+        checkOutRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        checkOutRecycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

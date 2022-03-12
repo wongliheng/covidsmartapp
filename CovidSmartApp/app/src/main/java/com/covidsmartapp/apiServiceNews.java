@@ -32,7 +32,7 @@ public class apiServiceNews {
     }
 
     public void getLocal (final VolleyResponseListener vrl) {
-        String url = newsQuery + "&search=singapore+travel" + apiKey1;
+        String url = newsQuery + "&search=singapore+vtl" + apiKey1;
 //        NewsDataModel newsDataModel = new NewsDataModel();
         ArrayList<NewsDataModel> newsArray = new ArrayList<NewsDataModel>();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,

@@ -21,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.covidsmartapp.data.LoginDataSource;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,13 +29,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+//
 
 /**
  * A simple {@link Fragment} subclass.
@@ -219,15 +211,6 @@ public class NewsFragment extends Fragment {
                                     webConstraint.setVisibility(View.GONE);
                                 }
                             });
-
-//                        WebFragment webFrag = new WebFragment();
-//                        Bundle args = new Bundle();
-//                        args.putString("url", newsDataModel.getUrl());
-//                        webFrag.setArguments(args);
-//                        getActivity().getSupportFragmentManager().beginTransaction()
-//                                .replace(((ViewGroup)getView().getParent()).getId(), webFrag, "newsFrag")
-//                                .addToBackStack("newsFrag")
-//                                .commit();
                         }
                     });
                     recyclerView.setAdapter(adapter);

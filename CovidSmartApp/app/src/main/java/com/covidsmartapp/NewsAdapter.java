@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,7 +45,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.description.setText(article.getDescription());
         Glide.with(this.context).load(article.getUrlToImage()).into(holder.image);
 
-        holder.container.setOnClickListener(new View.OnClickListener() {
+        holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onNewsClicked(news.get(position));
@@ -61,14 +62,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         public TextView headline, description;
         public ImageView image;
-        public ConstraintLayout container;
+        public CardView card;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             headline = itemView.findViewById(R.id.newsHeadline);
             description = itemView.findViewById(R.id.newsDescription);
             image = itemView.findViewById(R.id.newsImage);
-            container = itemView.findViewById(R.id.newsContainer);
+            card = itemView.findViewById(R.id.newsCard);
         }
     }
 }

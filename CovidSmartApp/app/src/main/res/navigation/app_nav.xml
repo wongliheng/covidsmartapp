@@ -29,4 +29,9 @@
         android:name="com.covidsmartapp.CaseFragment"
         android:label="fragment_case"
         tools:layout="@layout/fragment_case" />
+    <fragment
+        android:id="@+id/checkFragment"
+        android:name="com.covidsmartapp.CheckFragment"
+        android:label="fragment_check"
+        tools:layout="@layout/fragment_check" />
 </navigation>
