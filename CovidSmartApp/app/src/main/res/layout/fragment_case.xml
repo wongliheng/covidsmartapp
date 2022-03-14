@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".CaseFragment">
 
+    <TextView
+        android:id="@+id/casePageHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Active Covid Cases"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/flagImage"
         android:layout_width="120dp"
@@ -16,18 +29,6 @@
         app:layout_constraintTop_toBottomOf="@+id/casePageHeader"
         tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/casePageHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Active Covid Cases"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/countryName"
@@ -149,14 +150,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-        android:id="@+id/countrySpinner1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        android:background="@drawable/custom_border"
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/countrySpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <TextView
         android:id="@+id/blocker"

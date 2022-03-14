@@ -79,6 +79,8 @@ public class NewsFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
+            newsType = getArguments().getString("newsType");
         }
     }
 
@@ -93,8 +95,6 @@ public class NewsFragment extends Fragment {
         TextView urlText = (TextView) view.findViewById(R.id.urlTextView);
         ConstraintLayout webConstraint = (ConstraintLayout) view.findViewById(R.id.webConstraint);
         ImageButton close = (ImageButton) view.findViewById(R.id.closeButton);
-
-        String newsType = getArguments().getString("newsType");
 
         TextView pageHeader = (TextView) view.findViewById(R.id.pageHeader);
         if (newsType.equals("local"))
@@ -114,7 +114,7 @@ public class NewsFragment extends Fragment {
                          String newsType) {
         final apiServiceNews service = new apiServiceNews(getActivity());
 
-        if (newsType == "local"){
+        if (newsType.equals("local")){
             service.getLocal(new apiServiceNews.VolleyResponseListener() {
                 @Override
                 public void onError(String message) {
@@ -149,7 +149,7 @@ public class NewsFragment extends Fragment {
                 }
             });
         }
-        else if (newsType == "global") {
+        else if (newsType.equals("global")) {
             service.getGlobal(new apiServiceNews.VolleyResponseListener() {
                 @Override
                 public void onError(String message) {
@@ -184,7 +184,7 @@ public class NewsFragment extends Fragment {
                 }
             });
         }
-        else if (newsType == "vaccine"){
+        else if (newsType.equals("vaccine")){
             service.getVaccine(new apiServiceNews.VolleyResponseListener() {
                 @Override
                 public void onError(String message) {

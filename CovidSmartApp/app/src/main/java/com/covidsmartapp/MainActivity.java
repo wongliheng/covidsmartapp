@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        replaceFragment(new HomeFragment());
-
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -34,28 +32,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginPage.class));
             finish();
         }
+        else {
+            startActivity(new Intent(MainActivity.this, LoggedIn.class));
+            finish();
+        }
 
-        NavigationBarView bottomNav = findViewById(R.id.bottom_navigation);
 
-        bottomNav.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.navHome:
-                    replaceFragment(new HomeFragment());
-                    break;
-                case R.id.navInfo:
-                    replaceFragment(new InfoFragment());
-                    break;
-                case R.id.navBooking:
-                    replaceFragment(new BookingFragment());
-            }
-            return true;
-        });
-
-    }
-    private void replaceFragment (Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
-        fragmentTransaction.commit();
     }
 }

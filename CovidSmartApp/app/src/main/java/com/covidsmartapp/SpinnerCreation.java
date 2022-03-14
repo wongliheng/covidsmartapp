@@ -2,10 +2,16 @@ package com.covidsmartapp;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class SpinnerCreation {
     Context context;
@@ -37,18 +43,150 @@ public class SpinnerCreation {
             "Uganda", "Ukraine", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Wallis and Futuna",
             "Western Sahara", "Yemen", "Zambia", "Zimbabwe"};
 
+    String [] appointmentType = {"COVID-19 Test", "COVID-19 Vaccination", "Select a type"};
+    String [] locations = {"Ang Mo Kio Polyclinic", "Bedok Polyclinic", "Bukit Batok Polyclinic",  "Bukit Merah Polyclinic",
+            "Clementi Polyclinic", "Geylang Polyclinic", "Hougang Polyclinic", "Jurong Polyclinic", "Marine Parade Polyclinic",
+            "Outram Polyclinic", "Queenstown Polyclinic", "Sengkang Polyclinic", "Tampines Polyclinic", "Toa Payoh Polyclinic",
+            "Woodlands Polyclinic", "Yishun Polyclinic", "Select a location"};
+
     public SpinnerCreation(Context context) {
         this.context = context;
     }
 
-    public SearchableSpinner createSpinner (SearchableSpinner spinner) {
-        ArrayAdapter<String> countryA = new ArrayAdapter<>(this.context, android.R.layout.simple_spinner_item, countries);
-        countryA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(countryA);
+    public SearchableSpinner createCountrySpinner (SearchableSpinner spinner) {
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this.context, R.layout.spinner, countries);
+        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(countryAdapter);
 
         spinner.setTitle("Select Country");
         spinner.setPositiveButton("OK");
 
         return spinner;
     }
+
+    public Spinner createAppointmentSpinner (Spinner spinner) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, appointmentType) {
+
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == getCount()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return super.getCount() - 1;
+            }
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getCount());
+
+        return spinner;
+    }
+
+    public Spinner setUpTimeSpinner (Spinner spinner) {
+
+        String [] oneItemArray = {"Select a date"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, oneItemArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setEnabled(false);
+        spinner.setClickable(false);
+
+        return spinner;
+    }
+
+    public Spinner createTimeSpinner (Spinner spinner, int day) {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int currentDay = c.get(Calendar.DAY_OF_MONTH);
+
+        ArrayList<String> timeslots = new ArrayList<String>();
+
+        for (int i = 9; i <= 17; i++)
+        {
+            String slot1;
+            String slot2;
+            if (day == currentDay) {
+                int hourFromNow = hour + 1;
+                if (i > hourFromNow) {
+                    if (i > 12) {
+                        int hourAM = i - 12;
+
+                        slot1 = hourAM + ":00 PM";
+                        slot2 = hourAM + ":30 PM";
+
+                        timeslots.add(slot1);
+                        timeslots.add(slot2);
+                    } else {
+                        slot1 = i + ":00 AM";
+                        slot2 = i + ":30 AM";
+
+                        timeslots.add(slot1);
+                        timeslots.add(slot2);
+                    }
+                }
+            }
+            else {
+                if (i > 12) {
+                    int hourAM = i - 12;
+
+                    slot1 = hourAM + ":00 PM";
+                    slot2 = hourAM + ":30 PM";
+
+                    timeslots.add(slot1);
+                    timeslots.add(slot2);
+                } else {
+                    slot1 = i + ":00 AM";
+                    slot2 = i + ":30 AM";
+
+                    timeslots.add(slot1);
+                    timeslots.add(slot2);
+                }
+            }
+
+        }
+        if(timeslots.isEmpty()) {
+            timeslots.add("No timeslots available");
+        }
+
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(this.context, R.layout.spinner, timeslots);
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(timeAdapter);
+        spinner.setEnabled(true);
+        spinner.setClickable(true);
+
+        return spinner;
+    }
+
+    public Spinner createLocationSpinner (Spinner spinner) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, locations) {
+
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == getCount()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return super.getCount() - 1;
+            }
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getCount());
+
+        return spinner;
+    }
+
+
 }

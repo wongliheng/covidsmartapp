@@ -30,8 +30,23 @@
         android:label="fragment_case"
         tools:layout="@layout/fragment_case" />
     <fragment
-        android:id="@+id/checkFragment"
-        android:name="com.covidsmartapp.CheckFragment"
-        android:label="fragment_check"
-        tools:layout="@layout/fragment_check" />
+        android:id="@+id/checkInFragment"
+        android:name="com.covidsmartapp.CheckInFragment"
+        android:label="fragment_check_in"
+        tools:layout="@layout/fragment_check_in" />
+    <fragment
+        android:id="@+id/QRFragment"
+        android:name="com.covidsmartapp.QRFragment"
+        android:label="fragment_q_r"
+        tools:layout="@layout/fragment_q_r" />
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.covidsmartapp.CheckOutFragment"
+        android:label="fragment_check_out"
+        tools:layout="@layout/fragment_check_out" />
+    <fragment
+        android:id="@+id/appointmentFragment"
+        android:name="com.covidsmartapp.AppointmentFragment"
+        android:label="fragment_appointment"
+        tools:layout="@layout/fragment_appointment" />
 </navigation>

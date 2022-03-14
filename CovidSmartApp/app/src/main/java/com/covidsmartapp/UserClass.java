@@ -2,6 +2,7 @@ package com.covidsmartapp;
 
 public class UserClass {
 
+    //Could remove this class
     public String fName, lName, email, password;
     public int phoneNumber;
 

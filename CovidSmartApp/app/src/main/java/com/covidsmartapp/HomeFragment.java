@@ -33,8 +33,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.journeyapps.barcodescanner.ScanContract;
-import com.journeyapps.barcodescanner.ScanOptions;
+import com.google.zxing.Result;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -65,9 +64,6 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
     private String userID;
     private CheckOutAdapter adapter;
-    private ActivityResultLauncher<ScanOptions> barcodeLauncher;
-
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -128,29 +124,14 @@ public class HomeFragment extends Fragment {
         // Check Out Recycler View
         createCheckOutRecycler(checkOutRecycler);
 
-        // QR code scanner
-        barcodeLauncher = registerForActivityResult(new ScanContract(),
-            result -> {
-                if(result.getContents() == null) {
-                    Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
-                } else {
-                    CheckFragment checkFrag = new CheckFragment();
-                    Bundle args = new Bundle();
-                    args.putString("location", result.getContents());
-                    checkFrag.setArguments(args);
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                            .replace(((ViewGroup)getView().getParent()).getId(), checkFrag, "checkFrag")
-                            .addToBackStack("checkFrag")
-                            .commit();
-                }
-            });
-
         // QR code button
         scanQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                barcodeLauncher.launch(new ScanOptions());
+                QRFragment qrFrag = new QRFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), qrFrag, "qrFrag")
+                        .commit();
             }
         });
 
@@ -169,7 +150,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void createCheckOutRecycler(RecyclerView checkOutRecycler) {
-        CollectionReference locationRef = db.collection("history")
+        CollectionReference locationRef = db.collection("info")
                 .document(userID)
                 .collection("locations");
         Query query = locationRef.whereEqualTo("checkedOut", false);

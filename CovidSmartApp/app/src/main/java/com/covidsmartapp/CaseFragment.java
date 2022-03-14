@@ -90,8 +90,8 @@ public class CaseFragment extends Fragment {
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.caseProgressBar);
 
         SpinnerCreation createSpinner = new SpinnerCreation(getActivity());
-        SearchableSpinner countrySpinner = (SearchableSpinner) view.findViewById(R.id.countrySpinner1);
-        countrySpinner = createSpinner.createSpinner(countrySpinner);
+        SearchableSpinner countrySpinner = (SearchableSpinner) view.findViewById(R.id.countrySpinner);
+        countrySpinner = createSpinner.createCountrySpinner(countrySpinner);
         countrySpinner.setSelection(181);
 
         countrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

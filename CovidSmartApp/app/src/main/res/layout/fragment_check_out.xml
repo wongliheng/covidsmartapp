@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckFragment">
-
+    tools:context=".CheckInFragment">
 
     <TextView
-        android:id="@+id/checkInText"
+        android:id="@+id/checkOutText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check In To:"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,20 +23,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="TextView"
         android:textSize="25sp"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkInText" />
+        app:layout_constraintTop_toBottomOf="@+id/checkOutText" />
 
     <TextView
-        android:id="@+id/currentTime"
+        android:id="@+id/durationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="TextView"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,21 +42,25 @@
         app:layout_constraintTop_toBottomOf="@+id/locationName" />
 
     <Button
-        android:id="@+id/checkInBtn"
+        android:id="@+id/backToHomeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check In"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/cancelBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentTime" />
-
-    <Button
-        android:id="@+id/cancelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:text="Back To Home"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkInBtn"
-        app:layout_constraintTop_toTopOf="@+id/checkInBtn" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/durationText"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

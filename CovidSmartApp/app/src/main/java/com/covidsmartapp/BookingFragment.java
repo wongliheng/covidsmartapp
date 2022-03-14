@@ -71,6 +71,17 @@ public class BookingFragment extends Fragment {
         Button viewResults = (Button) view.findViewById(R.id.viewResults);
         Button viewLocationHistory = (Button) view.findViewById(R.id.viewLocationHistory);
 
+        createAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppointmentFragment appointmentFrag = new AppointmentFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), appointmentFrag, "appointmentFrag")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
 }

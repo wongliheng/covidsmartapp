@@ -25,7 +25,8 @@
         android:text="Sign Out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkOutRecycler" />
+        app:layout_constraintTop_toBottomOf="@+id/checkOutRecycler"
+        tools:visibility="visible"/>
 
     <Button
         android:id="@+id/scanQR"
@@ -35,7 +36,8 @@
         android:text="Scan QR Code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userGreeting" />
+        app:layout_constraintTop_toBottomOf="@+id/userGreeting"
+        tools:visibility="visible"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/checkOutRecycler"
@@ -46,5 +48,6 @@
         android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanQR"/>
+        app:layout_constraintTop_toBottomOf="@+id/scanQR"
+        tools:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

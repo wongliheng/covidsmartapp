@@ -1,69 +1,17 @@
 package com.covidsmartapp;
 
 public class LocationClass {
-    private int checkInDay, checkInMonth, checkInYear, checkInHour, checkInMinute;
+    private String locationName, checkInDate, checkInTime;
     private boolean checkedOut;
-    private String locationName;
 
-    // Empty constructor for Firebase
+    // For Firebase
     public LocationClass() {
     }
 
-    public LocationClass(int checkInDay, int checkInMonth, int checkInYear, int checkInHour, int checkInMinute, boolean checkedOut, String locationName) {
-        this.checkInDay = checkInDay;
-        this.checkInMonth = checkInMonth;
-        this.checkInYear = checkInYear;
-        this.checkInHour = checkInHour;
-        this.checkInMinute = checkInMinute;
-        this.checkedOut = checkedOut;
+    public LocationClass(String locationName, String checkInDate, String checkInTime, boolean checkedOut) {
         this.locationName = locationName;
-    }
-
-    public int getCheckInDay() {
-        return checkInDay;
-    }
-
-    public void setCheckInDay(int checkInDay) {
-        this.checkInDay = checkInDay;
-    }
-
-    public int getCheckInMonth() {
-        return checkInMonth;
-    }
-
-    public void setCheckInMonth(int checkInMonth) {
-        this.checkInMonth = checkInMonth;
-    }
-
-    public int getCheckInYear() {
-        return checkInYear;
-    }
-
-    public void setCheckInYear(int checkInYear) {
-        this.checkInYear = checkInYear;
-    }
-
-    public int getCheckInHour() {
-        return checkInHour;
-    }
-
-    public void setCheckInHour(int checkInHour) {
-        this.checkInHour = checkInHour;
-    }
-
-    public int getCheckInMinute() {
-        return checkInMinute;
-    }
-
-    public void setCheckInMinute(int checkInMinute) {
-        this.checkInMinute = checkInMinute;
-    }
-
-    public boolean isCheckedOut() {
-        return checkedOut;
-    }
-
-    public void setCheckedOut(boolean checkedOut) {
+        this.checkInDate = checkInDate;
+        this.checkInTime = checkInTime;
         this.checkedOut = checkedOut;
     }
 
@@ -73,5 +21,29 @@ public class LocationClass {
 
     public void setLocationName(String locationName) {
         this.locationName = locationName;
+    }
+
+    public String getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(String checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public String getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(String checkInTime) {
+        this.checkInTime = checkInTime;
+    }
+
+    public boolean isCheckedOut() {
+        return checkedOut;
+    }
+
+    public void setCheckedOut(boolean checkedOut) {
+        this.checkedOut = checkedOut;
     }
 }

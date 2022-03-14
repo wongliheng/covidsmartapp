@@ -134,24 +134,6 @@ public class RegisterPage extends AppCompatActivity {
                                                 progressBar.setVisibility(View.GONE);
                                             }
                                         });
-
-//                                UserClass user = new UserClass(fNameString, lNameString, emailString, pwString, phoneNum);
-//
-//                                FirebaseDatabase.getInstance().getReference("users")
-//                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        if (task.isSuccessful()) {
-//                                            Toast.makeText(RegisterPage.this, "Account successfully created", Toast.LENGTH_LONG).show();
-//                                            finish();
-//                                        }
-//                                        else {
-//                                            Toast.makeText(RegisterPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                                        }
-//                                        progressBar.setVisibility(View.GONE);
-//                                    }
-//                                });
                             } else {
                                 Toast.makeText(RegisterPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);

@@ -71,7 +71,7 @@ public class InfoFragment extends Fragment {
             public void onClick(View view) {
                 CaseFragment caseFrag = new CaseFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), caseFrag, "findThisFragment1")
+                        .replace(((ViewGroup)getView().getParent()).getId(), caseFrag, "caseFrag")
                         .addToBackStack(null)
                         .commit();
             }
@@ -85,7 +85,7 @@ public class InfoFragment extends Fragment {
                 args.putString("newsType", "local");
                 nextFrag.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
+                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "localFrag")
                         .addToBackStack(null)
                         .commit();
             }
@@ -99,7 +99,7 @@ public class InfoFragment extends Fragment {
                 args.putString("newsType", "global");
                 nextFrag.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
+                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "globalFrag")
                         .addToBackStack(null)
                         .commit();
             }
@@ -113,7 +113,7 @@ public class InfoFragment extends Fragment {
                 args.putString("newsType", "vaccine");
                 nextFrag.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "findThisFragment")
+                        .replace(((ViewGroup)getView().getParent()).getId(), nextFrag, "vaccineFrag")
                         .addToBackStack(null)
                         .commit();
             }

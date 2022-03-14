@@ -1,6 +1,7 @@
 package com.covidsmartapp;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -38,14 +40,23 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
     protected void onBindViewHolder(@NonNull CheckOutHolder holder, @SuppressLint("RecyclerView") int position, @NonNull LocationClass model) {
         holder.checkedInLocation.setText(model.getLocationName());
 
-        String checkedIn = model.getCheckInDay() + "/" + model.getCheckInMonth() + " "
-                + model.getCheckInHour() + ":" + model.getCheckInMinute();
-        holder.checkInTime.setText(checkedIn);
+        String time = model.getCheckInTime();
+        String timeWithoutSeconds = time.substring(0,5);
+        holder.checkInTime.setText(timeWithoutSeconds);
 
         holder.checkOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkOut(position);
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                String documentID = checkOut(position);
+
+                CheckOutFragment checkOutFrag = new CheckOutFragment();
+                Bundle args = new Bundle();
+                args.putString("documentID", documentID);
+                checkOutFrag.setArguments(args);
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView, checkOutFrag, "checkOutFrag")
+                        .commit();
             }
         });
     }
@@ -57,29 +68,12 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
         return new CheckOutHolder(view);
     }
 
-    public void checkOut(int position) {
+    public String checkOut(int position) {
         DocumentReference ref = getSnapshots().getSnapshot(position).getReference();
 
-        // Get time
-        Date timeNow = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy-HH-mm");
-        dateFormat.setTimeZone(TimeZone.getDefault());
-        // For database
-        String date = dateFormat.format(timeNow);
-        String[] dateTimeArray = date.split("-");
+        String documentID = ref.getId();
 
-        Integer checkOutday = Integer.parseInt(dateTimeArray[0]);
-        Integer checkOutMonth = Integer.parseInt(dateTimeArray[1]);
-        Integer checkOutYear = Integer.parseInt(dateTimeArray[2]);
-        Integer checkOutHour = Integer.parseInt(dateTimeArray[3]);
-        Integer checkOutMinute = Integer.parseInt(dateTimeArray[4]);
-
-        ref.update("checkedOut", true);
-        ref.update("checkOutDay", checkOutday);
-        ref.update("checkOutMonth", checkOutMonth);
-        ref.update("checkOutYear", checkOutYear);
-        ref.update("checkOutHour", checkOutHour);
-        ref.update("checkOutMinute", checkOutMinute);
+        return documentID;
     }
 
     class CheckOutHolder extends RecyclerView.ViewHolder {
