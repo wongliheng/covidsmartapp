@@ -1,10 +1,12 @@
 package com.covidsmartapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +47,12 @@ public class LoggedIn extends AppCompatActivity {
                 case R.id.navBooking:
                     replaceFragment(new BookingFragment());
                     break;
+                case R.id.navHistory:
+                    replaceFragment(new LocationHistoryFragment());
+                    break;
+                case R.id.navMore:
+                    replaceFragment(new MoreFragment());
+                    break;
             }
             return true;
         });
@@ -54,5 +62,22 @@ public class LoggedIn extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            new AlertDialog.Builder(this)
+                    .setMessage("Are you sure you want to exit?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            LoggedIn.this.finish();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+        else
+            super.onBackPressed();
     }
 }

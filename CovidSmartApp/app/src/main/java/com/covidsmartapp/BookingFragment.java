@@ -68,8 +68,8 @@ public class BookingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
 
         Button createAppointment = (Button) view.findViewById(R.id.createAppointment);
-        Button viewResults = (Button) view.findViewById(R.id.viewResults);
-        Button viewLocationHistory = (Button) view.findViewById(R.id.viewLocationHistory);
+        Button viewAppointments = (Button) view.findViewById(R.id.viewAppointments);
+        Button viewTestResults = (Button) view.findViewById(R.id.viewTestResults);
 
         createAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +77,28 @@ public class BookingFragment extends Fragment {
                 AppointmentFragment appointmentFrag = new AppointmentFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), appointmentFrag, "appointmentFrag")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        viewAppointments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppointmentInfoFragment appointmentInfoFrag = new AppointmentInfoFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), appointmentInfoFrag, "appointmentInfoFrag")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        viewTestResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TestResultFragment testResultFrag = new TestResultFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), testResultFrag, "testResultFrag")
                         .addToBackStack(null)
                         .commit();
             }

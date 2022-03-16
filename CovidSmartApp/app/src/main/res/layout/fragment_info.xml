@@ -8,44 +8,45 @@
 
     <Button
         android:id="@+id/covidCases"
-        android:layout_width="325dp"
-        android:layout_height="110dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:text="Active Covid Cases Globally"
-        android:textSize="20dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1"/>
 
     <Button
         android:id="@+id/localRestrictions"
-        android:layout_width="325dp"
-        android:layout_height="110dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginTop="16dp"
         android:text="Local Travel Restrictions"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/covidCases"  />
 
     <Button
         android:id="@+id/globalRestrictions"
-        android:layout_width="325dp"
-        android:layout_height="110dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginTop="16dp"
         android:text="International Travel Restrictions"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/localRestrictions" />
 
     <Button
         android:id="@+id/vaccineNews"
-        android:layout_width="325dp"
-        android:layout_height="110dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
         android:layout_marginTop="16dp"
         android:text="Covid Vaccine News"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/globalRestrictions" />

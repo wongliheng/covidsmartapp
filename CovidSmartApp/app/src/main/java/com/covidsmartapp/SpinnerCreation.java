@@ -43,47 +43,31 @@ public class SpinnerCreation {
             "Uganda", "Ukraine", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Wallis and Futuna",
             "Western Sahara", "Yemen", "Zambia", "Zimbabwe"};
 
-    String [] appointmentType = {"COVID-19 Test", "COVID-19 Vaccination", "Select a type"};
+    String [] appointmentType = {"COVID-19 Test", "COVID-19 Vaccination"};
     String [] locations = {"Ang Mo Kio Polyclinic", "Bedok Polyclinic", "Bukit Batok Polyclinic",  "Bukit Merah Polyclinic",
             "Clementi Polyclinic", "Geylang Polyclinic", "Hougang Polyclinic", "Jurong Polyclinic", "Marine Parade Polyclinic",
             "Outram Polyclinic", "Queenstown Polyclinic", "Sengkang Polyclinic", "Tampines Polyclinic", "Toa Payoh Polyclinic",
-            "Woodlands Polyclinic", "Yishun Polyclinic", "Select a location"};
+            "Woodlands Polyclinic", "Yishun Polyclinic"};
 
     public SpinnerCreation(Context context) {
         this.context = context;
     }
 
     public SearchableSpinner createCountrySpinner (SearchableSpinner spinner) {
-        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this.context, R.layout.spinner, countries);
-        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(countryAdapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, countries);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
-        spinner.setTitle("Select Country");
+        spinner.setTitle("Select a country");
         spinner.setPositiveButton("OK");
 
         return spinner;
     }
 
     public Spinner createAppointmentSpinner (Spinner spinner) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, appointmentType) {
-
-            @Override
-            public boolean isEnabled(int position) {
-                if (position == getCount()) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return super.getCount() - 1;
-            }
-        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, appointmentType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setSelection(adapter.getCount());
 
         return spinner;
     }
@@ -165,25 +149,9 @@ public class SpinnerCreation {
     }
 
     public Spinner createLocationSpinner (Spinner spinner) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, locations) {
-
-            @Override
-            public boolean isEnabled(int position) {
-                if (position == getCount()) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return super.getCount() - 1;
-            }
-        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, locations);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setSelection(adapter.getCount());
 
         return spinner;
     }

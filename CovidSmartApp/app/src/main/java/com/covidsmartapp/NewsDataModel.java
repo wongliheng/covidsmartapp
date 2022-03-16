@@ -65,7 +65,15 @@ public class NewsDataModel{
         this.urlToImage = urlToImage;
     }
 
-    public String getPublishDate() { return publishDate; }
+    public String getPublishDate() {
+        String dateString = publishDate.substring(0, 10);
+//        String [] dateArray = dateString.split("-");
+//        String year = dateArray[0];
+//        String month = dateArray[1];
+//        String day = dateArray[2];
+
+        return dateString;
+    }
 
     public void setPublishDate(String publishDate) { this.publishDate = publishDate; }
 }

@@ -3,10 +3,12 @@ package com.covidsmartapp;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +22,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,10 +47,7 @@ public class AppointmentFragment extends Fragment {
     private FirebaseFirestore db;
     private String userID;
 
-    private boolean appointmentCheck = false;
-    private boolean dateCheck = false;
     private boolean timeCheck = false;
-    private boolean locationCheck = false;
 
     public AppointmentFragment() {
         // Required empty public constructor
@@ -76,14 +81,22 @@ public class AppointmentFragment extends Fragment {
         TextView timeText = (TextView) view.findViewById(R.id.timeText);
         TextView locationText = (TextView) view.findViewById(R.id.locationText);
 
+//        SearchableSpinner appointmentSpinner = (SearchableSpinner) view.findViewById(R.id.appointmentSpinner);
         Spinner appointmentSpinner = (Spinner) view.findViewById(R.id.appointmentSpinner);
         Spinner timeSpinner = (Spinner) view.findViewById(R.id.timeSpinner) ;
         Spinner locationSpinner = (Spinner) view.findViewById(R.id.locationSpinner);
         Button bookBtn = (Button) view.findViewById(R.id.bookBtn);
 
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        dateEditText.setText(day + " " + getMonthString(month) + " " + year);
+
         SpinnerCreation createSpinner = new SpinnerCreation(getActivity());
         createSpinner.createAppointmentSpinner(appointmentSpinner);
-        createSpinner.setUpTimeSpinner(timeSpinner);
+        createSpinner.createTimeSpinner(timeSpinner, day);
         createSpinner.createLocationSpinner(locationSpinner);
 
 //        ArrayAdapter<CharSequence> locationAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -95,12 +108,12 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onDateSet(int year, int month, int day) {
                 dateEditText.setText(day + " " + getMonthString(month) + " " + year);
-                timeText.setText("Select a time");
                 createSpinner.createTimeSpinner(timeSpinner, day);
+                timeText.setText("Time:");
+                timeText.setTextColor(getResources().getColor(R.color.teal_700));
             }
         };
 
-        dateEditText.setText("Select a date");
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,60 +132,96 @@ public class AppointmentFragment extends Fragment {
                 String time = timeSpinner.getSelectedItem().toString();
                 String location = locationSpinner.getSelectedItem().toString();
 
-                if (!appointmentType.equals("Select a type"))
-                    appointmentCheck = true;
-                if (!date.equals("Select a date"))
-                    dateCheck = true;
-                if (!time.equals("Select a time") && !time.equals("Select a date"))
+                if (!time.equals("No timeslots available"))
                     timeCheck = true;
-                if (!location.equals("Select a location"))
-                    locationCheck = true;
 
-                if (!appointmentCheck){
-                    appointmentText.setText("Please select a type");
-                    appointmentText.setTextColor(getResources().getColor(R.color.red_400));
-                } else {
-                    appointmentText.setText("Appointment Type:");
-                    appointmentText.setTextColor(getResources().getColor(R.color.teal_700));
-                }
-                if (!dateCheck){
-                    dateText.setText("Please select a date");
-                    dateText.setTextColor(getResources().getColor(R.color.red_400));
-                } else {
-                    dateText.setText("Date:");
-                    dateText.setTextColor(getResources().getColor(R.color.teal_700));
-                }
                 if (!timeCheck){
-                    timeText.setText("Please select a time");
+                    timeText.setText("Please select a different date");
                     timeText.setTextColor(getResources().getColor(R.color.red_400));
                 } else {
                     timeText.setText("Time:");
                     timeText.setTextColor(getResources().getColor(R.color.teal_700));
                 }
-                if (!locationCheck){
-                    locationText.setText("Please select a location");
-                    locationText.setTextColor(getResources().getColor(R.color.red_400));
-                } else {
-                    locationText.setText("Location:");
-                    locationText.setTextColor(getResources().getColor(R.color.teal_700));
-                }
 
-                if (appointmentCheck && dateCheck && timeCheck && locationCheck) {
+                if (timeCheck) {
                     String [] dateArray = date.split(" ");
-                    int month  = getMonth(dateArray[1]);
-                    String newDate = dateArray[0] + month + dateArray[2];
+                    String monthDigit  = getMonth(dateArray[1]);
+                    String dayString = dateArray[0];
+                    int day = Integer.parseInt(dateArray[0]);
+                    if (day < 10)
+                        dayString = "0" + day;
+
+                    String newDate = dateArray[2] + monthDigit + dayString;
+
+                    String [] timeArray = time.split(":");
+                    int hour = Integer.parseInt(timeArray[0]);
+                    String [] subArray = timeArray[1].split(" ");
+                    String minuteString = subArray[0];
+
+                    // Get hour in 24 hour format
+                    if (hour < 9)
+                        hour = hour + 12;
+
+                    // Add leading zero
+                    String hourString = String.valueOf(hour);
+                    if (hour < 10)
+                        hourString = "0" + hour;
+
+                    String newTime = hourString + minuteString;
+                    String documentID = newDate + newTime;
+                    long dateTimeLong = Long.parseLong(documentID);
+
+                    String testResult = "Negative";
+                    Random rand = new Random();
+                    int random = rand.nextInt(100);
+                    if (random == 1)
+                        testResult = "Positive";
 
                     Map<String, Object> appointment = new HashMap<>();
                     appointment.put("appointmentType", appointmentType);
-                    appointment.put("date", newDate);
-                    appointment.put("time", time);
                     appointment.put("location", location);
+                    appointment.put("date", newDate);
+                    appointment.put("time", newTime);
+                    appointment.put("dateTime", dateTimeLong);
+                    appointment.put("testResult", testResult);
 
-                    db.collection("info")
+                    DocumentReference ref = db.collection("info")
                             .document(userID)
                             .collection("appointments")
-                            .document(newDate + " " + time)
-                            .set(appointment);
+                            .document(String.valueOf(dateTimeLong));
+                    ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Toast.makeText(getActivity(), "You already have an appointment at this timeslot", Toast.LENGTH_LONG).show();
+                                } else {
+                                    db.collection("info")
+                                            .document(userID)
+                                            .collection("appointments")
+                                            .document(String.valueOf(dateTimeLong))
+                                            .set(appointment);
+
+                                    BookingConfirmed bookingConfirmed = new BookingConfirmed();
+                                    Bundle args = new Bundle();
+                                    args.putString("appointmentType", appointmentType);
+                                    args.putString("date", date);
+                                    args.putString("time", time);
+                                    args.putString("location", location);
+                                    bookingConfirmed.setArguments(args);
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                                            .replace(((ViewGroup)getView().getParent()).getId(), bookingConfirmed, "bookingConfirmed")
+                                            .commit();
+
+                                }
+                            } else {
+                                Log.d("TAG", "get failed with ", task.getException());
+                            }
+                        }
+                    });
+
                 }
             }
         });
@@ -182,56 +231,56 @@ public class AppointmentFragment extends Fragment {
 
     private String getMonthString (int month) {
         String monthString = "December";
-        if (month == 1)
+        if (month == 0)
             monthString = "January";
-        else if (month == 2)
+        else if (month == 1)
             monthString = "February";
-        else if (month == 3)
+        else if (month == 2)
             monthString = "March";
-        else if (month == 4)
+        else if (month == 3)
             monthString = "April";
-        else if (month == 5)
+        else if (month == 4)
             monthString = "May";
-        else if (month == 6)
+        else if (month == 5)
             monthString = "June";
-        else if (month == 7)
+        else if (month == 6)
             monthString = "July";
-        else if (month == 8)
+        else if (month == 7)
             monthString = "August";
-        else if (month == 9)
+        else if (month == 8)
             monthString = "September";
-        else if (month == 10)
+        else if (month == 9)
             monthString = "October";
-        else if (month == 11)
+        else if (month == 10)
             monthString = "November";
 
         return monthString;
     }
 
-    private int getMonth (String monthString) {
-        int month = 12;
-        if (monthString == "January")
-            month = 1;
-        else if (monthString == "February")
-            month = 2;
-        else if (monthString == "March")
-            month = 3;
-        else if (monthString == "April")
-            month = 4;
-        else if (monthString == "May")
-            month = 5;
-        else if (monthString == "June")
-            month = 6;
-        else if (monthString == "July")
-            month = 7;
-        else if (monthString == "August")
-            month = 8;
-        else if (monthString == "September")
-            month = 9;
-        else if (monthString == "October")
-            month = 10;
-        else if (monthString == "November")
-            month = 11;
+    private String getMonth (String monthString) {
+        String month = "12";
+        if (monthString.equals("January"))
+            month = "01";
+        else if (monthString.equals("February"))
+            month = "02";
+        else if (monthString.equals("March"))
+            month = "03";
+        else if (monthString.equals("April"))
+            month = "04";
+        else if (monthString.equals("May"))
+            month = "05";
+        else if (monthString.equals("June"))
+            month = "06";
+        else if (monthString.equals("July"))
+            month = "07";
+        else if (monthString.equals("August"))
+            month = "08";
+        else if (monthString.equals("September"))
+            month = "09";
+        else if (monthString.equals("October"))
+            month = "10";
+        else if (monthString.equals("November"))
+            month = "11";
 
         return month;
     }

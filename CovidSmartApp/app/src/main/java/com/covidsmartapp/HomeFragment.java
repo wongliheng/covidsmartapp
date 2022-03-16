@@ -1,11 +1,10 @@
 package com.covidsmartapp;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,50 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.zxing.Result;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -69,30 +38,10 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment homeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -107,8 +56,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         TextView userGreeting = (TextView) view.findViewById(R.id.userGreeting);
+        TextView noRecentLocations = (TextView) view.findViewById(R.id.noRecentLocations);
         Button scanQR = (Button) view.findViewById(R.id.scanQR);
-        Button signOut = (Button) view.findViewById(R.id.signOut);
         RecyclerView checkOutRecycler = (RecyclerView) view.findViewById(R.id.checkOutRecycler);
 
         // Display user greeting
@@ -122,44 +71,62 @@ public class HomeFragment extends Fragment {
         });
 
         // Check Out Recycler View
-        createCheckOutRecycler(checkOutRecycler);
+        createCheckOutRecycler(checkOutRecycler, noRecentLocations);
 
         // QR code button
         scanQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QRFragment qrFrag = new QRFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), qrFrag, "qrFrag")
-                        .commit();
-            }
-        });
+                String[] permissions = {Manifest.permission.CAMERA};
+                String rationale = "Please provide camera permission to scan QR Codes";
+                Permissions.Options options = new Permissions.Options()
+                        .setRationaleDialogTitle("Info")
+                        .setSettingsDialogTitle("Warning");
 
-        // Sign out button
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                getActivity().finish();
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                Permissions.check(getActivity(), permissions, rationale, options, new PermissionHandler() {
+                    @Override
+                    public void onGranted() {
+                        QRFragment qrFrag = new QRFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(((ViewGroup)getView().getParent()).getId(), qrFrag, "qrFrag")
+                                .commit();
+                    }
+
+                    @Override
+                    public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+
+                    }
+                });
             }
         });
 
         return view;
     }
 
-    private void createCheckOutRecycler(RecyclerView checkOutRecycler) {
-        CollectionReference locationRef = db.collection("info")
+    private void createCheckOutRecycler(RecyclerView checkOutRecycler, TextView noRecentLocations) {
+        CollectionReference ref = db.collection("info")
                 .document(userID)
                 .collection("locations");
-        Query query = locationRef.whereEqualTo("checkedOut", false);
+        Query query = ref.whereEqualTo("checkedOut", false);
 
-        FirestoreRecyclerOptions<LocationClass> options = new FirestoreRecyclerOptions.Builder<LocationClass>()
-                .setQuery(query, LocationClass.class)
+        FirestoreRecyclerOptions<LocationBeforeCheckOutClass> options = new FirestoreRecyclerOptions.Builder<LocationBeforeCheckOutClass>()
+                .setQuery(query, LocationBeforeCheckOutClass.class)
                 .build();
 
-        adapter = new CheckOutAdapter(options);
+        adapter = new CheckOutAdapter(options) {
+            @Override
+            public void onDataChanged() {
+                super.onDataChanged();
+                if (getItemCount() == 0) {
+                    checkOutRecycler.setVisibility(View.INVISIBLE);
+                    noRecentLocations.setVisibility(View.VISIBLE);
+                }
+                else {
+                    checkOutRecycler.setVisibility(View.VISIBLE);
+                    noRecentLocations.setVisibility(View.GONE);
+                }
+            }
+        };
         checkOutRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         checkOutRecycler.setAdapter(adapter);
     }

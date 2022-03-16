@@ -56,7 +56,25 @@ public class CheckOutFragment extends Fragment {
         Button backToHomeBtn = (Button) view.findViewById(R.id.backToHomeBtn);
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-//         Get time
+        checkOut();
+        displayInfo(checkOutText, locationName, durationText, backToHomeBtn, progressBar);
+
+        backToHomeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeFragment homeFrag = new HomeFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                        .replace(((ViewGroup)getView().getParent()).getId(), homeFrag, "homeFrag")
+                        .commit();
+            }
+        });
+
+        return view;
+    }
+
+    private void checkOut () {
+//        Get time
         Date timeNow = Calendar.getInstance().getTime();
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("ddMMyyyy-HH:mm:ss");
         dateTimeFormat.setTimeZone(TimeZone.getDefault());
@@ -75,6 +93,10 @@ public class CheckOutFragment extends Fragment {
         ref.update("checkedOut", true);
         ref.update("checkOutDate", date);
         ref.update("checkOutTime", time);
+    }
+
+    private void displayInfo (TextView checkOutText, TextView locationName, TextView durationText,
+                              Button backToHomeBtn, ProgressBar progressBar) {
 
         db.collection("info")
                 .document(userID)
@@ -97,18 +119,5 @@ public class CheckOutFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
             }
         });
-
-        backToHomeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HomeFragment homeFrag = new HomeFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                        .replace(((ViewGroup)getView().getParent()).getId(), homeFrag, "homeFrag")
-                        .commit();
-            }
-        });
-
-        return view;
     }
 }

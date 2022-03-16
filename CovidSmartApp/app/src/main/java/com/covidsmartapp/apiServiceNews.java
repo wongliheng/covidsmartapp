@@ -50,6 +50,8 @@ public class apiServiceNews {
                             newsDataModel.setDescription(article.getString("description"));
                             newsDataModel.setUrl(article.getString("url"));
                             newsDataModel.setUrlToImage(article.getString("image_url"));
+                            newsDataModel.setSource(article.getString("source"));
+                            newsDataModel.setPublishDate(article.getString("published_at"));
                             newsArray.add(newsDataModel);
                         }
 
@@ -63,7 +65,7 @@ public class apiServiceNews {
     }
 
     public void getGlobal (final VolleyResponseListener vrl) {
-        String url = newsQuery + "&search=covid+travel+restrictions" + apiKey2;
+        String url = newsQuery + "&search=covid+travel" + apiKey2;
 //        NewsDataModel newsDataModel = new NewsDataModel();
         ArrayList<NewsDataModel> newsArray = new ArrayList<NewsDataModel>();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -81,6 +83,8 @@ public class apiServiceNews {
                             newsDataModel.setDescription(article.getString("description"));
                             newsDataModel.setUrl(article.getString("url"));
                             newsDataModel.setUrlToImage(article.getString("image_url"));
+                            newsDataModel.setSource(article.getString("source"));
+                            newsDataModel.setPublishDate(article.getString("published_at"));
                             newsArray.add(newsDataModel);
                         }
 
@@ -94,7 +98,7 @@ public class apiServiceNews {
     }
 
     public void getVaccine (final VolleyResponseListener vrl) {
-        String url = newsQuery + "&search=covid+vaccine" + apiKey3;
+        String url = newsQuery + "&singapore=vaccine" + apiKey3;
 //        NewsDataModel newsDataModel = new NewsDataModel();
         ArrayList<NewsDataModel> newsArray = new ArrayList<NewsDataModel>();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -112,6 +116,8 @@ public class apiServiceNews {
                             newsDataModel.setDescription(article.getString("description"));
                             newsDataModel.setUrl(article.getString("url"));
                             newsDataModel.setUrlToImage(article.getString("image_url"));
+                            newsDataModel.setSource(article.getString("source"));
+                            newsDataModel.setPublishDate(article.getString("published_at"));
                             newsArray.add(newsDataModel);
                         }
 

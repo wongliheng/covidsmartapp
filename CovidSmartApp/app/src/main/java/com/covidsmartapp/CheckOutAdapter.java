@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +16,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentReference;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
-
-public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, CheckOutAdapter.CheckOutHolder> {
+public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationBeforeCheckOutClass, CheckOutAdapter.CheckOutHolder> {
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -32,12 +24,12 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
      *
      * @param options
      */
-    public CheckOutAdapter(@NonNull FirestoreRecyclerOptions<LocationClass> options) {
+    public CheckOutAdapter(@NonNull FirestoreRecyclerOptions<LocationBeforeCheckOutClass> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CheckOutHolder holder, @SuppressLint("RecyclerView") int position, @NonNull LocationClass model) {
+    protected void onBindViewHolder(@NonNull CheckOutHolder holder, @SuppressLint("RecyclerView") int position, @NonNull LocationBeforeCheckOutClass model) {
         holder.checkedInLocation.setText(model.getLocationName());
 
         String time = model.getCheckInTime();
@@ -48,7 +40,7 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                String documentID = checkOut(position);
+                String documentID = getDocID(position);
 
                 CheckOutFragment checkOutFrag = new CheckOutFragment();
                 Bundle args = new Bundle();
@@ -68,11 +60,9 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationClass, Che
         return new CheckOutHolder(view);
     }
 
-    public String checkOut(int position) {
+    public String getDocID(int position) {
         DocumentReference ref = getSnapshots().getSnapshot(position).getReference();
-
         String documentID = ref.getId();
-
         return documentID;
     }
 

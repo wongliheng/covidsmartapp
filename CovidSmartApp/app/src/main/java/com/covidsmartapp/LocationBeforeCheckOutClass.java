@@ -1,15 +1,16 @@
 package com.covidsmartapp;
 
-public class LocationClass {
+public class LocationBeforeCheckOutClass {
+
     private String locationName, checkInDate, checkInTime;
     private boolean checkedOut;
     private Long dateTime;
 
     // For Firebase
-    public LocationClass() {
+    public LocationBeforeCheckOutClass() {
     }
 
-    public LocationClass(String locationName, String checkInDate, String checkInTime, boolean checkedOut, Long dateTime) {
+    public LocationBeforeCheckOutClass(String locationName, String checkInDate, String checkInTime, boolean checkedOut, Long dateTime) {
         this.locationName = locationName;
         this.checkInDate = checkInDate;
         this.checkInTime = checkInTime;

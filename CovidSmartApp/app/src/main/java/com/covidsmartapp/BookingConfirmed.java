@@ -3,55 +3,33 @@ package com.covidsmartapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BookingConfirmed#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BookingConfirmed extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String appointmentType;
+    private String date;
+    private String time;
+    private String location;
 
     public BookingConfirmed() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BookingConfirmed.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BookingConfirmed newInstance(String param1, String param2) {
-        BookingConfirmed fragment = new BookingConfirmed();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            appointmentType = getArguments().getString("appointmentType");
+            date = getArguments().getString("date");
+            time = getArguments().getString("time");
+            location = getArguments().getString("location");
         }
     }
 
@@ -59,6 +37,32 @@ public class BookingConfirmed extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_booking_confirmed, container, false);
+        View view = inflater.inflate(R.layout.fragment_booking_confirmed, container, false);
+
+        TextView appointmentTypeText = (TextView) view.findViewById(R.id.appointmentTypeText);
+        TextView dateTimeText = (TextView) view.findViewById(R.id.dateTimeText);
+        TextView locationText = (TextView) view.findViewById(R.id.locationText);
+        Button backBtn = (Button) view.findViewById(R.id.backBtn);
+
+        appointmentTypeText.setText(appointmentType);
+        String [] dateArray = date.split(" ");
+        String dateWithoutYear = dateArray[0] + " " + dateArray[1];
+        dateTimeText.setText(dateWithoutYear + ", " + time);
+        locationText.setText("@ " + location);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BookingFragment bookFrag = new BookingFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.popBackStack(null, fragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), bookFrag, "bookFrag")
+                        .commit();
+            }
+        });
+
+        return view;
+
     }
 }
