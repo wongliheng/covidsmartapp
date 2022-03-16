@@ -3,16 +3,18 @@ package com.covidsmartapp;
 public class LocationClass {
     private String locationName, checkInDate, checkInTime;
     private boolean checkedOut;
+    private Long dateTime;
 
     // For Firebase
     public LocationClass() {
     }
 
-    public LocationClass(String locationName, String checkInDate, String checkInTime, boolean checkedOut) {
+    public LocationClass(String locationName, String checkInDate, String checkInTime, boolean checkedOut, Long dateTime) {
         this.locationName = locationName;
         this.checkInDate = checkInDate;
         this.checkInTime = checkInTime;
         this.checkedOut = checkedOut;
+        this.dateTime = dateTime;
     }
 
     public String getLocationName() {
@@ -45,5 +47,13 @@ public class LocationClass {
 
     public void setCheckedOut(boolean checkedOut) {
         this.checkedOut = checkedOut;
+    }
+
+    public Long getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Long dateTime) {
+        this.dateTime = dateTime;
     }
 }
