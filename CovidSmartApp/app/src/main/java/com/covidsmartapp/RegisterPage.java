@@ -115,7 +115,8 @@ public class RegisterPage extends AppCompatActivity {
                                 user.put("fName", fNameString);
                                 user.put("lName", lNameString);
                                 user.put("email", emailString);
-                                user.put("pw", pwString);
+//                                No need to store user password
+//                                user.put("pw", pwString);
                                 user.put("phoneNum", phoneNum);
 
                                 db.collection("users").document(userID)

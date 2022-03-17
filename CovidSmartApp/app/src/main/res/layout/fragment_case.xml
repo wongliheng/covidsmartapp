@@ -286,7 +286,9 @@
         android:text="Click here"
         app:layout_constraintStart_toStartOf="@id/covidSitrep"
         app:layout_constraintEnd_toEndOf="@id/covidSitrep"
-        app:layout_constraintTop_toBottomOf="@id/covidSitrep" />
+        app:layout_constraintTop_toBottomOf="@id/covidSitrep"
+        android:visibility="invisible"/>
+
 <!--    This must be at the bottom-->
     <TextView
         android:id="@+id/blocker"

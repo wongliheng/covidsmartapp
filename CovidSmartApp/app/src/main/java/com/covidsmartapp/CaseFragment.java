@@ -78,7 +78,8 @@ public class CaseFragment extends Fragment {
                 String noOpenBrackets = noSpace.replace("(", "%28");
                 country = noOpenBrackets.replace(")", "%29");
 
-                loadCases(country, flagImage, countryName, activeCases, totalCases, critical, deaths, blocker, progressBar);
+                loadCases(country, flagImage, countryName, activeCases, totalCases, critical,
+                        deaths, blocker, progressBar, covidSitrepBtn);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -96,14 +97,14 @@ public class CaseFragment extends Fragment {
             }
         });
 
-        loadCases("sg", flagImage, countryName, activeCases, totalCases, critical, deaths, blocker, progressBar);
+        loadCases("sg", flagImage, countryName, activeCases, totalCases, critical, deaths, blocker, progressBar, covidSitrepBtn);
 
         return view;
     }
 
     public void loadCases(String country, ImageView flagImage, TextView countryName, TextView activeCases,
                           TextView totalCases, TextView critical, TextView deaths, TextView blocker,
-                          ProgressBar progressBar) {
+                          ProgressBar progressBar, Button covidSitrepBtn) {
         final apiServiceCases service = new apiServiceCases(getActivity());
         progressBar.setVisibility(View.VISIBLE);
         service.getCovidData(country, new apiServiceCases.VolleyResponseListener() {
@@ -123,6 +124,7 @@ public class CaseFragment extends Fragment {
 
                 blocker.setVisibility(View.GONE);
                 progressBar.setVisibility(View.GONE);
+                covidSitrepBtn.setVisibility(View.VISIBLE);
             }
         });
     }
