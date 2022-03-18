@@ -126,7 +126,7 @@ public class TestResultFragment extends Fragment {
                 }
             }
         };
-        testResultRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        testResultRecycler.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
         testResultRecycler.setAdapter(adapter);
     }
 

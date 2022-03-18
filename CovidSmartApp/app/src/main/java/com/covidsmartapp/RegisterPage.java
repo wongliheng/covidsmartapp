@@ -28,7 +28,7 @@ import java.util.Map;
 public class RegisterPage extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private Button register;
+    private Button register, backToLogIn;
     private TextInputEditText fName, lName, phone, email, pw;
     private ProgressBar progressBar;
 
@@ -47,11 +47,19 @@ public class RegisterPage extends AppCompatActivity {
         email = findViewById(R.id.emailEditText);
         pw = findViewById(R.id.passwordEditText);
         progressBar = findViewById(R.id.progressBar);
+        backToLogIn = findViewById(R.id.backToLogin);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerUser();
+            }
+        });
+
+        backToLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

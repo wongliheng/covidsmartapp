@@ -32,6 +32,12 @@ public class AppointmentInfoFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static AppointmentInfoFragment newInstance() {
+        AppointmentInfoFragment fragment = new AppointmentInfoFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -129,7 +135,7 @@ public class AppointmentInfoFragment extends Fragment {
                 }
             }
         };
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
     }
 

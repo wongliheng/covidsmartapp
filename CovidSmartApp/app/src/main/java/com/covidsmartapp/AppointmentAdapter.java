@@ -71,9 +71,11 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentClas
         String hours = time.substring(0,2);
         String minutes = time.substring(2,4);
         int hour = Integer.parseInt(hours);
-        if (hour > 12) {
+        if (hour >= 12) {
+            if (hour > 12){
+                hour = hour - 12;
+            }
             meridiem = "PM";
-            hour = hour - 12;
         }
         String newTime = hour + ":" + minutes + " " + meridiem;
         holder.timeText.setText(newTime);

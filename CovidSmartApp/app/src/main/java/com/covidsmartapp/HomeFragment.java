@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         };
-        checkOutRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        checkOutRecycler.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
         checkOutRecycler.setAdapter(adapter);
     }
 

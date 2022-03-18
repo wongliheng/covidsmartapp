@@ -18,6 +18,7 @@ public class LocationHistoryAdapter extends FirestoreRecyclerAdapter<LocationAft
      *
      * @param options
      */
+
     public LocationHistoryAdapter(@NonNull FirestoreRecyclerOptions<LocationAfterCheckOutClass> options) {
         super(options);
     }

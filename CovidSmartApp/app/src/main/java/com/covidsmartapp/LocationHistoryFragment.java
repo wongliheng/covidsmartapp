@@ -83,7 +83,7 @@ public class LocationHistoryFragment extends Fragment {
                 }
             }
         };
-        historyRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        historyRecycler.setLayoutManager(new WrapContentLinearLayoutManager(getActivity()));
         historyRecycler.setAdapter(adapter);
     }
 
