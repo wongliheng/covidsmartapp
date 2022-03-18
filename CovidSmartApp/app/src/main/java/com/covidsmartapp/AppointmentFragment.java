@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.Editable;
 import android.util.Log;
@@ -96,7 +97,7 @@ public class AppointmentFragment extends Fragment {
 
         SpinnerCreation createSpinner = new SpinnerCreation(getActivity());
         createSpinner.createAppointmentSpinner(appointmentSpinner);
-        createSpinner.createTimeSpinner(timeSpinner, day);
+        createSpinner.createTimeSpinner(timeSpinner, day, month);
         createSpinner.createLocationSpinner(locationSpinner);
 
 //        ArrayAdapter<CharSequence> locationAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -108,7 +109,7 @@ public class AppointmentFragment extends Fragment {
             @Override
             public void onDateSet(int year, int month, int day) {
                 dateEditText.setText(day + " " + getMonthString(month) + " " + year);
-                createSpinner.createTimeSpinner(timeSpinner, day);
+                createSpinner.createTimeSpinner(timeSpinner, day, month);
                 timeText.setText("Time:");
                 timeText.setTextColor(getResources().getColor(R.color.teal_700));
             }
@@ -210,6 +211,7 @@ public class AppointmentFragment extends Fragment {
                                     args.putString("time", time);
                                     args.putString("location", location);
                                     bookingConfirmed.setArguments(args);
+                                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                                     getActivity().getSupportFragmentManager().beginTransaction()
                                             .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
                                             .replace(((ViewGroup)getView().getParent()).getId(), bookingConfirmed, "bookingConfirmed")

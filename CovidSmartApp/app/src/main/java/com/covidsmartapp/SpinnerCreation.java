@@ -85,10 +85,11 @@ public class SpinnerCreation {
         return spinner;
     }
 
-    public Spinner createTimeSpinner (Spinner spinner, int day) {
+    public Spinner createTimeSpinner (Spinner spinner, int day, int month) {
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int currentDay = c.get(Calendar.DAY_OF_MONTH);
+        int currentMonth = c.get(Calendar.MONTH);
 
         ArrayList<String> timeslots = new ArrayList<String>();
 
@@ -96,14 +97,17 @@ public class SpinnerCreation {
         {
             String slot1;
             String slot2;
-            if (day == currentDay) {
+            if (day == currentDay && month == currentMonth) {
                 int hourFromNow = hour + 1;
                 if (i > hourFromNow) {
-                    if (i > 12) {
-                        int hourAM = i - 12;
+                    if (i >= 12) {
+                        int twelveHourFormat = i;
+                        if (twelveHourFormat > 12){
+                            twelveHourFormat = twelveHourFormat - 12;
+                        }
 
-                        slot1 = hourAM + ":00 PM";
-                        slot2 = hourAM + ":30 PM";
+                        slot1 = twelveHourFormat + ":00 PM";
+                        slot2 = twelveHourFormat + ":30 PM";
 
                         timeslots.add(slot1);
                         timeslots.add(slot2);
@@ -117,11 +121,14 @@ public class SpinnerCreation {
                 }
             }
             else {
-                if (i > 12) {
-                    int hourAM = i - 12;
+                if (i >= 12) {
+                    int twelveHourFormat = i;
+                    if (twelveHourFormat > 12){
+                        twelveHourFormat = twelveHourFormat - 12;
+                    }
 
-                    slot1 = hourAM + ":00 PM";
-                    slot2 = hourAM + ":30 PM";
+                    slot1 = twelveHourFormat + ":00 PM";
+                    slot2 = twelveHourFormat + ":30 PM";
 
                     timeslots.add(slot1);
                     timeslots.add(slot2);
