@@ -90,7 +90,7 @@ public class EditProfileFragment extends Fragment {
         fNameLayout.setOrientation(LinearLayout.VERTICAL);
         fNameLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         EditText fNameInput = new EditText(getActivity());
-        fNameInput.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
+        fNameInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         fNameInput.setMaxLines(1);
         fNameLayout.setPadding(200, 0, 200, 0);
         fNameLayout.addView(fNameInput);
@@ -126,7 +126,7 @@ public class EditProfileFragment extends Fragment {
         lNameLayout.setOrientation(LinearLayout.VERTICAL);
         lNameLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         EditText lNameInput = new EditText(getActivity());
-        lNameInput.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
+        lNameInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         lNameInput.setMaxLines(1);
         lNameLayout.setPadding(200, 0, 200, 0);
         lNameLayout.addView(lNameInput);
