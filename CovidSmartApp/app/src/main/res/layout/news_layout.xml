@@ -23,18 +23,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/newsDate"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="left"-->
-<!--            android:text="Date"-->
-<!--            android:textSize="18sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/newsSource"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.85"-->
-<!--            app:layout_constraintStart_toEndOf="@id/newsSource"-->
-<!--            app:layout_constraintTop_toTopOf="@id/newsSource" />-->
+        <TextView
+            android:id="@+id/newsDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Date"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/newsSource"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toEndOf="@id/newsSource"
+            app:layout_constraintTop_toTopOf="@id/newsSource" />
 
         <TextView
             android:id="@+id/newsHeadline"

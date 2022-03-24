@@ -44,7 +44,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.headline.setText(article.getTitle());
         holder.description.setText(article.getDescription());
         holder.source.setText(article.getSource());
-//        holder.date.setText(article.getPublishDate());
+        holder.date.setText(article.getPublishDate());
 //        Glide.with(this.context).load(article.getUrlToImage()).into(holder.image);
 
         holder.card.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     public class NewsViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView headline, description, source;
+        public TextView headline, description, source, date;
 //        public ImageView image;
         public CardView card;
 
@@ -71,6 +71,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             headline = itemView.findViewById(R.id.newsHeadline);
             description = itemView.findViewById(R.id.newsDescription);
             source = itemView.findViewById(R.id.newsSource);
+            date = itemView.findViewById(R.id.newsDate);
 //            image = itemView.findViewById(R.id.newsImage);
             card = itemView.findViewById(R.id.newsCard);
         }

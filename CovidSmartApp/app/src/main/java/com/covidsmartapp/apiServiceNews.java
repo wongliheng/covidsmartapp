@@ -32,7 +32,7 @@ public class apiServiceNews {
     }
 
     public void getLocal (final VolleyResponseListener vrl) {
-        String url = newsQuery + "&search=singapore+vtl" + apiKey1;
+        String url = newsQuery + "&search=singapore+vtl" + "&sort=published_at" + apiKey1;
 //        NewsDataModel newsDataModel = new NewsDataModel();
         ArrayList<NewsDataModel> newsArray = new ArrayList<NewsDataModel>();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -65,7 +65,7 @@ public class apiServiceNews {
     }
 
     public void getGlobal (final VolleyResponseListener vrl) {
-        String url = newsQuery + "&search=covid+travel" + apiKey2;
+        String url = newsQuery + "&search=covid+restrictions" + "&sort=published_at" + apiKey2;
 //        NewsDataModel newsDataModel = new NewsDataModel();
         ArrayList<NewsDataModel> newsArray = new ArrayList<NewsDataModel>();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -98,7 +98,7 @@ public class apiServiceNews {
     }
 
     public void getVaccine (final VolleyResponseListener vrl) {
-        String url = newsQuery + "&singapore=vaccine" + apiKey3;
+        String url = newsQuery + "&search=singapore+vaccine" + "&sort=published_at" + apiKey3;
 //        NewsDataModel newsDataModel = new NewsDataModel();
         ArrayList<NewsDataModel> newsArray = new ArrayList<NewsDataModel>();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,

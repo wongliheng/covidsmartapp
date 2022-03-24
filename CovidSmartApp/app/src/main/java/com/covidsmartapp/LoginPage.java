@@ -65,7 +65,6 @@ public class LoginPage extends AppCompatActivity {
                 logIn();
             }
         });
-
     }
 
     private void logIn() {

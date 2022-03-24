@@ -20,11 +20,6 @@ public class NewsDataModel{
         this.publishDate = publishDate;
     }
 
-    @Override
-    public String toString() {
-        return ", title='" + title + '\'' + '}';
-    }
-
     public String getSource() {
         return source;
     }
@@ -67,12 +62,13 @@ public class NewsDataModel{
 
     public String getPublishDate() {
         String dateString = publishDate.substring(0, 10);
-//        String [] dateArray = dateString.split("-");
-//        String year = dateArray[0];
-//        String month = dateArray[1];
-//        String day = dateArray[2];
+        String [] dateArray = dateString.split("-");
+        String year = dateArray[0];
+        String month = dateArray[1];
+        String day = dateArray[2];
+        String newDate = day + "/" + month + "/" + year;
 
-        return dateString;
+        return newDate;
     }
 
     public void setPublishDate(String publishDate) { this.publishDate = publishDate; }
