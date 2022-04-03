@@ -7,10 +7,10 @@
     tools:context=".BookingFragment">
 
     <Button
-        android:id="@+id/createAppointment"
+        android:id="@+id/bookTest"
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:text="Create New Appointment"
+        android:text="Book a COVID-19 Test"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,15 +19,27 @@
         app:layout_constraintVertical_bias="0.1"/>
 
     <Button
+        android:id="@+id/bookVaccination"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:text="Book a COVID-19 Vaccination"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookTest"  />
+
+
+    <Button
         android:id="@+id/viewAppointments"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_marginTop="16dp"
-        android:text="View Appointments"
+        android:text="View Upcoming Appointments"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAppointment"  />
+        app:layout_constraintTop_toBottomOf="@+id/bookVaccination"  />
 
     <Button
         android:id="@+id/viewTestResults"

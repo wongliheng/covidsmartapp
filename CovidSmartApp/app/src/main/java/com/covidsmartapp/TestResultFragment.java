@@ -28,6 +28,8 @@ import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -76,6 +78,7 @@ public class TestResultFragment extends Fragment {
         int minutes = c.get(Calendar.MINUTE);
 
         String monthString = "";
+        String dayString = "";
         String hourString = "";
         String minuteString = "";
 
@@ -87,6 +90,11 @@ public class TestResultFragment extends Fragment {
         else
             monthString = String.valueOf(month);
 
+        if (day < 10)
+            dayString = "0" + day;
+        else
+            dayString = String.valueOf(day);
+
         if (hour < 10)
             hourString = "0" + hour;
         else
@@ -97,8 +105,13 @@ public class TestResultFragment extends Fragment {
         else
             minuteString = String.valueOf(minutes);
 
-        String dateTime = year + monthString + day + hourString + minuteString;
+        String dateTime = year + monthString + dayString + hourString + minuteString;
         long dateTimeLong = Long.parseLong(dateTime);
+
+//        LocalDateTime dateTimeNow = LocalDateTime.now();
+//        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+//        String dateTimeString = dateTimeNow.format(format);
+//        Long dateTimeLong = Long.parseLong(dateTimeString);
 
         CollectionReference ref = db.collection("info")
                 .document(userID)

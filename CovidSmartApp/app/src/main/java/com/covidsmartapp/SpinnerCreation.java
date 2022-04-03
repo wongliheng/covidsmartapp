@@ -43,7 +43,6 @@ public class SpinnerCreation {
             "Uganda", "Ukraine", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Wallis and Futuna",
             "Western Sahara", "Yemen", "Zambia", "Zimbabwe"};
 
-    String [] appointmentType = {"COVID-19 Test", "COVID-19 Vaccination"};
     String [] locations = {"Ang Mo Kio Polyclinic", "Bedok Polyclinic", "Bukit Batok Polyclinic",  "Bukit Merah Polyclinic",
             "Clementi Polyclinic", "Geylang Polyclinic", "Hougang Polyclinic", "Jurong Polyclinic", "Marine Parade Polyclinic",
             "Outram Polyclinic", "Queenstown Polyclinic", "Sengkang Polyclinic", "Tampines Polyclinic", "Toa Payoh Polyclinic",
@@ -60,14 +59,6 @@ public class SpinnerCreation {
 
         spinner.setTitle("Select a country");
         spinner.setPositiveButton("OK");
-
-        return spinner;
-    }
-
-    public Spinner createAppointmentSpinner (Spinner spinner) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, appointmentType);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         return spinner;
     }

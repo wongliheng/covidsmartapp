@@ -35,14 +35,15 @@ public class TestResultAdapter extends FirestoreRecyclerAdapter<AppointmentClass
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        String result = model.getTestResult();
+        String result = model.getStatus();
         holder.testResult.setText(result);
         if (result.equals("Positive")) {
             holder.testResult.setTextColor(Color.RED);
         }
-        else {
+        else if (result.equals("Negative")){
             holder.testResult.setTextColor(Color.GREEN);
-        }
+        } else
+            holder.testResult.setTextColor(Color.BLUE);
 
         String dateString = model.getDate();
         String dateYear = dateString.substring(0, 4);

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +31,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentClass, AppointmentAdapter.AppointmentHolder> {
     /**
@@ -37,8 +43,9 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentClas
      */
 
     private Context context;
-
     private String userID;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     public AppointmentAdapter(@NonNull FirestoreRecyclerOptions<AppointmentClass> options, String userID, Context context) {
         super(options);
         this.userID = userID;
@@ -83,25 +90,23 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentClas
         holder.cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String documentID = getDocID(position);
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                String documentID = String.valueOf(model.getDateTime());
+//                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference appointment = db.collection("info")
+                        .document(userID)
+                        .collection("appointments")
+                        .document(documentID);
 
                 new AlertDialog.Builder(context)
                         .setMessage("Are you sure you want to cancel this booking?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                db.collection("info")
-                                        .document(userID)
-                                        .collection("appointments")
-                                        .document(documentID)
-                                        .delete();
+                                appointment.delete();
                             }
                         })
                         .setNegativeButton("No", null)
                         .show();
-
-
             }
         });
     }
@@ -111,12 +116,6 @@ public class AppointmentAdapter extends FirestoreRecyclerAdapter<AppointmentClas
     public AppointmentAdapter.AppointmentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_layout, parent, false);
         return new AppointmentHolder(view);
-    }
-
-    public String getDocID(int position) {
-        DocumentReference ref = getSnapshots().getSnapshot(position).getReference();
-        String documentID = ref.getId();
-        return documentID;
     }
 
     private String getMonthString (int month) {

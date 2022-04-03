@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "991469849297",
-    "firebase_url": "https://covidsmartapp-be9c5-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "covidsmartapp-be9c5",
-    "storage_bucket": "covidsmartapp-be9c5.appspot.com"
+    "project_number": "71384645465",
+    "project_id": "covid-smart-app",
+    "storage_bucket": "covid-smart-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:991469849297:android:aa3c479e6a45c3052c93f0",
+        "mobilesdk_app_id": "1:71384645465:android:9a895606065e4ed2921648",
         "android_client_info": {
           "package_name": "com.covidsmartapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "991469849297-ak5p5a52hmhong7ag3mt01pm58ets17v.apps.googleusercontent.com",
+          "client_id": "71384645465-nod4tpm7quq2du1ahbhqjf2qdsr7e9vl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA0nmC_dNvaNNwtLqZ33NVY8e5QipQAeCc"
+          "current_key": "AIzaSyA6_hWDypvSlz3pukrDvzJ6CAOLZkIXyI4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "991469849297-ak5p5a52hmhong7ag3mt01pm58ets17v.apps.googleusercontent.com",
+              "client_id": "71384645465-nod4tpm7quq2du1ahbhqjf2qdsr7e9vl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

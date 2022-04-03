@@ -11,15 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class AppointmentInfoFragment extends Fragment {
 
@@ -58,25 +65,25 @@ public class AppointmentInfoFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         TextView noBookings = (TextView) view.findViewById(R.id.noBookings);
-        Button bookBtn = (Button) view.findViewById(R.id.bookBtn);
+//        Button bookBtn = (Button) view.findViewById(R.id.bookBtn);
 
-        bookBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppointmentFragment appointmentFrag = new AppointmentFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), appointmentFrag, "appointmentFrag")
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
+//        bookBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AppointmentFragment appointmentFrag = new AppointmentFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(((ViewGroup)getView().getParent()).getId(), appointmentFrag, "appointmentFrag")
+//                        .addToBackStack(null)
+//                        .commit();
+//            }
+//        });
 
-        createAppointmentRecycler(recyclerView, noBookings, bookBtn);
+        createAppointmentRecycler(recyclerView, noBookings);
 
         return view;
     }
 
-    private void createAppointmentRecycler(RecyclerView recyclerView, TextView noBookings, Button bookBtn) {
+    private void createAppointmentRecycler(RecyclerView recyclerView, TextView noBookings) {
         CollectionReference ref = db.collection("info")
                 .document(userID)
                 .collection("appointments");
@@ -89,6 +96,7 @@ public class AppointmentInfoFragment extends Fragment {
         int minutes = c.get(Calendar.MINUTE);
 
         String monthString = "";
+        String dayString = "";
         String hourString = "";
         String minuteString = "";
 
@@ -100,6 +108,11 @@ public class AppointmentInfoFragment extends Fragment {
         else
             monthString = String.valueOf(month);
 
+        if (day < 10)
+            dayString = "0" + day;
+        else
+            dayString = String.valueOf(day);
+
         if (hour < 10)
             hourString = "0" + hour;
         else
@@ -110,10 +123,15 @@ public class AppointmentInfoFragment extends Fragment {
         else
             minuteString = String.valueOf(minutes);
 
-        String dateTime = year + monthString + day + hourString + minuteString;
+        String dateTime = year + monthString + dayString + hourString + minuteString;
         long dateTimeLong = Long.parseLong(dateTime);
 
-        Query query = ref.whereGreaterThanOrEqualTo("dateTime", dateTimeLong);
+//        LocalDateTime dateTimeNow = LocalDateTime.now();
+//        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+//        String dateTimeString = dateTimeNow.format(format);
+//        Long dateTimeLong = Long.parseLong(dateTimeString);
+
+        Query query = ref.whereGreaterThan("dateTime", dateTimeLong);
 
         FirestoreRecyclerOptions<AppointmentClass> options = new FirestoreRecyclerOptions.Builder<AppointmentClass>()
                 .setQuery(query, AppointmentClass.class)
@@ -126,12 +144,10 @@ public class AppointmentInfoFragment extends Fragment {
                 if (getItemCount() == 0) {
                     recyclerView.setVisibility(View.INVISIBLE);
                     noBookings.setVisibility(View.VISIBLE);
-                    bookBtn.setVisibility(View.VISIBLE);
                 }
                 else {
                     recyclerView.setVisibility(View.VISIBLE);
                     noBookings.setVisibility(View.GONE);
-                    bookBtn.setVisibility(View.GONE);
                 }
             }
         };

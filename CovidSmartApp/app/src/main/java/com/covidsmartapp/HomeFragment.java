@@ -5,27 +5,43 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
@@ -57,9 +73,14 @@ public class HomeFragment extends Fragment {
 
         TextView userGreeting = (TextView) view.findViewById(R.id.userGreeting);
         TextView noRecentLocations = (TextView) view.findViewById(R.id.noRecentLocations);
-        Button scanQR = (Button) view.findViewById(R.id.scanQR);
+        ConstraintLayout constraintVaccination = (ConstraintLayout) view.findViewById(R.id.constraintVaccination);
+        ImageView vaccinationImage = (ImageView) view.findViewById(R.id.vaccinationImage);
+        TextView vaccinationStatus = (TextView) view.findViewById(R.id.vaccinationStatus);
+        ConstraintLayout scanQR = (ConstraintLayout) view.findViewById(R.id.constraintScan);
         RecyclerView checkOutRecycler = (RecyclerView) view.findViewById(R.id.checkOutRecycler);
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
+        progressBar.setVisibility(View.VISIBLE);
         // Display user greeting
         db.collection("users").document(userID)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -69,6 +90,8 @@ public class HomeFragment extends Fragment {
                 userGreeting.setText("Hello " + fName);
             }
         });
+
+        getVaccinationStatus(vaccinationStatus, vaccinationImage, progressBar, getActivity());
 
         // Check Out Recycler View
         createCheckOutRecycler(checkOutRecycler, noRecentLocations);
@@ -101,6 +124,56 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void getVaccinationStatus(TextView vaccinationStatus, ImageView vaccinationImage, ProgressBar progressBar, Context ct) {
+        Calendar c = Calendar.getInstance();
+        Date currentDate = c.getTime();
+        Timestamp timestamp = new Timestamp(currentDate);
+
+        DocumentReference vacRef = db.collection("info")
+                .document(userID)
+                .collection("vaccination")
+                .document("vaccinationStatus");
+
+        vacRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String status = document.getString("status");
+                        if (status.equals("none")) {
+                            vaccinationStatus.setText("Not Vaccinated");
+                        } else if (status.equals("first")) {
+                            vaccinationStatus.setText("Partially Vaccinated");
+                        } else if (status.equals("second")) {
+                            vaccinationStatus.setText("Vaccinated without Booster");
+                        } else if (status.equals("booster")) {
+                            vaccinationStatus.setText("Fully Vaccinated");
+                        }
+                        setVaccinationImage(status, vaccinationImage, ct);
+                    } else {
+                        Log.d("DEBUG", "No such document");
+                    }
+                } else {
+                    Log.d("DEBUG", "get failed with ", task.getException());
+                }
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void setVaccinationImage (String status, ImageView vaccinationImage, Context ct) {
+        if (status.equals("none")) {
+            vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_not_interested_24));
+        } else if (status.equals("first")) {
+            vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_not_interested_24));
+        } else if (status.equals("second")) {
+            vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_check_24));
+        } else if (status.equals("booster")) {
+            vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_check_circle_outline_24));
+        }
     }
 
     private void createCheckOutRecycler(RecyclerView checkOutRecycler, TextView noRecentLocations) {

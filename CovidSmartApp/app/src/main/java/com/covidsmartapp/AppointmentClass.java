@@ -1,20 +1,22 @@
 package com.covidsmartapp;
 
+import com.google.firebase.Timestamp;
+
 public class AppointmentClass {
 
-    private String appointmentType, location, date, time, testResult;
+    private String appointmentType, location, date, time, status;
     private long dateTime;
 
     // For firebase
     public AppointmentClass() {
     }
 
-    public AppointmentClass(String appointmentType, String location, String date, String time, String testResult, long dateTime) {
+    public AppointmentClass(String appointmentType, String location, String date, String time, String status, long dateTime) {
         this.appointmentType = appointmentType;
         this.location = location;
         this.date = date;
         this.time = time;
-        this.testResult = testResult;
+        this.status = status;
         this.dateTime = dateTime;
     }
 
@@ -50,12 +52,12 @@ public class AppointmentClass {
         this.time = time;
     }
 
-    public String getTestResult() {
-        return testResult;
+    public String getStatus() {
+        return status;
     }
 
-    public void setTestResult(String testResult) {
-        this.testResult = testResult;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public long getDateTime() {

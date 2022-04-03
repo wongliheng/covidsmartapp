@@ -67,14 +67,32 @@ public class BookingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
 
-        Button createAppointment = (Button) view.findViewById(R.id.createAppointment);
+        Button bookTest = (Button) view.findViewById(R.id.bookTest);
+        Button bookVaccination = (Button) view.findViewById(R.id.bookVaccination);
         Button viewAppointments = (Button) view.findViewById(R.id.viewAppointments);
         Button viewTestResults = (Button) view.findViewById(R.id.viewTestResults);
 
-        createAppointment.setOnClickListener(new View.OnClickListener() {
+        bookTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppointmentFragment appointmentFrag = new AppointmentFragment();
+                Bundle args = new Bundle();
+                args.putString("appointmentType", "COVID-19 Test");
+                appointmentFrag.setArguments(args);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), appointmentFrag, "appointmentFrag")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        bookVaccination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppointmentFragment appointmentFrag = new AppointmentFragment();
+                Bundle args = new Bundle();
+                args.putString("appointmentType", "COVID-19 Vaccination");
+                appointmentFrag.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), appointmentFrag, "appointmentFrag")
                         .addToBackStack(null)

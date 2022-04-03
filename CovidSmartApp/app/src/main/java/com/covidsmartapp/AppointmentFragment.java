@@ -1,9 +1,11 @@
 package com.covidsmartapp;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,6 +39,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +53,7 @@ public class AppointmentFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String userID;
+    private String appointmentType;
 
     private boolean timeCheck = false;
 
@@ -63,6 +70,9 @@ public class AppointmentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            appointmentType = getArguments().getString("appointmentType");
+        }
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -77,13 +87,22 @@ public class AppointmentFragment extends Fragment {
 
         EditText dateEditText = (EditText) view.findViewById(R.id.dateEditText);
 
-        TextView appointmentText = (TextView) view.findViewById(R.id.appointmentText);
+//        TextView appointmentText = (TextView) view.findViewById(R.id.appointmentText);
+        TextView appointmentTypeText = (TextView) view.findViewById(R.id.appointmentTypeText);
         TextView dateText = (TextView) view.findViewById(R.id.dateText);
         TextView timeText = (TextView) view.findViewById(R.id.timeText);
         TextView locationText = (TextView) view.findViewById(R.id.locationText);
 
+        if (appointmentType.equals("COVID-19 Test")){
+            appointmentTypeText.setText("COVID-19 Test Booking");
+        }
+        else if (appointmentType.equals("COVID-19 Vaccination"))
+        {
+            appointmentTypeText.setText("COVID-19 Vaccination Booking");
+        }
+
 //        SearchableSpinner appointmentSpinner = (SearchableSpinner) view.findViewById(R.id.appointmentSpinner);
-        Spinner appointmentSpinner = (Spinner) view.findViewById(R.id.appointmentSpinner);
+//        Spinner appointmentSpinner = (Spinner) view.findViewById(R.id.appointmentSpinner);
         Spinner timeSpinner = (Spinner) view.findViewById(R.id.timeSpinner) ;
         Spinner locationSpinner = (Spinner) view.findViewById(R.id.locationSpinner);
         Button bookBtn = (Button) view.findViewById(R.id.bookBtn);
@@ -96,7 +115,7 @@ public class AppointmentFragment extends Fragment {
         dateEditText.setText(day + " " + getMonthString(month) + " " + year);
 
         SpinnerCreation createSpinner = new SpinnerCreation(getActivity());
-        createSpinner.createAppointmentSpinner(appointmentSpinner);
+//        createSpinner.createAppointmentSpinner(appointmentSpinner);
         createSpinner.createTimeSpinner(timeSpinner, day, month);
         createSpinner.createLocationSpinner(locationSpinner);
 
@@ -127,8 +146,6 @@ public class AppointmentFragment extends Fragment {
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String appointmentType = appointmentSpinner.getSelectedItem().toString();
                 String date = dateEditText.getText().toString();
                 String time = timeSpinner.getSelectedItem().toString();
                 String location = locationSpinner.getSelectedItem().toString();
@@ -172,19 +189,13 @@ public class AppointmentFragment extends Fragment {
                     String documentID = newDate + newTime;
                     long dateTimeLong = Long.parseLong(documentID);
 
-                    String testResult = "Negative";
-                    Random rand = new Random();
-                    int random = rand.nextInt(100);
-                    if (random == 1)
-                        testResult = "Positive";
-
                     Map<String, Object> appointment = new HashMap<>();
                     appointment.put("appointmentType", appointmentType);
                     appointment.put("location", location);
                     appointment.put("date", newDate);
                     appointment.put("time", newTime);
                     appointment.put("dateTime", dateTimeLong);
-                    appointment.put("testResult", testResult);
+                    appointment.put("status", "Processing");
 
                     DocumentReference ref = db.collection("info")
                             .document(userID)
@@ -196,13 +207,20 @@ public class AppointmentFragment extends Fragment {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    Toast.makeText(getActivity(), "You already have an appointment at this timeslot", Toast.LENGTH_LONG).show();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setMessage("You already have an appointment at this timeslot.");
+                                    final AlertDialog dialog = builder.create();
+                                    dialog.show();
+
+                                    final Timer t = new Timer();
+                                    t.schedule(new TimerTask() {
+                                        public void run() {
+                                            dialog.dismiss();
+                                            t.cancel();
+                                        }
+                                    }, 1250);
                                 } else {
-                                    db.collection("info")
-                                            .document(userID)
-                                            .collection("appointments")
-                                            .document(String.valueOf(dateTimeLong))
-                                            .set(appointment);
+                                    ref.set(appointment);
 
                                     BookingConfirmed bookingConfirmed = new BookingConfirmed();
                                     Bundle args = new Bundle();
