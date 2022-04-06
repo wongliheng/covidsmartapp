@@ -1,11 +1,16 @@
 <resources>
+    <!--Menu Strings-->
     <string name="app_name">CovidSmartApp</string>
     <string name="home">Home</string>
     <string name="info">Info</string>
     <string name="booking">Bookings</string>
     <string name="history">History</string>
     <string name="more">More</string>
+    <string name="adminPanel">Admin Panel</string>
+
+    <!--App Strings-->
     <string name="covidSitrep">For more information on COVID-19 in Singapore, visit the COVID-19 Situation Report website by the Ministry of Health by clicking the button below</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -15,4 +20,5 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
 </resources>

@@ -154,6 +154,8 @@ public class HomeFragment extends Fragment {
                         }
                         setVaccinationImage(status, vaccinationImage, ct);
                     } else {
+                        vaccinationStatus.setText("Not Vaccinated");
+                        setVaccinationImage("none", vaccinationImage, ct);
                         Log.d("DEBUG", "No such document");
                     }
                 } else {

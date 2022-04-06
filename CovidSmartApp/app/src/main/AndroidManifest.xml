@@ -18,10 +18,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidSmartApp">
         <activity
+            android:name=".RegisterStep3"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterStep2"
+            android:exported="false" />
+        <activity
+            android:name=".AdminHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoggedIn"
             android:exported="false" />
         <activity
-            android:name=".RegisterPage"
+            android:name=".RegisterStep1"
             android:exported="false" />
         <activity
             android:name=".LoginPage"

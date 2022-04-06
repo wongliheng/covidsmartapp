@@ -9,8 +9,6 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,20 +21,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginPage extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseFirestore db;
+
+    private String userID;
+
     private Button registerBtn, loginBtn;
     private TextInputEditText email, pw;
 //    private ProgressBar progressBar;
@@ -47,11 +42,11 @@ public class LoginPage extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
-            startActivity(new Intent(LoginPage.this, LoggedIn.class));
-        }
+        if (mAuth.getCurrentUser() != null)
+            mAuth.signOut();
+
 
         email = findViewById(R.id.emailEditText);
         pw = findViewById(R.id.passwordEditText);
@@ -60,7 +55,7 @@ public class LoginPage extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, RegisterPage.class));
+                startActivity(new Intent(LoginPage.this, RegisterStep1.class));
             }
         });
 
@@ -101,9 +96,44 @@ public class LoginPage extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
-                                startActivity(new Intent(LoginPage.this, MainActivity.class));
-                                finish();
+                                userID = user.getUid();
+                                user.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        // Check email verified
+                                        if (user.isEmailVerified()){
+                                            // Check whether user has filled up details
+                                            db.collection("users")
+                                                    .document(userID)
+                                                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        DocumentSnapshot document = task.getResult();
+                                                        if (document.exists()) {
+                                                            startActivity(new Intent(LoginPage.this, MainActivity.class));
+                                                            finish();
+                                                        } else {
+                                                            Toast.makeText(LoginPage.this, "Please complete your registration", Toast.LENGTH_SHORT).show();
+                                                            Intent i = new Intent(LoginPage.this, RegisterStep3.class);
+                                                            i.putExtra("email", emailString);
+                                                            i.putExtra("pw", pwString);
+                                                            startActivity(i);
+                                                        }
+                                                    } else {
+                                                        Log.d("DEBUG", "get failed with ", task.getException());
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            Toast.makeText(LoginPage.this, "Please complete your registration", Toast.LENGTH_SHORT).show();
+                                            Intent i = new Intent(LoginPage.this, RegisterStep2.class);
+                                            i.putExtra("email", emailString);
+                                            i.putExtra("pw", pwString);
+                                            startActivity(i);
+                                        }
+                                    }
+                                });
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -121,8 +151,5 @@ public class LoginPage extends AppCompatActivity {
                         }
             });
         }
-    }
-
-    private void updateUI(FirebaseUser user) {
     }
 }

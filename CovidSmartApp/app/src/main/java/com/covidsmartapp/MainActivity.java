@@ -1,24 +1,28 @@
 package com.covidsmartapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private FirebaseUser user;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +30,84 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
+        user = mAuth.getCurrentUser();
 
-        if (currentUser == null) {
+        if (user == null) {
             startActivity(new Intent(MainActivity.this, LoginPage.class));
             finish();
         }
         else {
-            startActivity(new Intent(MainActivity.this, LoggedIn.class));
-            finish();
+            userID = user.getUid();
+            user.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    // Check email verified
+                    if (user.isEmailVerified()) {
+                        // Check whether user has filled up details
+                        db.collection("users")
+                                .document(userID)
+                                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        String userType = document.getString("userType");
+                                        if (userType.equals("user")) {
+                                            startActivity(new Intent(MainActivity.this, LoggedIn.class));
+                                            finish();
+                                        } else if (userType.equals("admin")) {
+                                            startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+                                            finish();
+                                        }
+                                    } else {
+                                        startActivity(new Intent(MainActivity.this, LoginPage.class));
+                                        finish();
+                                    }
+                                } else {
+                                    Log.d("DEBUG", "get failed with ", task.getException());
+                                }
+                            }
+                        });
+                    } else {
+                        startActivity(new Intent(MainActivity.this, LoginPage.class));
+                        finish();
+                    }
+                }
+            });
         }
+
+
+//        else if (!user.isEmailVerified()) {
+//            startActivity(new Intent(MainActivity.this, RegisterStep2.class));
+//            finish();
+//        } else {
+//            String userID = user.getUid();
+//            DocumentReference userRef = db.collection("users")
+//                    .document(userID);
+//            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                    if (task.isSuccessful()) {
+//                        DocumentSnapshot document = task.getResult();
+//                        if (document.exists()) {
+//                            String userType = document.getString("userType");
+//                            if (userType.equals("user")) {
+//                                startActivity(new Intent(MainActivity.this, LoggedIn.class));
+//                                finish();
+//                            } else if (userType.equals("admin")) {
+//                                startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
+//                                finish();
+//                            }
+//                        } else {
+//                            Log.d("DEBUG", "No such document");
+//                        }
+//                    } else {
+//                        Log.d("DEBUG", "get failed with ", task.getException());
+//                    }
+//                }
+//            });
+//        }
     }
 }
