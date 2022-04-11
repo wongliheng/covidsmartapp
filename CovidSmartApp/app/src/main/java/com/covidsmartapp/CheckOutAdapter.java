@@ -42,7 +42,7 @@ public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationBeforeChec
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 String documentID = getDocID(position);
 
-                CheckOutFragment checkOutFrag = new CheckOutFragment();
+                UserCheckOutFragment checkOutFrag = new UserCheckOutFragment();
                 Bundle args = new Bundle();
                 args.putString("documentID", documentID);
                 checkOutFrag.setArguments(args);

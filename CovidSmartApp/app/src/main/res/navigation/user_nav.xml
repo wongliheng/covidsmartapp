@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.covidsmartapp.UserHomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_user_home" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.covidsmartapp.UserInfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_user_info" />
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.covidsmartapp.UserBookingFragment"
+        android:label="fragment_booking"
+        tools:layout="@layout/fragment_user_booking" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.covidsmartapp.UserNewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_user_news" />
+    <fragment
+        android:id="@+id/caseFragment"
+        android:name="com.covidsmartapp.UserCaseFragment"
+        android:label="fragment_case"
+        tools:layout="@layout/fragment_user_case" />
+    <fragment
+        android:id="@+id/checkInFragment"
+        android:name="com.covidsmartapp.UserCheckInFragment"
+        android:label="fragment_check_in"
+        tools:layout="@layout/fragment_user_check_in" />
+    <fragment
+        android:id="@+id/QRFragment"
+        android:name="com.covidsmartapp.UserQRFragment"
+        android:label="fragment_q_r"
+        tools:layout="@layout/fragment_user_qr" />
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.covidsmartapp.UserCheckOutFragment"
+        android:label="fragment_check_out"
+        tools:layout="@layout/fragment_user_check_out" />
+    <fragment
+        android:id="@+id/appointmentFragment"
+        android:name="com.covidsmartapp.UserAppointmentFragment"
+        android:label="fragment_appointment"
+        tools:layout="@layout/fragment_user_appointment" />
+    <fragment
+        android:id="@+id/bookingConfirmed"
+        android:name="com.covidsmartapp.UserBookingConfirmed"
+        android:label="fragment_booking_confirmed"
+        tools:layout="@layout/fragment_user_booking_confirmed" />
+    <fragment
+        android:id="@+id/appointmentInfoFragment"
+        android:name="com.covidsmartapp.UserAppointmentInfoFragment"
+        android:label="fragment_appointment_info"
+        tools:layout="@layout/fragment_user_appointment_info" />
+    <fragment
+        android:id="@+id/testResultFragment"
+        android:name="com.covidsmartapp.UserTestResultFragment"
+        android:label="fragment_test_result"
+        tools:layout="@layout/fragment_user_test_result" />
+    <fragment
+        android:id="@+id/locationHistoryFragment"
+        android:name="com.covidsmartapp.UserLocationHistoryFragment"
+        android:label="fragment_location_history"
+        tools:layout="@layout/fragment_user_location_history" />
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.covidsmartapp.UserMoreFragment"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_user_more" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.covidsmartapp.UserEditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_user_edit_profile" />
+</navigation>

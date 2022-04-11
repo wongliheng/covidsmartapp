@@ -1,8 +1,10 @@
 package com.covidsmartapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +18,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -47,7 +51,6 @@ public class LoginPage extends AppCompatActivity {
         if (mAuth.getCurrentUser() != null)
             mAuth.signOut();
 
-
         email = findViewById(R.id.emailEditText);
         pw = findViewById(R.id.passwordEditText);
 
@@ -55,7 +58,7 @@ public class LoginPage extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, RegisterStep1.class));
+                startActivity(new Intent(LoginPage.this, UserRegisterStep1.class));
             }
         });
 
@@ -111,14 +114,47 @@ public class LoginPage extends AppCompatActivity {
                                                     if (task.isSuccessful()) {
                                                         DocumentSnapshot document = task.getResult();
                                                         if (document.exists()) {
-                                                            startActivity(new Intent(LoginPage.this, MainActivity.class));
-                                                            finish();
+                                                            String userType = document.getString("userType");
+                                                            if (userType.equals("admin")) {
+                                                                Intent i = new Intent(LoginPage.this, AdminHomeActivity.class);
+                                                                i.putExtra("email", emailString);
+                                                                i.putExtra("pw", pwString);
+                                                                startActivity(i);
+                                                                //Check whether this is necessary
+                                                                finish();
+                                                            } else if (userType.equals("doctor")) {
+
+                                                            } else {
+                                                                startActivity(new Intent(LoginPage.this, UserLoggedIn.class));
+                                                                finish();
+                                                            }
                                                         } else {
-                                                            Toast.makeText(LoginPage.this, "Please complete your registration", Toast.LENGTH_SHORT).show();
-                                                            Intent i = new Intent(LoginPage.this, RegisterStep3.class);
-                                                            i.putExtra("email", emailString);
-                                                            i.putExtra("pw", pwString);
-                                                            startActivity(i);
+                                                            // If user has not filled up details
+                                                            new AlertDialog.Builder(LoginPage.this)
+                                                                    .setTitle("Incomplete Registration")
+                                                                    .setMessage("You have not completed your registration, would you like to continue?")
+                                                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                                        public void onClick(DialogInterface dialog, int id) {
+                                                                            Intent i = new Intent(LoginPage.this, UserRegisterStep3.class);
+                                                                            i.putExtra("email", emailString);
+                                                                            i.putExtra("pw", pwString);
+                                                                            startActivity(i);
+                                                                            //Check whether this is necessary
+                                                                            finish();
+                                                                        }
+                                                                    })
+                                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                                            AuthCredential credential = EmailAuthProvider.getCredential(emailString, pwString);
+                                                                            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                    user.delete();
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }).show();
                                                         }
                                                     } else {
                                                         Log.d("DEBUG", "get failed with ", task.getException());
@@ -126,11 +162,58 @@ public class LoginPage extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
-                                            Toast.makeText(LoginPage.this, "Please complete your registration", Toast.LENGTH_SHORT).show();
-                                            Intent i = new Intent(LoginPage.this, RegisterStep2.class);
-                                            i.putExtra("email", emailString);
-                                            i.putExtra("pw", pwString);
-                                            startActivity(i);
+                                            // If user has not verified email
+                                            // If the user is an admin or doctor, there is no need to immediately authenticate the email
+                                            db.collection("users")
+                                                    .document(userID)
+                                                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        DocumentSnapshot document = task.getResult();
+                                                        if (document.exists()) {
+                                                            String userType = document.getString("userType");
+                                                            if (userType.equals("admin")) {
+                                                                Intent i = new Intent(LoginPage.this, AdminHomeActivity.class);
+                                                                i.putExtra("email", emailString);
+                                                                i.putExtra("pw", pwString);
+                                                                startActivity(i);
+                                                                //Check whether this is necessary
+                                                                finish();
+                                                            } else if (userType.equals("doctor")) {
+                                                                startActivity(new Intent(LoginPage.this, UserLoggedIn.class));
+                                                                finish();
+                                                            }
+                                                        } else {
+                                                            new AlertDialog.Builder(LoginPage.this)
+                                                                    .setTitle("Incomplete Registration")
+                                                                    .setMessage("You have not completed your registration, would you like to continue?")
+                                                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                                        public void onClick(DialogInterface dialog, int id) {
+                                                                            Intent i = new Intent(LoginPage.this, UserRegisterStep2.class);
+                                                                            i.putExtra("email", emailString);
+                                                                            i.putExtra("pw", pwString);
+                                                                            startActivity(i);
+                                                                            //Check whether this is necessary
+                                                                            finish();
+                                                                        }
+                                                                    })
+                                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                                        @Override
+                                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                                            AuthCredential credential = EmailAuthProvider.getCredential(emailString, pwString);
+                                                                            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                    user.delete();
+                                                                                }
+                                                                            });
+                                                                        }
+                                                                    }).show();
+                                                        }
+                                                    }
+                                                }
+                                            });
                                         }
                                     }
                                 });

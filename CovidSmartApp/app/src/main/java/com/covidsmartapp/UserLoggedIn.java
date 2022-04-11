@@ -8,41 +8,42 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
 
-public class AdminHomeActivity extends AppCompatActivity {
+public class UserLoggedIn extends AppCompatActivity {
+
+    // This page serves as the main activity home page that the user arrives to after logging in
 
     private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_home);
+        setContentView(R.layout.activity_user_logged_in);
 
         fragmentManager = getSupportFragmentManager();
 
-        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            adminEmail = extras.getString("email");
-//            adminPw = extras.getString("pw");
-//        }
-
-        AdminHomeFragment adminHomeFragment = new AdminHomeFragment();
-        adminHomeFragment.setArguments(extras);
-
-        replaceFragment(adminHomeFragment);
+        replaceFragment(new UserHomeFragment());
 
         NavigationBarView bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
-                case R.id.adminPanel:
-                    replaceFragment(adminHomeFragment);
+                case R.id.navHome:
+                    replaceFragment(new UserHomeFragment());
+                    break;
+                case R.id.navInfo:
+                    replaceFragment(new UserInfoFragment());
+                    break;
+                case R.id.navBooking:
+                    replaceFragment(new UserBookingFragment());
+                    break;
+                case R.id.navHistory:
+                    replaceFragment(new UserLocationHistoryFragment());
                     break;
                 case R.id.navMore:
-                    replaceFragment(new AdminMoreFragment());
+                    replaceFragment(new UserMoreFragment());
                     break;
             }
             return true;
@@ -62,7 +63,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                     .setMessage("Are you sure you want to exit?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            AdminHomeActivity.this.finish();
+                            UserLoggedIn.this.finish();
                         }
                     })
                     .setNegativeButton("No", null)

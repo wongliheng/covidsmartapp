@@ -8,45 +8,34 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
 
-public class AdminHomeActivity extends AppCompatActivity {
-
+public class DoctorHomeActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_home);
+        setContentView(R.layout.activity_doctor_home);
 
         fragmentManager = getSupportFragmentManager();
 
-        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            adminEmail = extras.getString("email");
-//            adminPw = extras.getString("pw");
-//        }
-
-        AdminHomeFragment adminHomeFragment = new AdminHomeFragment();
-        adminHomeFragment.setArguments(extras);
-
-        replaceFragment(adminHomeFragment);
+//        replaceFragment(adminHomeFragment);
 
         NavigationBarView bottomNav = findViewById(R.id.bottom_navigation);
 
-        bottomNav.setOnItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.adminPanel:
-                    replaceFragment(adminHomeFragment);
-                    break;
-                case R.id.navMore:
-                    replaceFragment(new AdminMoreFragment());
-                    break;
-            }
-            return true;
-        });
+//        bottomNav.setOnItemSelectedListener(item -> {
+//            switch (item.getItemId()){
+//                case R.id.adminPanel:
+//                    replaceFragment(adminHomeFragment);
+//                    break;
+//                case R.id.navMore:
+//                    replaceFragment(new AdminMoreFragment());
+//                    break;
+//            }
+//            return true;
+//        });
     }
     private void replaceFragment (Fragment fragment){
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -62,7 +51,7 @@ public class AdminHomeActivity extends AppCompatActivity {
                     .setMessage("Are you sure you want to exit?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            AdminHomeActivity.this.finish();
+                            DoctorHomeActivity.this.finish();
                         }
                     })
                     .setNegativeButton("No", null)
