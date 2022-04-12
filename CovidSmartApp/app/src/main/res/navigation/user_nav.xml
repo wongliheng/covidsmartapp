@@ -79,4 +79,9 @@
         android:name="com.covidsmartapp.UserEditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_user_edit_profile" />
+    <fragment
+        android:id="@+id/userVaccinationStatusFragment"
+        android:name="com.covidsmartapp.UserVaccinationStatusFragment"
+        android:label="fragment_user_vaccination_status"
+        tools:layout="@layout/fragment_user_vaccination_status" />
 </navigation>

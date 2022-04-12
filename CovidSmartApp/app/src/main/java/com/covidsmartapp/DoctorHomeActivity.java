@@ -1,5 +1,6 @@
 package com.covidsmartapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,10 +10,19 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DoctorHomeActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
+    private String doctorEmail;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,22 +30,45 @@ public class DoctorHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_home);
 
         fragmentManager = getSupportFragmentManager();
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-//        replaceFragment(adminHomeFragment);
+        String userID = mAuth.getCurrentUser().getUid();
+
+        db.collection("users")
+                .document(userID)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                doctorEmail = documentSnapshot.getString("email");
+            }
+        });
+
+        replaceFragment(new DoctorHomeFragment());
 
         NavigationBarView bottomNav = findViewById(R.id.bottom_navigation);
 
-//        bottomNav.setOnItemSelectedListener(item -> {
-//            switch (item.getItemId()){
-//                case R.id.adminPanel:
-//                    replaceFragment(adminHomeFragment);
-//                    break;
-//                case R.id.navMore:
-//                    replaceFragment(new AdminMoreFragment());
-//                    break;
-//            }
-//            return true;
-//        });
+        bottomNav.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.doctorPanel:
+                    replaceFragment(new DoctorHomeFragment());
+                    break;
+                case R.id.updateVaccination:
+                    DoctorUpdateVaccinationFragment doctorUpdateVaccinationFragment = new DoctorUpdateVaccinationFragment();
+                    Bundle args = new Bundle();
+                    args.putString("email", doctorEmail);
+                    doctorUpdateVaccinationFragment.setArguments(args);
+                    replaceFragment(doctorUpdateVaccinationFragment);
+                    break;
+                case R.id.updateTest:
+                    replaceFragment(new DoctorUpdateTestsFragment());
+                    break;
+                case R.id.navMore:
+                    replaceFragment(new DoctorMoreFragment());
+                    break;
+            }
+            return true;
+        });
     }
     private void replaceFragment (Fragment fragment){
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);

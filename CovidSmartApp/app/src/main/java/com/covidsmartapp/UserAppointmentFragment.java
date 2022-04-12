@@ -82,8 +82,7 @@ public class UserAppointmentFragment extends Fragment {
         if (appointmentType.equals("COVID-19 Test")){
             appointmentTypeText.setText("COVID-19 Test Booking");
         }
-        else if (appointmentType.equals("COVID-19 Vaccination"))
-        {
+        else if (appointmentType.equals("COVID-19 Vaccination")) {
             appointmentTypeText.setText("COVID-19 Vaccination Booking");
         }
 

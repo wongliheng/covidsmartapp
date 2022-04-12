@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             userID = user.getUid();
-            db.collection("users")
+            db.collection("userType")
                     .document(userID)
                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                                         startActivity(new Intent(MainActivity.this, LoginPage.class));
                                         finish();
                                     } else if (userType.equals("doctor")) {
-                                        startActivity(new Intent(MainActivity.this, UserLoggedIn.class));
+                                        startActivity(new Intent(MainActivity.this, DoctorHomeActivity.class));
                                         finish();
                                     }
                                 } else {

@@ -106,7 +106,7 @@ public class LoginPage extends AppCompatActivity {
                                         // Check email verified
                                         if (user.isEmailVerified()){
                                             // Check whether user has filled up details
-                                            db.collection("users")
+                                            db.collection("userType")
                                                     .document(userID)
                                                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
@@ -120,10 +120,10 @@ public class LoginPage extends AppCompatActivity {
                                                                 i.putExtra("email", emailString);
                                                                 i.putExtra("pw", pwString);
                                                                 startActivity(i);
-                                                                //Check whether this is necessary
                                                                 finish();
                                                             } else if (userType.equals("doctor")) {
-
+                                                                startActivity(new Intent(LoginPage.this, DoctorHomeActivity.class));
+                                                                finish();
                                                             } else {
                                                                 startActivity(new Intent(LoginPage.this, UserLoggedIn.class));
                                                                 finish();
@@ -139,8 +139,6 @@ public class LoginPage extends AppCompatActivity {
                                                                             i.putExtra("email", emailString);
                                                                             i.putExtra("pw", pwString);
                                                                             startActivity(i);
-                                                                            //Check whether this is necessary
-                                                                            finish();
                                                                         }
                                                                     })
                                                                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -164,7 +162,7 @@ public class LoginPage extends AppCompatActivity {
                                         } else {
                                             // If user has not verified email
                                             // If the user is an admin or doctor, there is no need to immediately authenticate the email
-                                            db.collection("users")
+                                            db.collection("userType")
                                                     .document(userID)
                                                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
@@ -178,10 +176,9 @@ public class LoginPage extends AppCompatActivity {
                                                                 i.putExtra("email", emailString);
                                                                 i.putExtra("pw", pwString);
                                                                 startActivity(i);
-                                                                //Check whether this is necessary
                                                                 finish();
                                                             } else if (userType.equals("doctor")) {
-                                                                startActivity(new Intent(LoginPage.this, UserLoggedIn.class));
+                                                                startActivity(new Intent(LoginPage.this, DoctorHomeActivity.class));
                                                                 finish();
                                                             }
                                                         } else {
@@ -194,8 +191,6 @@ public class LoginPage extends AppCompatActivity {
                                                                             i.putExtra("email", emailString);
                                                                             i.putExtra("pw", pwString);
                                                                             startActivity(i);
-                                                                            //Check whether this is necessary
-                                                                            finish();
                                                                         }
                                                                     })
                                                                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

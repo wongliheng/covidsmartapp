@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/doctor_nav">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/doctor_nav"
+    app:startDestination="@id/doctorHomeFragment">
 
+    <fragment
+        android:id="@+id/doctorHomeFragment"
+        android:name="com.covidsmartapp.DoctorHomeFragment"
+        android:label="fragment_doctor_home"
+        tools:layout="@layout/fragment_doctor_home" />
+    <fragment
+        android:id="@+id/doctorMoreFragment"
+        android:name="com.covidsmartapp.DoctorMoreFragment"
+        android:label="fragment_doctor_more"
+        tools:layout="@layout/fragment_doctor_more" />
+    <fragment
+        android:id="@+id/doctorUpdateVaccinationFragment"
+        android:name="com.covidsmartapp.DoctorUpdateVaccinationFragment"
+        android:label="fragment_doctor_update_vaccination"
+        tools:layout="@layout/fragment_doctor_update_vaccination" />
+    <fragment
+        android:id="@+id/doctorUpdateTestsFragment"
+        android:name="com.covidsmartapp.DoctorUpdateTestsFragment"
+        android:label="fragment_doctor_update_tests"
+        tools:layout="@layout/fragment_doctor_update_tests" />
 </navigation>

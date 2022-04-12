@@ -115,6 +115,16 @@ public class UserHomeFragment extends Fragment {
             }
         });
 
+        constraintVaccination.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserVaccinationStatusFragment userVaccinationStatusFragment = new UserVaccinationStatusFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), userVaccinationStatusFragment, "qrFrag")
+                        .commit();
+            }
+        });
+
         return view;
     }
 
@@ -134,20 +144,12 @@ public class UserHomeFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String status = document.getString("status");
-                        if (status.equals("none")) {
-                            vaccinationStatus.setText("Not Vaccinated");
-                        } else if (status.equals("first")) {
-                            vaccinationStatus.setText("Partially Vaccinated");
-                        } else if (status.equals("second")) {
-                            vaccinationStatus.setText("Vaccinated without Booster");
-                        } else if (status.equals("booster")) {
-                            vaccinationStatus.setText("Fully Vaccinated");
-                        }
+                        String status = document.getString("vaccinationStatus");
+                        vaccinationStatus.setText(status);
                         setVaccinationImage(status, vaccinationImage, ct);
                     } else {
-                        vaccinationStatus.setText("Not Vaccinated");
-                        setVaccinationImage("none", vaccinationImage, ct);
+                        vaccinationStatus.setText("Unvaccinated");
+                        setVaccinationImage("Unvaccinated", vaccinationImage, ct);
                         Log.d("DEBUG", "No such document");
                     }
                 } else {
@@ -159,13 +161,13 @@ public class UserHomeFragment extends Fragment {
     }
 
     private void setVaccinationImage (String status, ImageView vaccinationImage, Context ct) {
-        if (status.equals("none")) {
+        if (status.equals("Unvaccinated")) {
             vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_not_interested_24));
-        } else if (status.equals("first")) {
+        } else if (status.equals("Partially Vaccinated")) {
             vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_not_interested_24));
-        } else if (status.equals("second")) {
+        } else if (status.equals("Vaccinated without Booster")) {
             vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_check_24));
-        } else if (status.equals("booster")) {
+        } else if (status.equals("Fully Vaccinated")) {
             vaccinationImage.setImageDrawable(ct.getResources().getDrawable(R.drawable.ic_baseline_check_circle_outline_24));
         }
     }

@@ -48,6 +48,8 @@ public class SpinnerCreation {
             "Outram Polyclinic", "Queenstown Polyclinic", "Sengkang Polyclinic", "Tampines Polyclinic", "Toa Payoh Polyclinic",
             "Woodlands Polyclinic", "Yishun Polyclinic"};
 
+    String [] vaccinationStatus = {"Unvaccinated", "Partially Vaccinated", "Vaccinated without Booster", "Fully Vaccinated"};
+
     public SpinnerCreation(Context context) {
         this.context = context;
     }
@@ -64,7 +66,6 @@ public class SpinnerCreation {
     }
 
     public Spinner setUpTimeSpinner (Spinner spinner) {
-
         String [] oneItemArray = {"Select a date"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, oneItemArray);
@@ -150,6 +151,16 @@ public class SpinnerCreation {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, locations);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
+    public SearchableSpinner createStatusSpinner (SearchableSpinner spinner) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.context, R.layout.spinner, vaccinationStatus);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setPositiveButton("OK");
 
         return spinner;
     }

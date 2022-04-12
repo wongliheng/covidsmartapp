@@ -83,8 +83,6 @@ public class UserRegisterStep3 extends AppCompatActivity {
         }
 
         if (verified) {
-            int phoneNum = Integer.parseInt(phoneNumString);
-
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -93,8 +91,8 @@ public class UserRegisterStep3 extends AppCompatActivity {
             userObject.put("fName", fNameString);
             userObject.put("lName", lNameString);
             userObject.put("email", email);
-            userObject.put("phoneNum", phoneNum);
-            userObject.put("userType", "user");
+            userObject.put("phoneNum", phoneNumString);
+            userObject.put("user", "true");
 
             db.collection("users")
                     .document(userID)
@@ -102,9 +100,19 @@ public class UserRegisterStep3 extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(UserRegisterStep3.this, "Account successfully created", Toast.LENGTH_LONG).show();
-                            mAuth.signOut();
-                            finish();
+                            Map<String, Object> userTypeObject = new HashMap<>();
+                            userTypeObject.put("userType", "user");
+                            db.collection("userType")
+                                    .document(userID)
+                                    .set(userTypeObject)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(UserRegisterStep3.this, "Account successfully created", Toast.LENGTH_LONG).show();
+                                            mAuth.signOut();
+                                            finish();
+                                        }
+                                    });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

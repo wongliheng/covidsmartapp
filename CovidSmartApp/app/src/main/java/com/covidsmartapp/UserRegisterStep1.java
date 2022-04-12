@@ -19,12 +19,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class UserRegisterStep1 extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Button register, backToLogIn;
     private TextInputEditText email, pw;
     private ProgressBar progressBar;
+
+    private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
+    private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +78,16 @@ public class UserRegisterStep1 extends AppCompatActivity {
             pw.setError("Please enter your password");
             pw.requestFocus();
         }
-        else if (pwString.length() < 6) {
-            pw.setError("Password needs to be at least 6 characters");
+        else if (pwString.length() < 8) {
+            pw.setError("Password needs to be at least 8 characters");
+            pw.requestFocus();
+        }
+        else if (pwString.length() > 20) {
+            pw.setError("Maximum of 20 characters for password");
+            pw.requestFocus();
+        }
+        else if (!checkPassword(pwString)) {
+            pw.setError("Password requires at least 1 digit, lowercase and uppercase character");
             pw.requestFocus();
         }
         else {
@@ -115,5 +129,10 @@ public class UserRegisterStep1 extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private boolean checkPassword(String password) {
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
     }
 }
