@@ -33,6 +33,7 @@ public class AdminHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_admin_home, container, false);
 
         Button createDoctorBtn = (Button) view.findViewById(R.id.createDoctorBtn);
+        Button manageDoctorBtn = (Button) view.findViewById(R.id.manageDoctorBtn);
 
         createDoctorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +44,18 @@ public class AdminHomeFragment extends Fragment {
                 args.putString("pw", adminPw);
                 createDoctorFragment.setArguments(args);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), createDoctorFragment, "appointmentFrag")
+                        .replace(((ViewGroup)getView().getParent()).getId(), createDoctorFragment, "createDoctorFrag")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        manageDoctorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AdminManageDoctorFragment suspendDoctorFragment = new AdminManageDoctorFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), suspendDoctorFragment, "suspendDoctorFrag")
                         .addToBackStack(null)
                         .commit();
             }

@@ -120,10 +120,18 @@ public class LoginPage extends AppCompatActivity {
                                                                 i.putExtra("email", emailString);
                                                                 i.putExtra("pw", pwString);
                                                                 startActivity(i);
+                                                                //Check whether this is necessary
                                                                 finish();
                                                             } else if (userType.equals("doctor")) {
                                                                 startActivity(new Intent(LoginPage.this, DoctorHomeActivity.class));
                                                                 finish();
+                                                            } else if (userType.equals("suspended")) {
+                                                                mAuth.signOut();
+                                                                new AlertDialog.Builder(LoginPage.this)
+                                                                        .setTitle("Account Suspended")
+                                                                        .setMessage("This account has been suspended.")
+                                                                        .setCancelable(true)
+                                                                        .show();
                                                             } else {
                                                                 startActivity(new Intent(LoginPage.this, UserLoggedIn.class));
                                                                 finish();
@@ -139,6 +147,8 @@ public class LoginPage extends AppCompatActivity {
                                                                             i.putExtra("email", emailString);
                                                                             i.putExtra("pw", pwString);
                                                                             startActivity(i);
+//                                                                            Check whether this is necessary
+//                                                                            finish();
                                                                         }
                                                                     })
                                                                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -176,10 +186,18 @@ public class LoginPage extends AppCompatActivity {
                                                                 i.putExtra("email", emailString);
                                                                 i.putExtra("pw", pwString);
                                                                 startActivity(i);
+                                                                //Check whether this is necessary
                                                                 finish();
                                                             } else if (userType.equals("doctor")) {
                                                                 startActivity(new Intent(LoginPage.this, DoctorHomeActivity.class));
                                                                 finish();
+                                                            } else if (userType.equals("suspended")) {
+                                                                mAuth.signOut();
+                                                                new AlertDialog.Builder(LoginPage.this)
+                                                                        .setTitle("Account Suspended")
+                                                                        .setMessage("This account has been suspended.")
+                                                                        .setCancelable(true)
+                                                                        .show();
                                                             }
                                                         } else {
                                                             new AlertDialog.Builder(LoginPage.this)
@@ -191,6 +209,8 @@ public class LoginPage extends AppCompatActivity {
                                                                             i.putExtra("email", emailString);
                                                                             i.putExtra("pw", pwString);
                                                                             startActivity(i);
+//                                                                            Check whether this is necessary
+//                                                                            finish();
                                                                         }
                                                                     })
                                                                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

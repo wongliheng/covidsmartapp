@@ -72,16 +72,16 @@ public class UserEditProfileFragment extends Fragment {
             public void onEvent(@Nullable DocumentSnapshot snapshot,
                                 @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
-                    Log.w("TAG", "Listen failed.", e);
+                    Log.w("DEBUG", "Listen failed.", e);
                     return;
                 }
 
                 if (snapshot != null && snapshot.exists()) {
                     fNameText.setText(snapshot.getString("fName"));
                     lNameText.setText(snapshot.getString("lName"));
-                    phoneNumText.setText(String.valueOf(snapshot.getLong("phoneNum")));
+                    phoneNumText.setText(snapshot.getString("phoneNum"));
                 } else {
-                    Log.d("TAG", "Current data: null");
+                    Log.d("DEBUG", "Current data: null");
                 }
             }
         });
@@ -109,7 +109,6 @@ public class UserEditProfileFragment extends Fragment {
                             .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     String fName = fNameInput.getText().toString();
-
                                     db.collection("users")
                                             .document(userID)
                                             .update("fName", fName);
@@ -145,7 +144,6 @@ public class UserEditProfileFragment extends Fragment {
                             .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     String lName = lNameInput.getText().toString();
-
                                     db.collection("users")
                                             .document(userID)
                                             .update("lName", lName);
@@ -180,9 +178,7 @@ public class UserEditProfileFragment extends Fragment {
                             .setView(numberLayout)
                             .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    String phoneNumString = numberInput.getText().toString();
-                                    int phoneNum = Integer.parseInt(phoneNumString);
-
+                                    String phoneNum = numberInput.getText().toString();
                                     db.collection("users")
                                             .document(userID)
                                             .update("phoneNum", phoneNum);

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminManageDoctorFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/doctorConstraint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintWidth_percent="0.8">
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/doctorSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:hintText="Search for a doctor's email"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/doctorEmailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Doctor's Email:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doctorConstraint"
+        app:layout_constraintHorizontal_bias="0.1"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/doctorEmailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="15sp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/doctorEmailTitle"
+        app:layout_constraintStart_toEndOf="@+id/doctorEmailTitle"
+        app:layout_constraintTop_toTopOf="@+id/doctorEmailTitle"
+        app:layout_constraintWidth_percent="0.6"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/doctorNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Doctor's Name:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doctorEmailTitle"
+        app:layout_constraintHorizontal_bias="0.1"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/doctorNameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="15sp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/doctorNameTitle"
+        app:layout_constraintStart_toEndOf="@+id/doctorNameTitle"
+        app:layout_constraintTop_toTopOf="@+id/doctorNameTitle"
+        app:layout_constraintWidth_percent="0.6"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/currentStatusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Current Status:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doctorNameTitle"
+        app:layout_constraintHorizontal_bias="0.1"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/currentStatusText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="15sp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/currentStatusTitle"
+        app:layout_constraintStart_toEndOf="@+id/currentStatusTitle"
+        app:layout_constraintTop_toTopOf="@+id/currentStatusTitle"
+        app:layout_constraintWidth_percent="0.6"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <Button
+        android:id="@+id/manageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentStatusTitle"
+        app:layout_constraintVertical_bias="0.1"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

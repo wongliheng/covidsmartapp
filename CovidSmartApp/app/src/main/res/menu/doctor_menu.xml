@@ -2,20 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/doctorPanel"
+        android:id="@+id/doctorHome"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/doctorPanel"/>
+        android:title="@string/doctorHome"/>
     <item
-        android:id="@+id/updateVaccination"
+        android:id="@+id/update"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_edit_note_24"
-        android:title="@string/updateVaccination"/>
-    <item
-        android:id="@+id/updateTest"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_edit_note_24"
-        android:title="@string/updateTest"/>
+        android:title="@string/update"/>
     <item
         android:id="@+id/navMore"
         android:enabled="true"

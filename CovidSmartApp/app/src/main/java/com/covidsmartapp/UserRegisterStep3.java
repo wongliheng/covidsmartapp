@@ -78,7 +78,11 @@ public class UserRegisterStep3 extends AppCompatActivity {
         } else if (phoneNumString.isEmpty()) {
             phone.setError("Please enter your phone number");
             phone.requestFocus();
-        } else {
+        } else if (phoneNumString.length() < 8) {
+            phone.setError("Phone Number needs to be at least 8 digits");
+            phone.requestFocus();
+        }
+        else {
             verified = true;
         }
 
@@ -92,7 +96,7 @@ public class UserRegisterStep3 extends AppCompatActivity {
             userObject.put("lName", lNameString);
             userObject.put("email", email);
             userObject.put("phoneNum", phoneNumString);
-            userObject.put("user", "true");
+            userObject.put("type", "user");
 
             db.collection("users")
                     .document(userID)

@@ -134,8 +134,8 @@ public class AdminCreateDoctorFragment extends Fragment {
                                 Map<String, Object> userObject = new HashMap<>();
                                 userObject.put("userID", userID);
                                 userObject.put("name", nameString);
-                                userObject.put("user", "false");
                                 userObject.put("email", emailString);
+                                userObject.put("type", "doctor");
 
                                 db.collection("users")
                                         .document(userID)

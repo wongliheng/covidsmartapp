@@ -50,18 +50,15 @@ public class DoctorHomeActivity extends AppCompatActivity {
 
         bottomNav.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
-                case R.id.doctorPanel:
+                case R.id.doctorHome:
                     replaceFragment(new DoctorHomeFragment());
                     break;
-                case R.id.updateVaccination:
-                    DoctorUpdateVaccinationFragment doctorUpdateVaccinationFragment = new DoctorUpdateVaccinationFragment();
+                case R.id.update:
+                    DoctorUpdateFragment doctorUpdateFragment = new DoctorUpdateFragment();
                     Bundle args = new Bundle();
                     args.putString("email", doctorEmail);
-                    doctorUpdateVaccinationFragment.setArguments(args);
-                    replaceFragment(doctorUpdateVaccinationFragment);
-                    break;
-                case R.id.updateTest:
-                    replaceFragment(new DoctorUpdateTestsFragment());
+                    doctorUpdateFragment.setArguments(args);
+                    replaceFragment(doctorUpdateFragment);
                     break;
                 case R.id.navMore:
                     replaceFragment(new DoctorMoreFragment());

@@ -6,8 +6,9 @@
     <string name="booking">Bookings</string>
     <string name="history">History</string>
     <string name="more">More</string>
-    <string name="adminPanel">Admin Panel</string>
-    <string name="doctorPanel">Doctor Panel</string>
+    <string name="adminPanel">Admin Home</string>
+    <string name="doctorHome">Doctor Home</string>
+    <string name="update">Update</string>
     <string name="updateVaccination">Vaccination</string>
     <string name="updateTest">Tests</string>
 

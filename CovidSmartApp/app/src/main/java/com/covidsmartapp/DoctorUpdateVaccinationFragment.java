@@ -79,7 +79,7 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String patientEmail = adapterView.getItemAtPosition(i).toString();
-                getPatientInfo(patientEmail, currentStatus, recyclerView, noVaccination, statusSpinner);
+                getPatientInfo(patientEmail, currentStatus, recyclerView, noVaccination);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -105,8 +105,8 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
                 String patientEmail = patientSpinner.getSelectedItem().toString();
                 String status = statusSpinner.getSelectedItem().toString();
                 updateVaccination(status, patientEmail);
+                currentStatus.setText("Current Status: " + status);
                 Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -116,13 +116,14 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
     private void createPatientSpinner(SearchableSpinner patientSpinner) {
         ArrayList<String> emails = new ArrayList<>();
         db.collection("users")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String user = document.getString("user");
-                        if (user.equals("true")) {
+                        String type = document.getString("type");
+                        if (type.equals("user")) {
                             String email = document.getString("email");
                             emails.add(email);
                         }
@@ -138,7 +139,7 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
     }
 
     private void getPatientInfo(String email, TextView currentStatus, RecyclerView recyclerView,
-                                TextView noVaccination, SearchableSpinner statusSpinner) {
+                                TextView noVaccination) {
         ArrayList<String> userIDList = new ArrayList<>();
         db.collection("users")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -166,7 +167,7 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
                                             String status = document.getString("vaccinationStatus");
                                             currentStatus.setText("Current Status: " + status);
                                         } else {
-                                            currentStatus.setText("Current Status: Not Vaccinated");
+                                            currentStatus.setText("Current Status: Unvaccinated");
                                             Log.d("DEBUG", "No such document");
                                         }
                                     } else {

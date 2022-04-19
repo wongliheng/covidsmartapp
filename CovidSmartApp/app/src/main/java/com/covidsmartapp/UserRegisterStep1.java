@@ -87,7 +87,7 @@ public class UserRegisterStep1 extends AppCompatActivity {
             pw.requestFocus();
         }
         else if (!checkPassword(pwString)) {
-            pw.setError("Password requires at least 1 digit, lowercase and uppercase character");
+            pw.setError("Password requires at least 8 characters with at least 1 digit, 1 lowercase and 1 uppercase character");
             pw.requestFocus();
         }
         else {

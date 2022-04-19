@@ -25,4 +25,9 @@
         android:name="com.covidsmartapp.DoctorUpdateTestsFragment"
         android:label="fragment_doctor_update_tests"
         tools:layout="@layout/fragment_doctor_update_tests" />
+    <fragment
+        android:id="@+id/doctorUpdateFragment"
+        android:name="com.covidsmartapp.DoctorUpdateFragment"
+        android:label="fragment_doctor_update"
+        tools:layout="@layout/fragment_doctor_update" />
 </navigation>

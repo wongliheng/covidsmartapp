@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminHomeFragment">
-
+    tools:context=".DoctorUpdateFragment">
 
     <Button
-        android:id="@+id/createDoctorBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create Doctor Account"
+        android:id="@+id/updateVaccinationBtn"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:text="Update Patient Vaccination Status"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,12 +19,14 @@
         app:layout_constraintVertical_bias="0.2"/>
 
     <Button
-        android:id="@+id/manageDoctorBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Manage Doctor Account"
+        android:id="@+id/updateTestBtn"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:text="Update Patient Test Results"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/createDoctorBtn"/>
+        app:layout_constraintTop_toBottomOf="@+id/updateVaccinationBtn"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

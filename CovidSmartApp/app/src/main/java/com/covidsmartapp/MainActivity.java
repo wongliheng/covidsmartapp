@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
                                     } else if (userType.equals("doctor")) {
                                         startActivity(new Intent(MainActivity.this, DoctorHomeActivity.class));
                                         finish();
+                                    } else if (userType.equals("suspended")) {
+                                        mAuth.signOut();
+                                        startActivity(new Intent(MainActivity.this, LoginPage.class));
+                                        finish();
                                     }
                                 } else {
                                     startActivity(new Intent(MainActivity.this, LoginPage.class));
