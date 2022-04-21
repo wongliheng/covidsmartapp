@@ -30,4 +30,9 @@
         android:name="com.covidsmartapp.DoctorUpdateFragment"
         android:label="fragment_doctor_update"
         tools:layout="@layout/fragment_doctor_update" />
+    <fragment
+        android:id="@+id/doctorUpdateTestResultFragment"
+        android:name="com.covidsmartapp.DoctorUpdateTestResultFragment"
+        android:label="fragment_doctor_update_test_result"
+        tools:layout="@layout/fragment_doctor_update_test_result" />
 </navigation>

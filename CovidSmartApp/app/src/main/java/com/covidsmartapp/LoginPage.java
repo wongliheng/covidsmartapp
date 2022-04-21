@@ -125,6 +125,9 @@ public class LoginPage extends AppCompatActivity {
                                                             } else if (userType.equals("doctor")) {
                                                                 startActivity(new Intent(LoginPage.this, DoctorHomeActivity.class));
                                                                 finish();
+                                                            } else if (userType.equals("tracer")) {
+                                                                startActivity(new Intent(LoginPage.this, CTHomeActivity.class));
+                                                                finish();
                                                             } else if (userType.equals("suspended")) {
                                                                 mAuth.signOut();
                                                                 new AlertDialog.Builder(LoginPage.this)
@@ -151,6 +154,7 @@ public class LoginPage extends AppCompatActivity {
 //                                                                            finish();
                                                                         }
                                                                     })
+                                                                    // Delete account if cancelled
                                                                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -171,7 +175,7 @@ public class LoginPage extends AppCompatActivity {
                                             });
                                         } else {
                                             // If user has not verified email
-                                            // If the user is an admin or doctor, there is no need to immediately authenticate the email
+                                            // If the user is an admin/doctor/tracer, there is no need to immediately authenticate the email
                                             db.collection("userType")
                                                     .document(userID)
                                                     .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -190,6 +194,9 @@ public class LoginPage extends AppCompatActivity {
                                                                 finish();
                                                             } else if (userType.equals("doctor")) {
                                                                 startActivity(new Intent(LoginPage.this, DoctorHomeActivity.class));
+                                                                finish();
+                                                            } else if (userType.equals("tracer")) {
+                                                                startActivity(new Intent(LoginPage.this, CTHomeActivity.class));
                                                                 finish();
                                                             } else if (userType.equals("suspended")) {
                                                                 mAuth.signOut();

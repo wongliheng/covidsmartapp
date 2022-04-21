@@ -34,6 +34,8 @@ public class AdminHomeFragment extends Fragment {
 
         Button createDoctorBtn = (Button) view.findViewById(R.id.createDoctorBtn);
         Button manageDoctorBtn = (Button) view.findViewById(R.id.manageDoctorBtn);
+        Button createCTBtn = (Button) view.findViewById(R.id.createCTBtn);
+        Button manageCTBtn = (Button) view.findViewById(R.id.manageCTBtn);
 
         createDoctorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,9 +55,35 @@ public class AdminHomeFragment extends Fragment {
         manageDoctorBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AdminManageDoctorFragment suspendDoctorFragment = new AdminManageDoctorFragment();
+                AdminManageDoctorFragment manageDoctorFragment = new AdminManageDoctorFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), suspendDoctorFragment, "suspendDoctorFrag")
+                        .replace(((ViewGroup)getView().getParent()).getId(), manageDoctorFragment, "manageDoctorFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        createCTBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AdminCreateCTFragment createCTFragment = new AdminCreateCTFragment();
+                Bundle args = new Bundle();
+                args.putString("email", adminEmail);
+                args.putString("pw", adminPw);
+                createCTFragment.setArguments(args);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), createCTFragment, "createCTFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        manageCTBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AdminManageCTFragment manageCTFragment = new AdminManageCTFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), manageCTFragment, "manageCTFragment")
                         .addToBackStack(null)
                         .commit();
             }

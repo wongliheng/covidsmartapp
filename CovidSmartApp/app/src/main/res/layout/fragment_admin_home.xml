@@ -9,22 +9,44 @@
 
     <Button
         android:id="@+id/createDoctorBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Create Doctor Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"/>
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintWidth_percent="0.7"/>
 
     <Button
         android:id="@+id/manageDoctorBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Manage Doctor Account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/createDoctorBtn"/>
+        app:layout_constraintTop_toBottomOf="@id/createDoctorBtn"
+        app:layout_constraintWidth_percent="0.7"/>
+
+    <Button
+        android:id="@+id/createCTBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Create Contact Tracer Account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/manageDoctorBtn"
+        app:layout_constraintWidth_percent="0.7"/>
+
+    <Button
+        android:id="@+id/manageCTBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Manage Contact Tracer Account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createCTBtn"
+        app:layout_constraintWidth_percent="0.7"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,6 +48,20 @@ public class DoctorUpdateFragment extends Fragment {
             }
         });
 
+        updateTestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DoctorUpdateTestsFragment doctorUpdateTestsFragment = new DoctorUpdateTestsFragment();
+                Bundle args = new Bundle();
+                args.putString("email", doctorEmail);
+                doctorUpdateTestsFragment.setArguments(args);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), doctorUpdateTestsFragment, "doctorUpdateTestsFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
 }

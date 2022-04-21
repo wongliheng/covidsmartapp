@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                                     } else if (userType.equals("doctor")) {
                                         startActivity(new Intent(MainActivity.this, DoctorHomeActivity.class));
                                         finish();
+                                    } else if (userType.equals("tracer")) {
+                                        startActivity(new Intent(MainActivity.this, CTHomeActivity.class));
+                                        finish();
                                     } else if (userType.equals("suspended")) {
                                         mAuth.signOut();
                                         startActivity(new Intent(MainActivity.this, LoginPage.class));
@@ -69,76 +72,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-
-//            user.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                @Override
-//                public void onSuccess(Void unused) {
-//                    // Check email verified
-//                    if (user.isEmailVerified()) {
-//                        // Check whether user has filled up details
-//                        db.collection("users")
-//                                .document(userID)
-//                                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                                if (task.isSuccessful()) {
-//                                    DocumentSnapshot document = task.getResult();
-//                                    if (document.exists()) {
-//                                        String userType = document.getString("userType");
-//                                        if (userType.equals("user")) {
-//                                            startActivity(new Intent(MainActivity.this, LoggedIn.class));
-//                                            finish();
-//                                        } else if (userType.equals("admin")) {
-//                                            startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
-//                                            finish();
-//                                        }
-//                                    } else {
-//                                        startActivity(new Intent(MainActivity.this, LoginPage.class));
-//                                        finish();
-//                                    }
-//                                } else {
-//                                    Log.d("DEBUG", "get failed with ", task.getException());
-//                                }
-//                            }
-//                        });
-//                    } else {
-//                        startActivity(new Intent(MainActivity.this, LoginPage.class));
-//                        finish();
-//                    }
-//                }
-//            });
         }
-
-
-//        else if (!user.isEmailVerified()) {
-//            startActivity(new Intent(MainActivity.this, RegisterStep2.class));
-//            finish();
-//        } else {
-//            String userID = user.getUid();
-//            DocumentReference userRef = db.collection("users")
-//                    .document(userID);
-//            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                    if (task.isSuccessful()) {
-//                        DocumentSnapshot document = task.getResult();
-//                        if (document.exists()) {
-//                            String userType = document.getString("userType");
-//                            if (userType.equals("user")) {
-//                                startActivity(new Intent(MainActivity.this, LoggedIn.class));
-//                                finish();
-//                            } else if (userType.equals("admin")) {
-//                                startActivity(new Intent(MainActivity.this, AdminHomeActivity.class));
-//                                finish();
-//                            }
-//                        } else {
-//                            Log.d("DEBUG", "No such document");
-//                        }
-//                    } else {
-//                        Log.d("DEBUG", "get failed with ", task.getException());
-//                    }
-//                }
-//            });
-//        }
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ct_nav"
+    app:startDestination="@id/CTHomeFragment">
+
+    <fragment
+        android:id="@+id/CTHomeFragment"
+        android:name="com.covidsmartapp.CTHomeFragment"
+        android:label="fragment_c_t_home"
+        tools:layout="@layout/fragment_c_t_home" />
+    <fragment
+        android:id="@+id/CTMoreFragment"
+        android:name="com.covidsmartapp.CTMoreFragment"
+        android:label="fragment_c_t_more"
+        tools:layout="@layout/fragment_c_t_more" />
+</navigation>

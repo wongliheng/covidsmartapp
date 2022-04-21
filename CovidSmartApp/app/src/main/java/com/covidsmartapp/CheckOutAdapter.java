@@ -18,12 +18,6 @@ import com.google.firebase.firestore.DocumentReference;
 
 public class CheckOutAdapter extends FirestoreRecyclerAdapter<LocationBeforeCheckOutClass, CheckOutAdapter.CheckOutHolder> {
 
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
     public CheckOutAdapter(@NonNull FirestoreRecyclerOptions<LocationBeforeCheckOutClass> options) {
         super(options);
     }

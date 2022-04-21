@@ -2,7 +2,7 @@ package com.covidsmartapp;
 
 public class LocationAfterCheckOutClass {
 
-    private String locationName, checkInDate, checkInTime, checkOutDate, checkOutTime;
+    private String locationName, checkInDate, checkInTime, userID, checkOutDate, checkOutTime;
     private boolean checkedOut;
     private Long dateTime;
 
@@ -10,12 +10,12 @@ public class LocationAfterCheckOutClass {
     public LocationAfterCheckOutClass() {
     }
 
-    public LocationAfterCheckOutClass(String locationName, String checkInDate, String checkInTime,
-                                      String checkOutDate, String checkOutTime, boolean checkedOut,
-                                      Long dateTime) {
+    public LocationAfterCheckOutClass(String locationName, String checkInDate, String checkInTime, String userID,
+                                      String checkOutDate, String checkOutTime, boolean checkedOut, Long dateTime) {
         this.locationName = locationName;
         this.checkInDate = checkInDate;
         this.checkInTime = checkInTime;
+        this.userID = userID;
         this.checkOutDate = checkOutDate;
         this.checkOutTime = checkOutTime;
         this.checkedOut = checkedOut;
@@ -44,6 +44,14 @@ public class LocationAfterCheckOutClass {
 
     public void setCheckInTime(String checkInTime) {
         this.checkInTime = checkInTime;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getCheckOutDate() {

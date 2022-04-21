@@ -12,12 +12,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class VaccinationAdapter extends FirestoreRecyclerAdapter<AppointmentClass, VaccinationAdapter.VaccinationHolder> {
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
+
     public VaccinationAdapter(@NonNull FirestoreRecyclerOptions<AppointmentClass> options) {
         super(options);
     }

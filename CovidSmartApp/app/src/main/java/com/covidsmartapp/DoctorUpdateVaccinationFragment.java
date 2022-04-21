@@ -3,6 +3,7 @@ package com.covidsmartapp;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,11 +65,17 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_doctor_update_vaccination, container, false);
 
         SearchableSpinner patientSpinner = (SearchableSpinner) view.findViewById(R.id.patientSpinner);
-        TextView currentStatus = (TextView) view.findViewById(R.id.currentStatus);
-        SearchableSpinner statusSpinner = (SearchableSpinner) view.findViewById(R.id.statusSpinner);
-        Button updateBtn = (Button) view.findViewById(R.id.updateBtn);
+        TextView nameTitle = (TextView) view.findViewById(R.id.nameTitle);
+        TextView nameText = (TextView) view.findViewById(R.id.nameText);
+        TextView statusTitle = (TextView) view.findViewById(R.id.statusTitle);
+        TextView statusText = (TextView) view.findViewById(R.id.statusText);
+        TextView recentAppointments = (TextView) view.findViewById(R.id.recentAppointments);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         TextView noVaccination = (TextView) view.findViewById(R.id.noVaccination);
+        TextView step2 = (TextView) view.findViewById(R.id.step2);
+        ConstraintLayout statusConstraint = (ConstraintLayout) view.findViewById(R.id.statusConstraint);
+        SearchableSpinner statusSpinner = (SearchableSpinner) view.findViewById(R.id.statusSpinner);
+        Button updateBtn = (Button) view.findViewById(R.id.updateBtn);
 
         createPatientSpinner(patientSpinner);
 
@@ -79,7 +86,15 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String patientEmail = adapterView.getItemAtPosition(i).toString();
-                getPatientInfo(patientEmail, currentStatus, recyclerView, noVaccination);
+                getPatientInfo(patientEmail, nameText, statusText, recyclerView, noVaccination);
+                nameTitle.setVisibility(View.VISIBLE);
+                nameText.setVisibility(View.VISIBLE);
+                statusTitle.setVisibility(View.VISIBLE);
+                statusText.setVisibility(View.VISIBLE);
+                recentAppointments.setVisibility(View.VISIBLE);
+                step2.setVisibility(View.VISIBLE);
+                statusConstraint.setVisibility(View.VISIBLE);
+                updateBtn.setVisibility(View.VISIBLE);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -105,7 +120,7 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
                 String patientEmail = patientSpinner.getSelectedItem().toString();
                 String status = statusSpinner.getSelectedItem().toString();
                 updateVaccination(status, patientEmail);
-                currentStatus.setText("Current Status: " + status);
+                statusText.setText(status);
                 Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
             }
         });
@@ -138,8 +153,8 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
         });
     }
 
-    private void getPatientInfo(String email, TextView currentStatus, RecyclerView recyclerView,
-                                TextView noVaccination) {
+    private void getPatientInfo(String email, TextView nameText, TextView statusText,
+                                RecyclerView recyclerView, TextView noVaccination) {
         ArrayList<String> userIDList = new ArrayList<>();
         db.collection("users")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -153,6 +168,25 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
                             userIDList.add(userID);
                         }
                     }
+
+                    db.collection("users")
+                            .document(userIDList.get(0))
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            String fName = document.getString("fName");
+                                            String lName = document.getString("lName");
+                                            String name = fName + " " + lName;
+                                            nameText.setText(name);
+                                        }
+                                    }
+                                }
+                            });
+
                     db.collection("info")
                             .document(userIDList.get(0))
                             .collection("vaccination")
@@ -165,9 +199,9 @@ public class DoctorUpdateVaccinationFragment extends Fragment {
                                         DocumentSnapshot document = task.getResult();
                                         if (document.exists()) {
                                             String status = document.getString("vaccinationStatus");
-                                            currentStatus.setText("Current Status: " + status);
+                                            statusText.setText(status);
                                         } else {
-                                            currentStatus.setText("Current Status: Unvaccinated");
+                                            statusText.setText("Unvaccinated");
                                             Log.d("DEBUG", "No such document");
                                         }
                                     } else {

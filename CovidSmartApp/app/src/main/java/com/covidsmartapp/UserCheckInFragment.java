@@ -87,6 +87,7 @@ public class UserCheckInFragment extends Fragment {
                 location.put("checkInTime", time);
                 location.put("checkedOut", false);
                 location.put("dateTime", dateTimeLong);
+                location.put("userID", userID);
 
                 db.collection("info")
                         .document(userID)
