@@ -4,19 +4,20 @@ import com.google.firebase.Timestamp;
 
 public class AppointmentClass {
 
-    private String appointmentType, location, date, time, status;
+    private String appointmentType, location, date, time, status, userID;
     private long dateTime;
 
     // For firebase
     public AppointmentClass() {
     }
 
-    public AppointmentClass(String appointmentType, String location, String date, String time, String status, long dateTime) {
+    public AppointmentClass(String appointmentType, String location, String date, String time, String status, String userID, long dateTime) {
         this.appointmentType = appointmentType;
         this.location = location;
         this.date = date;
         this.time = time;
         this.status = status;
+        this.userID = userID;
         this.dateTime = dateTime;
     }
 
@@ -66,5 +67,13 @@ public class AppointmentClass {
 
     public void setDateTime(long dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

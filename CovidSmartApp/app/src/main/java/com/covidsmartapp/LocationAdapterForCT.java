@@ -11,15 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class LocationHistoryAdapter extends FirestoreRecyclerAdapter<LocationAfterCheckOutClass, LocationHistoryAdapter.LocationHistoryHolder> {
+public class LocationAdapterForCT extends FirestoreRecyclerAdapter<LocationAfterCheckOutClass, LocationAdapterForCT.LocationHolder> {
 
-    public LocationHistoryAdapter(@NonNull FirestoreRecyclerOptions<LocationAfterCheckOutClass> options) {
+    public LocationAdapterForCT(@NonNull FirestoreRecyclerOptions<LocationAfterCheckOutClass> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull LocationHistoryHolder holder, int position, @NonNull LocationAfterCheckOutClass model) {
-        holder.locationName.setText(model.getLocationName());
+    protected void onBindViewHolder(@NonNull LocationHolder holder, int position, @NonNull LocationAfterCheckOutClass model) {
+        holder.userIDText.setText(model.getUserID());
+        holder.locationText.setText(model.getLocationName());
 
         String checkInDate = model.getCheckInDate();
         String checkOutDate = model.getCheckOutDate();
@@ -27,14 +28,14 @@ public class LocationHistoryAdapter extends FirestoreRecyclerAdapter<LocationAft
         if (checkInDate.equals(checkOutDate)){
             String day = checkInDate.substring(0, 2);
             String month = checkInDate.substring(2, 4);
-            holder.date.setText(day + " " + getMonthString(Integer.parseInt(month)));
+            holder.dateText.setText(day + " " + getMonthString(Integer.parseInt(month)));
         } else {
             String checkInDay = checkInDate.substring(0, 2);
             String checkInMonth = checkInDate.substring(2, 4);
             String checkOutDay = checkOutDate.substring(0, 2);
             String checkOutMonth = checkOutDate.substring(2, 4);
 
-            holder.date.setText(checkInDay + " " + getMonthString(Integer.parseInt(checkInMonth)) + " - " +
+            holder.dateText.setText(checkInDay + " " + getMonthString(Integer.parseInt(checkInMonth)) + " - " +
                     checkOutDay + " " + getMonthString(Integer.parseInt(checkOutMonth)));
         }
 
@@ -47,14 +48,14 @@ public class LocationHistoryAdapter extends FirestoreRecyclerAdapter<LocationAft
         int checkInHour = Integer.parseInt(checkIn[0]);
         int checkOutHour = Integer.parseInt(checkOut[0]);
 
-        holder.time.setText(checkInHour + ":" + checkIn[1] + " - " + checkOutHour + ":" + checkOut[1]);
+        holder.timeText.setText(checkInHour + ":" + checkIn[1] + " - " + checkOutHour + ":" + checkOut[1]);
     }
 
     @NonNull
     @Override
-    public LocationHistoryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_history_layout, parent, false);
-        return new LocationHistoryAdapter.LocationHistoryHolder(view);
+    public LocationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_layout_ct, parent, false);
+        return new LocationAdapterForCT.LocationHolder(view);
     }
 
     private String getMonthString (int month) {
@@ -85,15 +86,16 @@ public class LocationHistoryAdapter extends FirestoreRecyclerAdapter<LocationAft
         return monthString;
     }
 
-    public class LocationHistoryHolder extends RecyclerView.ViewHolder {
+    public class LocationHolder extends RecyclerView.ViewHolder {
 
-        TextView locationName, date, time;
+        TextView userIDText, locationText, dateText, timeText;
 
-        public LocationHistoryHolder(@NonNull View itemView) {
+        public LocationHolder(@NonNull View itemView) {
             super(itemView);
-            locationName = itemView.findViewById(R.id.locationName);
-            date = itemView.findViewById(R.id.date);
-            time = itemView.findViewById(R.id.time);
+            userIDText = itemView.findViewById(R.id.userIDText);
+            locationText = itemView.findViewById(R.id.locationText);
+            dateText = itemView.findViewById(R.id.dateText);
+            timeText = itemView.findViewById(R.id.timeText);
         }
     }
 }

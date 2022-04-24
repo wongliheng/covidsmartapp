@@ -15,4 +15,9 @@
         android:name="com.covidsmartapp.CTMoreFragment"
         android:label="fragment_c_t_more"
         tools:layout="@layout/fragment_c_t_more" />
+    <fragment
+        android:id="@+id/CTSearchByLocationFragment"
+        android:name="com.covidsmartapp.CTSearchByLocationFragment"
+        android:label="fragment_c_t_search_by_location"
+        tools:layout="@layout/fragment_c_t_search_by_location" />
 </navigation>

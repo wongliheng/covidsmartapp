@@ -1,14 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DoctorUpdateTestResultFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Update Test Results"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/backArrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backArrow"
+        app:layout_constraintTop_toTopOf="@+id/backArrow"
+        app:layout_constraintWidth_percent="0.75"/>
+
+    <TextView
+        android:id="@+id/nameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Patient Name:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.1"/>
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/nameTitle"
+        app:layout_constraintStart_toEndOf="@+id/nameTitle"
+        app:layout_constraintTop_toTopOf="@+id/nameTitle"
+        app:layout_constraintWidth_percent="0.6"/>
+
+    <TextView
+        android:id="@+id/locationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Location:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/nameTitle"
+        app:layout_constraintTop_toBottomOf="@+id/nameTitle" />
+
+    <TextView
+        android:id="@+id/locationText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/locationTitle"
+        app:layout_constraintStart_toEndOf="@+id/locationTitle"
+        app:layout_constraintTop_toTopOf="@+id/locationTitle"
+        app:layout_constraintWidth_percent="0.6"/>
+
+    <TextView
+        android:id="@+id/dateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Date:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/locationTitle"
+        app:layout_constraintTop_toBottomOf="@+id/locationTitle" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dateTitle"
+        app:layout_constraintStart_toEndOf="@+id/dateTitle"
+        app:layout_constraintTop_toTopOf="@+id/dateTitle"
+        app:layout_constraintWidth_percent="0.6"/>
+
+    <TextView
+        android:id="@+id/timeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Time:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/dateTitle"
+        app:layout_constraintTop_toBottomOf="@+id/dateTitle" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/timeTitle"
+        app:layout_constraintStart_toEndOf="@+id/timeTitle"
+        app:layout_constraintTop_toTopOf="@+id/timeTitle"
+        app:layout_constraintWidth_percent="0.6"/>
+
+    <Button
+        android:id="@+id/positiveBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Positive"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeTitle"
+        app:layout_constraintWidth_percent="0.4"/>
+
+    <Button
+        android:id="@+id/negativeBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Negative"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/positiveBtn"
+        app:layout_constraintWidth_percent="0.4"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

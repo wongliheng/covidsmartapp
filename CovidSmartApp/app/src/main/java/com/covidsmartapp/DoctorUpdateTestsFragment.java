@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,7 @@ public class DoctorUpdateTestsFragment extends Fragment {
     private FirebaseFirestore db;
     private UpdateTestAdapter adapter;
     private String doctorEmail;
+    private String patientEmail = null;
 
     public DoctorUpdateTestsFragment() {
         // Required empty public constructor
@@ -42,6 +44,9 @@ public class DoctorUpdateTestsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            patientEmail = savedInstanceState.getString("patientEmail");
+        }
         if (getArguments() != null) {
             doctorEmail = getArguments().getString("email");
         }
@@ -63,10 +68,16 @@ public class DoctorUpdateTestsFragment extends Fragment {
 
         createPatientSpinner(patientSpinner);
 
+        if (patientEmail != null) {
+            getPatientInfo(patientEmail, nameText, recyclerView, noTests);
+            nameTitle.setVisibility(View.VISIBLE);
+            nameText.setVisibility(View.VISIBLE);
+        }
+
         patientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String patientEmail = adapterView.getItemAtPosition(i).toString();
+                patientEmail = adapterView.getItemAtPosition(i).toString();
                 getPatientInfo(patientEmail, nameText, recyclerView, noTests);
                 nameTitle.setVisibility(View.VISIBLE);
                 nameText.setVisibility(View.VISIBLE);
@@ -219,5 +230,11 @@ public class DoctorUpdateTestsFragment extends Fragment {
         if (adapter != null) {
             adapter.stopListening();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("patientEmail", patientEmail);
     }
 }

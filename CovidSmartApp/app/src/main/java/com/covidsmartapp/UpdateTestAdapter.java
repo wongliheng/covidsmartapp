@@ -1,6 +1,7 @@
 package com.covidsmartapp;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,13 +61,18 @@ public class UpdateTestAdapter extends FirestoreRecyclerAdapter<AppointmentClass
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 String documentID = getDocID(position);
 
-//                UserCheckOutFragment checkOutFrag = new UserCheckOutFragment();
-//                Bundle args = new Bundle();
-//                args.putString("documentID", documentID);
-//                checkOutFrag.setArguments(args);
-//                activity.getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragmentContainerView, checkOutFrag, "checkOutFrag")
-//                        .commit();
+                DoctorUpdateTestResultFragment doctorUpdateTestResultFragment = new DoctorUpdateTestResultFragment();
+                Bundle args = new Bundle();
+                args.putString("location", model.getLocation());
+                args.putString("date", newDate);
+                args.putString("time", newTime);
+                args.putString("userID", model.getUserID());
+                args.putString("documentID", documentID);
+                doctorUpdateTestResultFragment.setArguments(args);
+                activity.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView, doctorUpdateTestResultFragment, "doctorUpdateTestResultFragment")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
     }

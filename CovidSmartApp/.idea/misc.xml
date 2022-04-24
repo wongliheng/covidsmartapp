@@ -48,7 +48,9 @@
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_booking.xml" value="0.2520833333333333" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_booking2.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_booking_confirmed.xml" value="0.25" />
+        <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_c_t_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_c_t_more.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_c_t_search_by_location.xml" value="0.3451086956521739" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_case.xml" value="0.33" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_check.xml" value="0.36277173913043476" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_check_in.xml" value="0.24270833333333333" />
@@ -56,6 +58,7 @@
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_doctor_home.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_doctor_more.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_doctor_update.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_doctor_update_test_result.xml" value="0.33" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_doctor_update_tests.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_doctor_update_vaccination.xml" value="0.33" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_edit_profile.xml" value="0.30344202898550726" />
@@ -75,6 +78,7 @@
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_user_vaccination_status.xml" value="0.36594202898550726" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/fragment_web.xml" value="0.33" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/location_history_layout.xml" value="0.30344202898550726" />
+        <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/location_layout_ct.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/news_layout.xml" value="0.33" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/news_layout1.xml" value="0.2520833333333333" />
         <entry key="..\:/Users/wong_/covidsmartapp/CovidSmartApp/app/src/main/res/layout/spinner.xml" value="0.2520833333333333" />

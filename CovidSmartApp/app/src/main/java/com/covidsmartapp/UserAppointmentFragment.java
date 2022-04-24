@@ -29,11 +29,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UserAppointmentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class UserAppointmentFragment extends Fragment {
 
     private FirebaseAuth mAuth;
@@ -45,12 +40,6 @@ public class UserAppointmentFragment extends Fragment {
 
     public UserAppointmentFragment() {
         // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static UserAppointmentFragment newInstance(String param1, String param2) {
-        UserAppointmentFragment fragment = new UserAppointmentFragment();
-        return fragment;
     }
 
     @Override
@@ -100,14 +89,8 @@ public class UserAppointmentFragment extends Fragment {
         dateEditText.setText(day + " " + getMonthString(month) + " " + year);
 
         SpinnerCreation createSpinner = new SpinnerCreation(getActivity());
-//        createSpinner.createAppointmentSpinner(appointmentSpinner);
         createSpinner.createTimeSpinner(timeSpinner, day, month);
         createSpinner.createLocationSpinner(locationSpinner);
-
-//        ArrayAdapter<CharSequence> locationAdapter = ArrayAdapter.createFromResource(getActivity(),
-//                R.array.locations, R.layout.spinner);
-//        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        locationSpinner.setAdapter(locationAdapter);
 
         DatePickerFragment.DatePickerFragmentListener listener = new DatePickerFragment.DatePickerFragmentListener() {
             @Override
@@ -181,6 +164,7 @@ public class UserAppointmentFragment extends Fragment {
                     appointment.put("time", newTime);
                     appointment.put("dateTime", dateTimeLong);
                     appointment.put("status", "Processing");
+                    appointment.put("userID", userID);
 
                     DocumentReference ref = db.collection("info")
                             .document(userID)

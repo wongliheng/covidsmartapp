@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/userIDTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User ID:"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"/>
+
+        <TextView
+            android:id="@+id/userIDText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/userIDTitle"
+            app:layout_constraintTop_toTopOf="@id/userIDTitle"
+            app:layout_constraintBottom_toBottomOf="@id/userIDTitle"
+            app:layout_constraintWidth_percent="0.8"/>
+
+        <TextView
+            android:id="@+id/locationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location:"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/userIDTitle"
+            app:layout_constraintTop_toBottomOf="@id/userIDTitle"/>
+
+        <TextView
+            android:id="@+id/locationText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/locationTitle"
+            app:layout_constraintTop_toTopOf="@id/locationTitle"
+            app:layout_constraintBottom_toBottomOf="@id/locationTitle"
+            app:layout_constraintWidth_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/dateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date:"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/locationTitle"
+            app:layout_constraintTop_toBottomOf="@id/locationTitle"/>
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/dateTitle"
+            app:layout_constraintTop_toTopOf="@id/dateTitle"
+            app:layout_constraintBottom_toBottomOf="@id/dateTitle"
+            app:layout_constraintWidth_percent="0.5"/>
+
+        <TextView
+            android:id="@+id/timeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time:"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@id/dateTitle"
+            app:layout_constraintTop_toBottomOf="@id/dateTitle"/>
+
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/timeTitle"
+            app:layout_constraintTop_toTopOf="@id/timeTitle"
+            app:layout_constraintBottom_toBottomOf="@id/timeTitle"
+            app:layout_constraintWidth_percent="0.5"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

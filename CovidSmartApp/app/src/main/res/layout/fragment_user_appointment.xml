@@ -6,43 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".UserAppointmentFragment">
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/appointmentContainer"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/custom_border"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.2"-->
-<!--        app:layout_constraintWidth_percent="0.65">-->
-
-<!--        <Spinner-->
-<!--            android:id="@+id/appointmentSpinner"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/appointmentText"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Appointment Type:"-->
-<!--        android:textSize="16sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:layout_marginBottom="5dp"-->
-<!--        android:textColor="@color/teal_700"-->
-<!--        app:layout_constraintHorizontal_bias="0"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/appointmentContainer"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/appointmentContainer"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/appointmentContainer" />-->
-
     <TextView
         android:id="@+id/appointmentTypeText"
         android:layout_width="wrap_content"
