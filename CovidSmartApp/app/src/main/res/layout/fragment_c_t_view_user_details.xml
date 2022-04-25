@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CTViewUserDetailsFragment">
+
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="User Details"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/emailTitle"
+        app:layout_constraintStart_toStartOf="@+id/emailTitle" />
+
+    <TextView
+        android:id="@+id/emailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="User Email:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.05"/>
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/emailTitle"
+        app:layout_constraintStart_toEndOf="@+id/emailTitle"
+        app:layout_constraintTop_toTopOf="@+id/emailTitle"
+        app:layout_constraintWidth_percent="0.65"/>
+
+    <TextView
+        android:id="@+id/nameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Name:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/emailTitle"
+        app:layout_constraintTop_toBottomOf="@+id/emailTitle" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/nameTitle"
+        app:layout_constraintStart_toEndOf="@+id/nameTitle"
+        app:layout_constraintTop_toTopOf="@+id/nameTitle"
+        app:layout_constraintWidth_percent="0.7"/>
+
+    <TextView
+        android:id="@+id/phoneTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Phone Number:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/nameTitle"
+        app:layout_constraintTop_toBottomOf="@+id/nameTitle" />
+
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneTitle"
+        app:layout_constraintStart_toEndOf="@+id/phoneTitle"
+        app:layout_constraintTop_toTopOf="@+id/phoneTitle"
+        app:layout_constraintWidth_percent="0.6"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Visit Details"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/locationTitle"
+        app:layout_constraintStart_toStartOf="@+id/locationTitle"
+        app:layout_constraintWidth_percent="0.75" />
+
+    <TextView
+        android:id="@+id/locationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="@id/emailTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.5"/>
+
+    <TextView
+        android:id="@+id/locationText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/locationTitle"
+        app:layout_constraintTop_toTopOf="@id/locationTitle"
+        app:layout_constraintBottom_toBottomOf="@id/locationTitle"
+        app:layout_constraintWidth_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/dateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/locationTitle"
+        app:layout_constraintTop_toBottomOf="@id/locationTitle"/>
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/dateTitle"
+        app:layout_constraintTop_toTopOf="@id/dateTitle"
+        app:layout_constraintBottom_toBottomOf="@id/dateTitle"
+        app:layout_constraintWidth_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/timeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time:"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/dateTitle"
+        app:layout_constraintTop_toBottomOf="@id/dateTitle"/>
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/timeTitle"
+        app:layout_constraintTop_toTopOf="@id/timeTitle"
+        app:layout_constraintBottom_toBottomOf="@id/timeTitle"
+        app:layout_constraintWidth_percent="0.5"/>
+
+    <Button
+        android:id="@+id/messageBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Send a Message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeTitle"
+        app:layout_constraintWidth_percent="0.6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

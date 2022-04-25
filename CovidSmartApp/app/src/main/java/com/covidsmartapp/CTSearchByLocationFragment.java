@@ -2,6 +2,7 @@ package com.covidsmartapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,11 @@ public class CTSearchByLocationFragment extends Fragment {
 
     private FirebaseFirestore db;
     private LocationAdapterForCT adapter;
+    private String location = null;
+    private String dateEntry = null;
+    private String timeEntry = null;
+    private String dateTimeString = null;
+
 
     public CTSearchByLocationFragment() {
         // Required empty public constructor
@@ -31,6 +37,12 @@ public class CTSearchByLocationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            location = savedInstanceState.getString("location");
+            dateEntry = savedInstanceState.getString("dateEntry");
+            timeEntry = savedInstanceState.getString("timeEntry");
+            dateTimeString = savedInstanceState.getString("dateTimeString");
+        }
         if (getArguments() != null) {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
@@ -57,8 +69,15 @@ public class CTSearchByLocationFragment extends Fragment {
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        dateText.setText(day + " " + getMonthString(month) + " " + year);
-        timeText.setText("00:00");
+        if (location != null && dateEntry != null && timeEntry !=null && dateTimeString != null) {
+            locationText.setText(location);
+            dateText.setText(dateEntry);
+            timeText.setText(timeEntry);
+            createRecycler(location, Long.parseLong(dateTimeString), recyclerView, noLocations);
+        } else {
+            dateText.setText(day + " " + getMonthString(month) + " " + year);
+            timeText.setText("00:00");
+        }
 
         DatePickerForCTFragment.DatePickerFragmentListener dateListener = new DatePickerForCTFragment.DatePickerFragmentListener() {
             @Override
@@ -104,9 +123,10 @@ public class CTSearchByLocationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (checkFields(locationText)) {
-                    String location = locationText.getText().toString().trim();
-                    String date = dateText.getText().toString().trim();
-                    String [] dateArray = date.split(" ");
+                    location = locationText.getText().toString().trim();
+                    // For saving instance
+                    dateEntry = dateText.getText().toString().trim();
+                    String [] dateArray = dateEntry.split(" ");
                     String monthDigit  = getMonth(dateArray[1]);
                     String dayString = dateArray[0];
                     int day = Integer.parseInt(dateArray[0]);
@@ -115,11 +135,12 @@ public class CTSearchByLocationFragment extends Fragment {
 
                     String dateString = dateArray[2] + monthDigit + dayString;
 
-                    String time = timeText.getText().toString().trim();
-                    String [] timeArray = time.split(":");
+                    // For saving instance
+                    timeEntry = timeText.getText().toString().trim();
+                    String [] timeArray = timeEntry.split(":");
                     String timeString =  timeArray[0].concat(timeArray[1]);
 
-                    String dateTimeString = dateString.concat(timeString);
+                    dateTimeString = dateString.concat(timeString);
                     long dateTime = Long.parseLong(dateTimeString);
 
                     createRecycler(location, dateTime, recyclerView, noLocations);
@@ -245,5 +266,14 @@ public class CTSearchByLocationFragment extends Fragment {
         if (adapter != null) {
             adapter.stopListening();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("location", location);
+        outState.putString("dateEntry", dateEntry);
+        outState.putString("timeEntry", timeEntry);
+        outState.putString("dateTimeString", dateTimeString);
     }
 }

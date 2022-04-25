@@ -20,4 +20,9 @@
         android:name="com.covidsmartapp.CTSearchByLocationFragment"
         android:label="fragment_c_t_search_by_location"
         tools:layout="@layout/fragment_c_t_search_by_location" />
+    <fragment
+        android:id="@+id/CTViewUserDetailsFragment"
+        android:name="com.covidsmartapp.CTViewUserDetailsFragment"
+        android:label="fragment_c_t_view_user_details"
+        tools:layout="@layout/fragment_c_t_view_user_details" />
 </navigation>
