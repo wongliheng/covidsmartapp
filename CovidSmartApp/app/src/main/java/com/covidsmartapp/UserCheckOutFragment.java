@@ -1,6 +1,8 @@
 package com.covidsmartapp;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -18,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class UserCheckOutFragment extends Fragment {
@@ -56,8 +62,33 @@ public class UserCheckOutFragment extends Fragment {
         Button backToHomeBtn = (Button) view.findViewById(R.id.backToHomeBtn);
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        checkOut();
-        displayInfo(checkOutText, locationName, durationText, backToHomeBtn, progressBar);
+        Date timeNow = Calendar.getInstance().getTime();
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("ddMMyyyy-HH:mm:ss");
+        dateTimeFormat.setTimeZone(TimeZone.getDefault());
+
+        // Check out
+        String dateTime = dateTimeFormat.format(timeNow);
+        String [] dateTimeArray = dateTime.split("-");
+
+        String date = dateTimeArray[0];
+        String time = dateTimeArray[1];
+
+        Map<String, Object> checkOutUpdates = new HashMap<>();
+        checkOutUpdates.put("checkedOut", true);
+        checkOutUpdates.put("checkOutDate", date);
+        checkOutUpdates.put("checkOutTime", time);
+
+        db.collection("info")
+                .document(userID)
+                .collection("locations")
+                .document(documentID)
+                .update(checkOutUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        displayInfo(checkOutText, locationName, durationText, backToHomeBtn, progressBar);
+                    }
+                });
 
         backToHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,28 +104,6 @@ public class UserCheckOutFragment extends Fragment {
         return view;
     }
 
-    private void checkOut () {
-//        Get time
-        Date timeNow = Calendar.getInstance().getTime();
-        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("ddMMyyyy-HH:mm:ss");
-        dateTimeFormat.setTimeZone(TimeZone.getDefault());
-
-        String dateTime = dateTimeFormat.format(timeNow);
-        String [] dateTimeArray = dateTime.split("-");
-
-        String date = dateTimeArray[0];
-        String time = dateTimeArray[1];
-
-        DocumentReference ref = db.collection("info")
-                .document(userID)
-                .collection("locations")
-                .document(documentID);
-
-        ref.update("checkedOut", true);
-        ref.update("checkOutDate", date);
-        ref.update("checkOutTime", time);
-    }
-
     private void displayInfo (TextView checkOutText, TextView locationName, TextView durationText,
                               Button backToHomeBtn, ProgressBar progressBar) {
 
@@ -105,7 +114,7 @@ public class UserCheckOutFragment extends Fragment {
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                String loc = documentSnapshot.getString("locationName");
+                String location = documentSnapshot.getString("locationName");
                 String checkInTime = documentSnapshot.getString("checkInTime");
                 String checkOutTime = documentSnapshot.getString("checkOutTime");
 
@@ -113,7 +122,7 @@ public class UserCheckOutFragment extends Fragment {
                 String checkOutTimeWithoutSeconds =  checkOutTime.substring(0,5);
 
                 checkOutText.setText("Checked Out");
-                locationName.setText(loc);
+                locationName.setText(location);
                 durationText.setText(checkInTimeWithoutSeconds + " - " + checkOutTimeWithoutSeconds);
                 backToHomeBtn.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);

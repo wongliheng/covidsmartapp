@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
 
@@ -63,16 +66,25 @@ public class UserHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_home, container, false);
 
+        //M
+        ConstraintLayout messageLayout = (ConstraintLayout) view.findViewById(R.id.messageLayout);
+        ImageView unreadImage = (ImageView) view.findViewById(R.id.unreadImage);
+        ImageView readImage = (ImageView) view.findViewById(R.id.readImage);
         TextView userGreeting = (TextView) view.findViewById(R.id.userGreeting);
         TextView noRecentLocations = (TextView) view.findViewById(R.id.noRecentLocations);
-        ConstraintLayout constraintVaccination = (ConstraintLayout) view.findViewById(R.id.constraintVaccination);
+        ConstraintLayout vaccinationLayout = (ConstraintLayout) view.findViewById(R.id.vaccinationLayout);
         ImageView vaccinationImage = (ImageView) view.findViewById(R.id.vaccinationImage);
         TextView vaccinationStatus = (TextView) view.findViewById(R.id.vaccinationStatus);
         ConstraintLayout scanQR = (ConstraintLayout) view.findViewById(R.id.constraintScan);
         RecyclerView checkOutRecycler = (RecyclerView) view.findViewById(R.id.checkOutRecycler);
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
+        // Start displaying elements on page
         progressBar.setVisibility(View.VISIBLE);
+
+        // Check for unread messages
+        getMessages(readImage, unreadImage);
+
         // Display user greeting
         db.collection("users").document(userID)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -83,10 +95,22 @@ public class UserHomeFragment extends Fragment {
             }
         });
 
+        // Get the vaccination status of the user
         getVaccinationStatus(vaccinationStatus, vaccinationImage, progressBar, getActivity());
 
-        // Check Out Recycler View
+        // Create the recycler view for checked in locations
         createCheckOutRecycler(checkOutRecycler, noRecentLocations);
+
+        messageLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserMessageCentreFragment userMessageCentreFragment = new UserMessageCentreFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), userMessageCentreFragment, "userMessageCentreFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         // QR code button
         scanQR.setOnClickListener(new View.OnClickListener() {
@@ -101,9 +125,9 @@ public class UserHomeFragment extends Fragment {
                 Permissions.check(getActivity(), permissions, rationale, options, new PermissionHandler() {
                     @Override
                     public void onGranted() {
-                        UserQRFragment qrFrag = new UserQRFragment();
+                        UserQRFragment userQRFragment = new UserQRFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(((ViewGroup)getView().getParent()).getId(), qrFrag, "qrFrag")
+                                .replace(((ViewGroup)getView().getParent()).getId(), userQRFragment, "userQRFragment")
                                 .commit();
                     }
 
@@ -115,17 +139,50 @@ public class UserHomeFragment extends Fragment {
             }
         });
 
-        constraintVaccination.setOnClickListener(new View.OnClickListener() {
+        // Vaccination status button
+        vaccinationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UserVaccinationStatusFragment userVaccinationStatusFragment = new UserVaccinationStatusFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), userVaccinationStatusFragment, "qrFrag")
+                        .replace(((ViewGroup)getView().getParent()).getId(), userVaccinationStatusFragment, "userVaccinationStatusFragment")
+                        .addToBackStack(null)
                         .commit();
             }
         });
 
         return view;
+    }
+
+    private void getMessages(ImageView read, ImageView unread) {
+        ArrayList<String> messageStatus = new ArrayList<>();
+        db.collection("info")
+                .document(userID)
+                .collection("messages")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String status = document.getString("status");
+                        if (status.equals("unread")) {
+                            messageStatus.add("unread");
+                        } else if (status.equals("read")){
+                            messageStatus.add("read");
+                        }
+                    }
+                    // Show unread message image if there are unread messages
+                    if (messageStatus.contains("unread")) {
+                        unread.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        read.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            }
+        });
     }
 
     private void getVaccinationStatus(TextView vaccinationStatus, ImageView vaccinationImage, ProgressBar progressBar, Context ct) {

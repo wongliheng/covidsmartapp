@@ -20,15 +20,15 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Update Test Results"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/backArrow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/backArrow"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backArrow"
-        app:layout_constraintWidth_percent="0.75"/>
+        app:layout_constraintWidth_percent="0.75" />
 
     <TextView
         android:id="@+id/nameTitle"

@@ -84,4 +84,9 @@
         android:name="com.covidsmartapp.UserVaccinationStatusFragment"
         android:label="fragment_user_vaccination_status"
         tools:layout="@layout/fragment_user_vaccination_status" />
+    <fragment
+        android:id="@+id/userMessageCentreFragment"
+        android:name="com.covidsmartapp.UserMessageCentreFragment"
+        android:label="fragment_user_message_centre"
+        tools:layout="@layout/fragment_user_message_centre" />
 </navigation>

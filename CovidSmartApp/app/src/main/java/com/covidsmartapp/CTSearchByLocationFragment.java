@@ -164,7 +164,8 @@ public class CTSearchByLocationFragment extends Fragment {
                 .whereEqualTo("locationName", location)
                 .whereEqualTo("checkedOut", true)
                 .whereGreaterThanOrEqualTo("dateTime", dateTime)
-                .whereEqualTo("checkInDate", newDate);
+                .whereEqualTo("checkInDate", newDate)
+                .orderBy("dateTime", Query.Direction.ASCENDING);
 
         FirestoreRecyclerOptions<LocationAfterCheckOutClass> options = new FirestoreRecyclerOptions.Builder<LocationAfterCheckOutClass>()
                 .setQuery(query, LocationAfterCheckOutClass.class)

@@ -60,7 +60,6 @@ public class UserCheckInFragment extends Fragment {
         Date timeNow = Calendar.getInstance().getTime();
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("ddMMyyyy-HH:mm:ss");
         dateTimeFormat.setTimeZone(TimeZone.getDefault());
-
         String dateTime = dateTimeFormat.format(timeNow);
         String [] dateTimeArray = dateTime.split("-");
 
@@ -69,10 +68,12 @@ public class UserCheckInFragment extends Fragment {
         String timeWithoutSeconds = time.substring(0,5);
 
         // Create document ID
-        SimpleDateFormat dateTimeFormatForDocument = new SimpleDateFormat("yyyyMMddHHmmss");
-        dateTimeFormatForDocument.setTimeZone(TimeZone.getDefault());
-        String dateTimeForDocument = dateTimeFormatForDocument.format(timeNow);
-        long dateTimeLong = Long.parseLong(dateTimeForDocument);
+        SimpleDateFormat dateTimeFormatForDocumentID = new SimpleDateFormat("yyyyMMddHHmmss");
+        dateTimeFormatForDocumentID.setTimeZone(TimeZone.getDefault());
+        String documentID = dateTimeFormatForDocumentID.format(timeNow);
+
+        String dateTimeForQuery = documentID.substring(0, documentID.length() - 2);
+        long dateTimeLong = Long.parseLong(dateTimeForQuery);
 
         currentTime.setText(timeWithoutSeconds);
 
@@ -92,7 +93,7 @@ public class UserCheckInFragment extends Fragment {
                 db.collection("info")
                         .document(userID)
                         .collection("locations")
-                        .document(dateTimeForDocument)
+                        .document(documentID)
                         .set(location);
 
                 getActivity().getSupportFragmentManager().beginTransaction()
