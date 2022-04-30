@@ -31,14 +31,26 @@ public class CTHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_c_t_home, container, false);
 
-        Button button = (Button) view.findViewById(R.id.button);
+        Button searchByLocationBtn = (Button) view.findViewById(R.id.searchByLocationBtn);
+        Button searchByUserBtn = (Button) view.findViewById(R.id.searchByUserBtn);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        searchByLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CTSearchByLocationFragment ctSearchByLocationFragment = new CTSearchByLocationFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), ctSearchByLocationFragment, "ctSearchByLocationFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        searchByUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CTSearchByUserFragment ctSearchByUserFragment = new CTSearchByUserFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), ctSearchByUserFragment, "ctSearchByUserFragment")
                         .addToBackStack(null)
                         .commit();
             }

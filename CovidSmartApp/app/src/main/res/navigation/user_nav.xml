@@ -89,4 +89,9 @@
         android:name="com.covidsmartapp.UserMessageCentreFragment"
         android:label="fragment_user_message_centre"
         tools:layout="@layout/fragment_user_message_centre" />
+    <fragment
+        android:id="@+id/userDeleteAccountFragment"
+        android:name="com.covidsmartapp.UserDeleteAccountFragment"
+        android:label="fragment_user_delete_account"
+        tools:layout="@layout/fragment_user_delete_account" />
 </navigation>

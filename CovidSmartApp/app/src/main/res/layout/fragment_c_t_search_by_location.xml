@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:hint="Time"
+            android:hint="Visits after this time"
             android:drawableRight="@drawable/ic_baseline_access_time_24"
             android:background="#ffffff"
             android:clickable="false"

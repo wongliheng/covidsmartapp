@@ -55,18 +55,6 @@ public class UserAppointmentInfoFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         TextView noBookings = (TextView) view.findViewById(R.id.noBookings);
-//        Button bookBtn = (Button) view.findViewById(R.id.bookBtn);
-
-//        bookBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AppointmentFragment appointmentFrag = new AppointmentFragment();
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(((ViewGroup)getView().getParent()).getId(), appointmentFrag, "appointmentFrag")
-//                        .addToBackStack(null)
-//                        .commit();
-//            }
-//        });
 
         createAppointmentRecycler(recyclerView, noBookings);
 

@@ -36,14 +36,26 @@ public class UserMoreFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_more, container, false);
 
         Button editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
+        Button deleteAccountBtn = (Button) view.findViewById(R.id.deleteAccountBtn);
         Button signOutBtn = (Button) view.findViewById(R.id.signOutBtn);
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserEditProfileFragment editProfileFrag = new UserEditProfileFragment();
+                UserEditProfileFragment userEditProfileFragment = new UserEditProfileFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), editProfileFrag, "editProfileFrag")
+                        .replace(((ViewGroup)getView().getParent()).getId(), userEditProfileFragment, "userEditProfileFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        deleteAccountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserDeleteAccountFragment userDeleteAccountFragment = new UserDeleteAccountFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), userDeleteAccountFragment, "userDeleteAccountFragment")
                         .addToBackStack(null)
                         .commit();
             }

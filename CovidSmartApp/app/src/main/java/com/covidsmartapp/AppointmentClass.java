@@ -7,7 +7,7 @@ public class AppointmentClass {
     private String appointmentType, location, date, time, status, userID;
     private long dateTime;
 
-    // For firebase
+    // For Firestore recycler
     public AppointmentClass() {
     }
 

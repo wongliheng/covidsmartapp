@@ -72,9 +72,10 @@ public class UserVaccinationStatusFragment extends Fragment {
                         String status = document.getString("vaccinationStatus");
                         vaccinationStatus.setText(status);
                         if (status.equals("Unvaccinated")) {
+                            vaccineEligibility.setText("Vaccine Eligibility");
                             vaccineEligibility.setVisibility(View.VISIBLE);
-                            vaccineEligibilityDate.setVisibility(View.VISIBLE);
                             vaccineEligibilityDate.setText("Eligible");
+                            vaccineEligibilityDate.setVisibility(View.VISIBLE);
                         } else if (status.equals("Partially Vaccinated")) {
                             getTimeUntilNextShot(false, vaccineEligibility, vaccineEligibilityDate);
                         } else if (status.equals("Vaccinated without Booster")) {

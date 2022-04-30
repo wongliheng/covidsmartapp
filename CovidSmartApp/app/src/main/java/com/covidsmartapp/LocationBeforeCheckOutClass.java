@@ -6,7 +6,7 @@ public class LocationBeforeCheckOutClass {
     private boolean checkedOut;
     private Long dateTime;
 
-    // For Firebase
+    // For Firestore recycler
     public LocationBeforeCheckOutClass() {
     }
 

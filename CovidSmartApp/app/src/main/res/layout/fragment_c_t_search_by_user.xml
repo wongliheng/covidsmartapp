@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CTSearchByUserFragment">
+
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Search for a user's location history"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintWidth_percent="0.8"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/userConstraint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pageTitle"
+        app:layout_constraintWidth_percent="0.8">
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/userSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:hintText="Search for a user's email"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/nameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User's Name:"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userConstraint"
+        app:layout_constraintHorizontal_bias="0.13"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/nameTitle"
+        app:layout_constraintTop_toTopOf="@id/nameTitle"
+        app:layout_constraintBottom_toBottomOf="@id/nameTitle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/emailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User's Email:"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/nameTitle"
+        app:layout_constraintTop_toBottomOf="@id/nameTitle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/emailTitle"
+        app:layout_constraintTop_toTopOf="@id/emailTitle"
+        app:layout_constraintBottom_toBottomOf="@id/emailTitle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/phoneTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User's Phone Number:"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/emailTitle"
+        app:layout_constraintTop_toBottomOf="@id/emailTitle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/phoneTitle"
+        app:layout_constraintTop_toTopOf="@id/phoneTitle"
+        app:layout_constraintBottom_toBottomOf="@id/phoneTitle"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneTitle"
+        app:layout_constraintWidth_percent="0.92"
+        app:layout_constraintVertical_bias="0.15"/>
+
+    <TextView
+        android:id="@+id/noHistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="User has no location history"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recyclerView"
+        app:layout_constraintWidth_percent="0.7"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
