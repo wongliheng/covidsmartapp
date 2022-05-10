@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".AdminManageDoctorFragment">
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Manage Doctor Accounts"
+        android:textSize="26sp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.75" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/doctorConstraint"
         android:layout_width="0dp"

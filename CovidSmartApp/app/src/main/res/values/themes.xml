@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.CovidSmartApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
+        <item name="android:fontFamily">@font/heebo</item>
         <item name="colorPrimary">@color/red_700</item>
         <item name="colorPrimaryVariant">@color/red_400</item>
         <item name="colorOnPrimary">@color/white</item>

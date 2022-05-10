@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +34,6 @@ public class UserRegisterStep3 extends AppCompatActivity {
 
     private TextInputEditText fName, lName, phone;
     private Button completeBtn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +126,7 @@ public class UserRegisterStep3 extends AppCompatActivity {
                         }
                     });
         }
+
     }
 
     @Override

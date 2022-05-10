@@ -7,14 +7,39 @@
     tools:context=".DoctorHomeFragment">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Doctor Home"
+        android:textSize="26sp"
+        android:layout_marginTop="16dp"
         android:textStyle="bold"
-        android:textSize="20dp"
-        android:text="HOME PAGE PLACEHOLDER"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.75" />
+
+    <Button
+        android:id="@+id/updateVaccinationBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Update Patient Vaccination Status"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintWidth_percent="0.7"/>
+
+    <Button
+        android:id="@+id/updateTestBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Update Patient Test Results"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateVaccinationBtn"
+        app:layout_constraintWidth_percent="0.7"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

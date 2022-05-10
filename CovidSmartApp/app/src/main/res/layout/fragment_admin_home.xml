@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".AdminHomeFragment">
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="User Admin Home"
+        android:textSize="26sp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.75" />
 
     <Button
         android:id="@+id/createDoctorBtn"
@@ -24,6 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Manage Doctor Account"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/createDoctorBtn"
@@ -34,6 +47,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Create Contact Tracer Account"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/manageDoctorBtn"
@@ -44,6 +58,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Manage Contact Tracer Account"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/createCTBtn"

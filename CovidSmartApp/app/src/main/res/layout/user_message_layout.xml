@@ -31,7 +31,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="this is a mesage"
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="@id/dateText"
             app:layout_constraintEnd_toEndOf="parent"

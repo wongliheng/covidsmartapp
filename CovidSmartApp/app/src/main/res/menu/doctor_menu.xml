@@ -6,11 +6,11 @@
         android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/doctorHome"/>
-    <item
-        android:id="@+id/update"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_edit_note_24"
-        android:title="@string/update"/>
+<!--    <item-->
+<!--        android:id="@+id/update"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_baseline_edit_note_24"-->
+<!--        android:title="@string/update"/>-->
     <item
         android:id="@+id/navMore"
         android:enabled="true"

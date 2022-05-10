@@ -23,6 +23,7 @@ public class DoctorHomeActivity extends AppCompatActivity {
     private String doctorEmail;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private DoctorHomeFragment doctorHomeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,24 +42,21 @@ public class DoctorHomeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 doctorEmail = documentSnapshot.getString("email");
+                doctorHomeFragment = new DoctorHomeFragment();
+                Bundle args = new Bundle();
+                args.putString("email", doctorEmail);
+                doctorHomeFragment.setArguments(args);
+                replaceFragment(doctorHomeFragment);
             }
         });
 
-        replaceFragment(new DoctorHomeFragment());
 
         NavigationBarView bottomNav = findViewById(R.id.bottom_navigation);
 
         bottomNav.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.doctorHome:
-                    replaceFragment(new DoctorHomeFragment());
-                    break;
-                case R.id.update:
-                    DoctorUpdateFragment doctorUpdateFragment = new DoctorUpdateFragment();
-                    Bundle args = new Bundle();
-                    args.putString("email", doctorEmail);
-                    doctorUpdateFragment.setArguments(args);
-                    replaceFragment(doctorUpdateFragment);
+                    replaceFragment(doctorHomeFragment);
                     break;
                 case R.id.navMore:
                     replaceFragment(new DoctorMoreFragment());
