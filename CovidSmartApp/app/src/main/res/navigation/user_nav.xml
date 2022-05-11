@@ -94,4 +94,14 @@
         android:name="com.covidsmartapp.UserDeleteAccountFragment"
         android:label="fragment_user_delete_account"
         tools:layout="@layout/fragment_user_delete_account" />
+    <fragment
+        android:id="@+id/userCovidTipsFragment"
+        android:name="com.covidsmartapp.UserCovidTipsFragment"
+        android:label="fragment_user_covid_tips"
+        tools:layout="@layout/fragment_user_covid_tips" />
+    <fragment
+        android:id="@+id/userSafeTravellingFragment"
+        android:name="com.covidsmartapp.UserSafeTravellingFragment"
+        android:label="fragment_user_safe_travelling"
+        tools:layout="@layout/fragment_user_safe_travelling" />
 </navigation>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.auth.User;
 
 public class UserMoreFragment extends Fragment {
 
@@ -35,9 +36,33 @@ public class UserMoreFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_more, container, false);
 
+        Button stayingSafeBtn = (Button) view.findViewById(R.id.stayingSafeBtn);
+        Button safeTravellingBtn = (Button) view.findViewById(R.id.safeTravellingBtn);
         Button editProfileBtn = (Button) view.findViewById(R.id.editProfileBtn);
         Button deleteAccountBtn = (Button) view.findViewById(R.id.deleteAccountBtn);
         Button signOutBtn = (Button) view.findViewById(R.id.signOutBtn);
+
+        stayingSafeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserCovidTipsFragment userCovidTipsFragment = new UserCovidTipsFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), userCovidTipsFragment, "userCovidTipsFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        safeTravellingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserSafeTravellingFragment userSafeTravellingFragment = new UserSafeTravellingFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), userSafeTravellingFragment, "userSafeTravellingFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
