@@ -81,7 +81,7 @@ public class UserCaseFragment extends Fragment {
         covidSitrepBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String data = "covidsitrep.moh.gov.sg/";
+                String data = "https://www.moh.gov.sg/covid-19/testing/situation-report-pdf";
                 Intent defaultBrowser = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_BROWSER);
                 defaultBrowser.setData(Uri.parse(data));
                 startActivity(defaultBrowser);
